@@ -1,4 +1,4 @@
-# SOEN 341 PROJECT
+
 
 # Real Estate Web Application
 
