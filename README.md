@@ -29,7 +29,7 @@ Welcome to the Real Estate Web Application, a cutting-edge digital platform desi
 ### System Administrator Features
 1. **Broker Management**: Administrators can perform CRUD operations on brokers, maintaining the broker network.
 
-
+### Team Members and Roles
 1. **Backend Developer(s)**:
    - **Names**:
      - Jonathan Dannessa, Role: Developer
