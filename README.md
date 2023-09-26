@@ -30,4 +30,15 @@ Welcome to the Real Estate Web Application, a cutting-edge digital platform desi
 1. **Broker Management**: Administrators can perform CRUD operations on brokers, maintaining the broker network.
 
 
+1. **Backend Developer(s)**:
+   - **Names**:
+     - Jonathan Dannessa, Role: Developer
+     - Mario Thomas Esposito, Role: Developer
+   - **Technologies**:
+     - **Languages**: Java
+     - **Frameworks**: Spring
+     - **Database**: PostgreSQL
+
+
+
 
