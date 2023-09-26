@@ -34,13 +34,16 @@ Welcome to the Real Estate Web Application, a cutting-edge digital platform desi
    - **Names**:
      - Jonathan Dannessa, Role: Developer
      - Mario Thomas Esposito, Role: Developer
-     - Syed Ayaan Jilani, Role: Project Manager
-     - Younes Bouhaba, Role: Document Specialist
    - **Technologies**:
      - **Languages**: Java
      - **Frameworks**: Spring
      - **Database**: PostgreSQL
 
-
+2. **Frontend Developer(s)**:
+   - **Names**:
+     - Syed Ayaan Jilani, Role: Project Manager
+     - Younes Bouhaba, Role: Document Specialist
+   - **Technologies**:
+     - **Languages**: Javascript/React
 
 
