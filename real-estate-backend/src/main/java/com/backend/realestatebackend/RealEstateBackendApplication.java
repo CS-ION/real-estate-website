@@ -9,9 +9,7 @@ public class RealEstateBackendApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(RealEstateBackendApplication.class, args);
 	}
-	
-	private void sayHi(){
 
-	}
+
 
 }
