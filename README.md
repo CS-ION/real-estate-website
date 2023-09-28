@@ -29,7 +29,7 @@ Welcome to the Real Estate Web Application, a cutting-edge digital platform desi
 ### System Administrator Features
 1. **Broker Management**: Administrators can perform CRUD operations on brokers, maintaining the broker network.
 
-### Technical Roles
+### Team Members and Roles
 1. **Product Owner**: Younes Bouhaba
 2. **Scrum Master**: Syed Ayaan Jilani
 3. **Developers**: Mario Thomas Esposito and Jonathan D'Annessa
