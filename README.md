@@ -29,11 +29,16 @@ Welcome to the Real Estate Web Application, a cutting-edge digital platform desi
 ### System Administrator Features
 1. **Broker Management**: Administrators can perform CRUD operations on brokers, maintaining the broker network.
 
-### Team Members and Roles
+### Technical Roles
+1. **Product Owner**: Younes Bouhaba
+2. **Scrum Master**: Syed Ayaan Jilani
+3. **Developers**: Mario Thomas Esposito and Jonathan D'Annessa
+
+### Technical Roles
 1. **Backend Developer(s)**:
    - **Names**:
-     - Jonathan Dannessa, Role: Developer
-     - Mario Thomas Esposito, Role: Developer
+     - Jonathan D'Annessa
+     - Mario Thomas Esposito
    - **Technologies**:
      - **Languages**: Java
      - **Frameworks**: Spring
@@ -41,10 +46,10 @@ Welcome to the Real Estate Web Application, a cutting-edge digital platform desi
 
 2. **Frontend Developer(s)**:
    - **Names**:
-     - Syed Ayaan Jilani, Role: Scrum Master
-     - Younes Bouhaba, Role: Product Owner
+     - Syed Ayaan Jilani
+     - Younes Bouhaba
    - **Technologies**:
-     - **Languages**: Javascript/React
+     - **Languages**: HTML, CSS, Javascript/React
 
 # Project Approach: Real Estate Web App
 
