@@ -41,8 +41,8 @@ Welcome to the Real Estate Web Application, a cutting-edge digital platform desi
 
 2. **Frontend Developer(s)**:
    - **Names**:
-     - Syed Ayaan Jilani, Role: Project Manager
-     - Younes Bouhaba, Role: Document Specialist
+     - Syed Ayaan Jilani, Role: Scrum Master
+     - Younes Bouhaba, Role: Product Owner
    - **Technologies**:
      - **Languages**: Javascript/React
 
@@ -65,7 +65,7 @@ Welcome to the Real Estate Web Application, a cutting-edge digital platform desi
    - Implement Spring Boot API.
 
 ## 6. Frontend Development
-   - Develop React app with Redux.
+   - Develop React app.
 
 ## 7. Integration
    - Ensure frontend-backend communication.
