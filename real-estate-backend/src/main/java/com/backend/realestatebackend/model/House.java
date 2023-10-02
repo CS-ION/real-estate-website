@@ -1,6 +1,8 @@
 package com.backend.realestatebackend.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,15 +22,18 @@ public class House {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long houseId;
-
-    @NotNull
     @Embedded
+    @NotNull
+    @Valid
     private Address address;
-
     @NotNull
     @Column(name = "price")
+    @Min(value = 0, message = "Price cannot be negative")
     private Long price;
 
     @Column(name = "bedrooms")
+    @NotNull
+    @Min(value = 0, message = "Number of bedrooms cannot be negative")
     private Integer numberOfBedrooms;
+
 }

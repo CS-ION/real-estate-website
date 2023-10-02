@@ -2,37 +2,30 @@ package com.backend.realestatebackend.controller;
 
 import com.backend.realestatebackend.model.House;
 import com.backend.realestatebackend.service.HouseService;
-import jakarta.websocket.server.PathParam;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/house")
+@RequestMapping("/api/houses")
 @RequiredArgsConstructor
 public class HouseController {
 
     private final HouseService houseService;
 
-    @GetMapping("/houses")
+    @GetMapping("/all-houses")
     public List<House> getAllHouses() {
         return houseService.getAllHouses();
     }
 
-    @GetMapping("/houses/{id}")
+    @GetMapping("/{id}")
     public House getHouse(@PathVariable Long id) {
         return houseService.getHouse(id);
     }
 
-    @GetMapping("/houses/price-filter")
-    public List<House> getHouseByPriceRange(@RequestParam(name = "minPrice", required = true) Long minPrice,
-                                            @RequestParam(name = "maxPrice", required = true) Long maxPrice) {
-        return houseService.findByPriceBetween(minPrice,maxPrice);
-    }
-
-    @GetMapping("/houses/filter")
+    @GetMapping("/filter")
     public List<House> getHousesByFilters(
             @RequestParam(name = "minPrice", required = false) Long minPrice,
             @RequestParam(name = "maxPrice", required = false) Long maxPrice,
@@ -43,6 +36,11 @@ public class HouseController {
             @RequestParam(name = "streetNumber", required = false) Integer streetNumber
     ){
         return houseService.filterHouses(minPrice, maxPrice, street, city, province, bedrooms, streetNumber);
+    }
+
+    @PostMapping("/add-house")
+    public House addHouse(@Valid @RequestBody House house){
+        return houseService.saveHouse(house);
     }
 
 }

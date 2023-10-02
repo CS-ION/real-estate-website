@@ -1,5 +1,6 @@
 package com.backend.realestatebackend.service;
 
+import com.backend.realestatebackend.exception.DuplicateAddressException;
 import com.backend.realestatebackend.exception.HouseNotFoundException;
 import com.backend.realestatebackend.exception.NoHousesFoundException;
 import com.backend.realestatebackend.model.House;
@@ -20,18 +21,7 @@ public class HouseService {
         return houses;
     }
     public House getHouse(Long id){
-        return houseRepository.findById(id).orElseThrow(()->  new HouseNotFoundException(id));
-    }
-    public List<House> findByPriceBetween(Long min, Long max){
-        List<House> houses = houseRepository.findByPriceBetween(min,max);
-        if(houses.isEmpty()) throw new NoHousesFoundException("No houses found within this price range");
-        return houses;
-    }
-
-    public List<House> findHousesByStreet(String street) {
-        List<House> houses = houseRepository.findByAddressStreet(street);
-        if(houses.isEmpty())throw new NoHousesFoundException("No houses listed with given street");
-        return houses;
+        return houseRepository.findById(id).orElseThrow(()-> {throw new HouseNotFoundException(id);});
     }
 
     public List<House> filterHouses(Long minPrice,
@@ -45,6 +35,11 @@ public class HouseService {
         List<House> houses = houseRepository.findByFilters(minPrice, maxPrice, street, city, province, bedrooms, streetNumber);
         if(houses.isEmpty())throw new NoHousesFoundException("No houses listed with given filters");
         return houses;
+    }
+
+    public House saveHouse(House house){
+        houseRepository.findByAddress(house.getAddress()).ifPresent((h) -> {throw new DuplicateAddressException();});
+        return houseRepository.save(house);
     }
 
 
