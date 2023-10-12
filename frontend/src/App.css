@@ -1,0 +1,447 @@
+@import url("https://fonts.googleapis.com/css2?family=Coiny&family=Montserrat:wght@600&family=Sono:wght@400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Coiny&family=Montserrat:wght@600&family=Roboto:ital,wght@1,100&family=Sono:wght@400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Coiny&family=Montserrat:wght@600&family=Roboto:ital,wght@0,400;1,100&family=Sono:wght@400;600;700&family=Ubuntu:wght@300&family=Young+Serif&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f0f0f0;
+}
+
+.property-listing-header {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.property-listing-header-contents {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.property-listings {
+  margin-left: 50px;
+  font-family: "Coiny", sans-serif;
+  font-size: 60px;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+.form-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.add-property-form {
+  background-color: rgb(219, 196, 163);
+  padding: 16px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 24px;
+  border: 2px solid brown;
+  border-radius: 50px;
+}
+
+.form-contents {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 24px;
+  gap: 16px;
+  border-radius: 16px;
+}
+
+input::placeholder,
+textarea::placeholder {
+  font-weight: bolder;
+  color: black;
+}
+
+.a_b_b {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.a_b_b input {
+  width: 180px;
+  background-color: rgb(228, 210, 187);
+  border: 4px solid chocolate;
+  border-radius: 10px;
+  padding: 16px;
+  color: inherit;
+  font-weight: bold;
+  font-size: 16px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.p_a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.b_b {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.s_a_c {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 14px;
+  padding-right: 10px;
+}
+
+.s_a_c select,
+.s_a_c input {
+  background-color: rgb(228, 210, 187);
+  border: 4px solid chocolate;
+  border-radius: 10px;
+  padding: 16px;
+  color: black;
+  font-weight: bold;
+  font-size: 16px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.unit-number {
+  width: 100px;
+}
+
+.unit-number:disabled {
+  background-color: #ccc;
+}
+
+.street-number {
+  width: 120px;
+}
+
+.city-name {
+  width: 150px;
+}
+
+.province-name {
+  width: 150px;
+}
+
+.postal-code {
+  width: 160px;
+}
+
+.status-type {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.address {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.location {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.description {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.description textarea {
+  background-color: rgb(228, 210, 187);
+  border: 4px solid chocolate;
+  border-radius: 20px;
+  resize: none;
+  width: 500px;
+  height: 180px;
+  padding: 16px;
+  font-weight: bold;
+  font-size: 16px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.bathrooms,
+.bedrooms {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  font-family: "Montserrat", sans-serif;
+  background-color: rgb(228, 210, 187);
+  border: 4px solid chocolate;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.bedrooms label,
+.bathrooms label {
+  color: black;
+  font-weight: bolder;
+  font-size: 16px;
+}
+
+.decrement {
+  background-color: red;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.increment {
+  background-color: green;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.increment:hover,
+.decrement:hover {
+  transform: scale(1.05);
+}
+
+.submit,
+.showForm {
+  border: 2px solid rgb(86, 37, 2);
+  font-family: "Coiny", sans-serif;
+  line-height: 1;
+  text-transform: uppercase;
+  font-size: 15px;
+  padding: 16px;
+  background-image: linear-gradient(
+    135deg,
+    brown,
+    chocolate,
+    burlywood,
+    yellow
+  );
+  color: inherit;
+  border-radius: 30px;
+  cursor: pointer;
+  width: 200px;
+  height: 70px;
+  font-size: 20px;
+  transition: 0.3s;
+}
+
+.showForm:hover,
+.submit:hover {
+  transform: scale(1.05);
+}
+
+.showForm {
+  background-image: linear-gradient(
+    135deg,
+    rgb(239, 35, 35),
+    rgb(144, 142, 141),
+    rgb(73, 162, 147),
+    rgb(132, 132, 52)
+  );
+  margin-right: 50px;
+  width: 200px;
+  height: 80px;
+  font-size: 20px;
+}
+
+.property-list-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -30px;
+}
+
+.property-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+  width: 100%;
+}
+
+.property {
+  font-size: 20px;
+  margin-bottom: 16px;
+  padding: 16px 30px;
+  background-color: white;
+  display: flex;
+  gap: 2px;
+  border-radius: 16px;
+  width: 80%;
+  border: 2px solid saddlebrown;
+}
+
+.prop-deets {
+  font-size: 20px;
+  line-height: 1.4;
+  margin-bottom: 16px;
+  padding: 16px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-radius: 16px;
+  width: 100%;
+}
+
+.location-amenities {
+  display: flex;
+}
+
+.li-location {
+  width: 100%;
+}
+
+.amenities {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.li-city {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: bold;
+  font-size: 17px;
+}
+
+.li-address {
+  font-family: "Montserrat", cursive;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.li-description {
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 5px;
+}
+
+.li-bathrooms,
+.li-bedrooms,
+.li-price,
+.li-area {
+  text-align: center;
+  font-family: "Montserrat", cursive;
+  font-weight: bold;
+  font-size: 23px;
+  border-right: 2px solid black;
+  padding: 3px;
+}
+
+.li-bathrooms p,
+.li-bedrooms p,
+.li-price p,
+.li-area p {
+  font-family: "Sono", sans-serif;
+  font-size: 19px;
+}
+
+.li-price {
+  border-right: none;
+}
+
+.prop-buttons {
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
+  gap: 10px;
+}
+
+.update,
+.delete {
+  border: 2px solid rgb(176, 64, 94);
+  font-family: "Coiny", sans-serif;
+  line-height: 1;
+  text-transform: uppercase;
+  font-size: 15px;
+  padding: 16px;
+  color: inherit;
+  border-radius: 30px;
+  cursor: pointer;
+  width: 150px;
+  height: 50px;
+  font-size: 20px;
+  transition: 0.3s;
+}
+
+.update:hover,
+.delete:hover {
+  transform: scale(1.05);
+}
+
+.update {
+  background-image: linear-gradient(
+    135deg,
+    rgb(31, 223, 95),
+    rgb(85, 254, 0),
+    rgb(183, 203, 184),
+    rgb(53, 242, 229)
+  );
+}
+
+.delete {
+  background-image: linear-gradient(
+    135deg,
+    rgb(76, 0, 76),
+    rgb(255, 0, 76),
+    rgb(250, 30, 1),
+    rgb(202, 110, 110)
+  );
+}
+
+.type,
+.status {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-family: "Coiny", sans-serif;
+  color: #f5f5f4;
+  padding-top: 3px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 100px;
+}
+
+.status {
+  margin-top: 15px;
+}
