@@ -35,6 +35,7 @@ public class HouseController {
             @RequestParam(name = "bedrooms", required = false) Integer bedrooms,
             @RequestParam(name = "streetNumber", required = false) Integer streetNumber
     ){
+        // can pass values as null and will work not be in volved in filtering
         return houseService.filterHouses(minPrice, maxPrice, street, city, province, bedrooms, streetNumber);
     }
 
