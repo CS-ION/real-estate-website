@@ -50,7 +50,7 @@ const PropertyForm = ({
     e.preventDefault();
     // Integrate with API
 
-    const isPostalCodeValid = /^[A-Z]\d{1}[A-Z]\-\d{1}[A-Z]\d{1}$/;
+    const isPostalCodeValid = /^[A-Z]\d{1}[A-Z]-\d{1}[A-Z]\d{1}$/;
     const isNumber = /^\d+$/;
     const errors = {};
 
