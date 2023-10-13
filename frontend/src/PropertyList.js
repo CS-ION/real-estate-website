@@ -104,6 +104,10 @@ function Property({
       behavior: "smooth",
     });
   };
+  const handleRequestViewing = () => {
+    alert(`Requesting a viewing for property with ID ${id}`);
+    // need to add more logic to handle the 'request a viewing' button
+  };
 
   return (
     <li className="property">
@@ -144,6 +148,9 @@ function Property({
         </button>
         <button className="delete" onClick={() => handleDelete(id)}>
           Delete
+        </button>          
+        <button className="request-viewing" onClick={handleRequestViewing}>
+          Request a Viewing
         </button>
         <span
           className="status"
