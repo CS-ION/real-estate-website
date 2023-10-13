@@ -1,0 +1,7 @@
+# JavaScript and CSS files should use LF line endings
+*.js text eol=lf
+*.css text eol=lf
+
+# HTML and JSON files should use CRLF line endings
+*.html text eol=crlf
+*.json text eol=crlf
