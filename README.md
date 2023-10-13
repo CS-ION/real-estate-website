@@ -119,5 +119,3 @@ As we embark on this project, we will follow an Agile methodology to ensure flex
     - Evaluate the project's success and archive it as needed.
 
 By following this Agile approach, we aim to deliver a high-quality Real Estate Web Application that adapts to user feedback and market changes throughout the development process.
-
-
