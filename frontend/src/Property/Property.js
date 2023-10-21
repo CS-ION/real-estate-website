@@ -1,4 +1,5 @@
 import "../App.css";
+import "./Property.css";
 import { useState } from "react";
 import PropertyHeader from "./PropertyHeader";
 import PropertyList from "./PropertyList";

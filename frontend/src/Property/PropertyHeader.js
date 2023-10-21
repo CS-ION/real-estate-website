@@ -1,4 +1,5 @@
 import "../App.css";
+import "./Property.css";
 import PropertyForm from "./PropertyForm";
 
 const PropertyHeader = ({

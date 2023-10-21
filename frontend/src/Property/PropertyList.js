@@ -1,4 +1,5 @@
 import React from "react";
+import "./Property.css";
 
 const STATUS = [
   { name: "For Sale", color: "#3b82f6" },
