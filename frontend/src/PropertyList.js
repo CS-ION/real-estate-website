@@ -148,9 +148,9 @@ function Property({
         </button>
         <button className="delete" onClick={() => handleDelete(id)}>
           Delete
-        </button>          
+        </button>
         <button className="request-viewing" onClick={handleRequestViewing}>
-          Request a Viewing
+          Request Viewing
         </button>
         <span
           className="status"

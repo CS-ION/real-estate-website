@@ -388,7 +388,8 @@ textarea::placeholder {
 }
 
 .update,
-.delete {
+.delete,
+.request-viewing {
   border: 2px solid rgb(176, 64, 94);
   font-family: "Coiny", sans-serif;
   line-height: 1;
@@ -404,8 +405,20 @@ textarea::placeholder {
   transition: 0.3s;
 }
 
+.request-viewing {
+  padding: 5px;
+  background-image: linear-gradient(
+    135deg,
+    rgb(230, 205, 106),
+    rgb(255, 165, 0),
+    rgb(255, 204, 0),
+    rgba(128, 120, 105, 0.374)
+  );
+}
+
 .update:hover,
-.delete:hover {
+.delete:hover,
+.request-viewing:hover {
   transform: scale(1.05);
 }
 
@@ -445,32 +458,3 @@ textarea::placeholder {
 .status {
   margin-top: 15px;
 }
-
-/* Styling for the "Request a Viewing" button */
-.request-viewing {
-  border: 2px solid rgb(86, 37, 2);
-  font-family: "Coiny", sans-serif;
-  line-height: 1;
-  text-transform: uppercase;
-  font-size: 15px;
-  padding: 16px;
-  background-image: linear-gradient(
-    135deg,
-    rgb(31, 223, 95),
-    rgb(85, 254, 0),
-    rgb(183, 203, 184),
-    rgb(53, 242, 229)
-  );
-  color: inherit;
-  border-radius: 30px;
-  cursor: pointer;
-  width: 200px;
-  height: 50px;
-  font-size: 20px;
-  transition: 0.3s;
-}
-
-.request-viewing:hover {
-  transform: scale(1.05);
-}
-
