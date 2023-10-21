@@ -1,6 +1,6 @@
 import { Link, Route, Routes } from "react-router-dom";
-import Property from "./Property";
-import "./App.css"; // Import your CSS file
+import Property from "./Property/Property";
+import "./App.css";
 
 function App() {
   return (
