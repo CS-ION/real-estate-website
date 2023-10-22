@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Property.css";
+import ViewingForm from "./ViewingForm";
 
 const STATUS = [
   { name: "For Sale", color: "#3b82f6" },
@@ -12,12 +13,19 @@ const TYPE = [
   { name: "House", color: "#db2777" },
 ];
 
-const PropertyList = ({ properties, setShowForm, setPropertyToBeUpdated }) => {
+const PropertyList = ({
+  properties,
+  setShowForm,
+  setPropertyToBeUpdated,
+  showViewForm,
+  setShowViewForm,
+}) => {
   if (properties.length === 0) {
     return <p>No Properties to Display!!</p>;
   }
   return (
     <div className="property-list-container">
+      {showViewForm ? <ViewingForm setViewForm={setShowViewForm} /> : null}
       <ul className="property-list">
         {properties.map((property) => (
           <Property
@@ -37,6 +45,7 @@ const PropertyList = ({ properties, setShowForm, setPropertyToBeUpdated }) => {
             type={property.type}
             status={property.status}
             setShowForm={setShowForm}
+            setShowViewForm={setShowViewForm}
             setPropertyToBeUpdated={setPropertyToBeUpdated}
           />
         ))}
@@ -61,6 +70,7 @@ function Property({
   type,
   status,
   setShowForm,
+  setShowViewForm,
   setPropertyToBeUpdated,
 }) {
   const handleDelete = (propertyId) => {
@@ -99,6 +109,7 @@ function Property({
       bathrooms: bathrooms,
       bedrooms: bedrooms,
     });
+    setShowViewForm(false);
     setShowForm(true);
     window.scrollTo({
       top: 0,
@@ -106,8 +117,12 @@ function Property({
     });
   };
   const handleRequestViewing = () => {
-    alert(`Requesting a viewing for property with ID ${id}`);
-    // need to add more logic to handle the 'request a viewing' button
+    setShowForm(false);
+    setShowViewForm(true);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   return (

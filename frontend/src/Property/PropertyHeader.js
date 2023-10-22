@@ -8,6 +8,7 @@ const PropertyHeader = ({
   addProperty,
   propertyToBeUpdated,
   setPropertyToBeUpdated,
+  setShowViewForm,
 }) => {
   return (
     <div className="property-listing-header">
@@ -17,6 +18,9 @@ const PropertyHeader = ({
           className="showForm"
           onClick={() => {
             setShowForm((show) => !show);
+            if (!showForm) {
+              setShowViewForm(false);
+            }
             setPropertyToBeUpdated(null);
           }}
         >

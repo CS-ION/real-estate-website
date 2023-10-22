@@ -59,6 +59,7 @@ const Property = () => {
   ]);
   const [propertyToBeUpdated, setPropertyToBeUpdated] = useState(null);
   const [showForm, setShowForm] = useState(false);
+  const [showViewForm, setShowViewForm] = useState(false);
   const addProperty = (newProperty) => {
     setProperties([...properties, newProperty]);
   };
@@ -70,11 +71,14 @@ const Property = () => {
         addProperty={addProperty}
         propertyToBeUpdated={propertyToBeUpdated}
         setPropertyToBeUpdated={setPropertyToBeUpdated}
+        setShowViewForm={setShowViewForm}
       />
       <PropertyList
         properties={properties}
         setShowForm={setShowForm}
         setPropertyToBeUpdated={setPropertyToBeUpdated}
+        showViewForm={showViewForm}
+        setShowViewForm={setShowViewForm}
       />
     </div>
   );

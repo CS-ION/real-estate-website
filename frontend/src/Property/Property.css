@@ -1,4 +1,4 @@
-/* PROPERTY */
+/* PROPERTY HEADER*/
 
 .property-listing-header {
   margin-top: 20px;
@@ -23,6 +23,8 @@
   margin-bottom: 10px;
   margin-top: 20px;
 }
+
+/* PROPERTY FORM */
 
 .form-container {
   display: flex;
@@ -230,7 +232,8 @@ textarea::placeholder {
 }
 
 .submit,
-.showForm {
+.showForm,
+.close {
   border: 2px solid rgb(86, 37, 2);
   font-family: "Coiny", sans-serif;
   line-height: 1;
@@ -254,7 +257,8 @@ textarea::placeholder {
 }
 
 .showForm:hover,
-.submit:hover {
+.submit:hover,
+.close:hover {
   transform: scale(1.05);
 }
 
@@ -272,10 +276,13 @@ textarea::placeholder {
   font-size: 20px;
 }
 
+/* PROPERTY LIST */
+
 .property-list-container {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   margin-top: -30px;
 }
 
@@ -446,4 +453,55 @@ textarea::placeholder {
 
 .status {
   margin-top: 15px;
+}
+
+/* VIEWING FORM */
+
+.viewing-form {
+  background-color: rgb(219, 196, 163);
+  margin: 20px;
+  padding: 16px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 24px;
+  border: 2px solid brown;
+  border-radius: 50px;
+}
+
+.days {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.theDays {
+  padding-top: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.theDays label {
+  text-transform: uppercase;
+  font-size: 14px;
+  font-family: "Coiny", sans-serif;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 7px;
+}
+
+.close {
+  background-image: linear-gradient(
+    135deg,
+    rgb(98, 211, 245),
+    rgb(110, 91, 231),
+    rgb(185, 156, 187),
+    rgb(216, 112, 147)
+  );
 }
