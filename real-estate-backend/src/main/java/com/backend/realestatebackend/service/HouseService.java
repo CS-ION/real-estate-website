@@ -30,9 +30,11 @@ public class HouseService {
                                     String city,
                                     String province,
                                     Integer bedrooms,
-                                    Integer streetNumber){
+                                    Integer bathrooms,
+                                    Integer streetNumber,
+                                    House.HouseType type){
 
-        List<House> houses = houseRepository.findByFilters(minPrice, maxPrice, street, city, province, bedrooms, streetNumber);
+        List<House> houses = houseRepository.findByFilters(minPrice, maxPrice, street, city, province, bedrooms,bathrooms ,streetNumber,type);
         if(houses.isEmpty())throw new NoHousesFoundException("No houses listed with given filters");
         return houses;
     }

@@ -33,10 +33,12 @@ public class HouseController {
             @RequestParam(name = "city", required = false) String city,
             @RequestParam(name = "province", required = false) String province,
             @RequestParam(name = "bedrooms", required = false) Integer bedrooms,
+            @RequestParam(name = "bathrooms", required = false) Integer bathrooms,
+            @RequestParam(name = "type", required = false) House.HouseType type,
             @RequestParam(name = "streetNumber", required = false) Integer streetNumber
     ){
-        // can pass values as null and will work not be in volved in filtering
-        return houseService.filterHouses(minPrice, maxPrice, street, city, province, bedrooms, streetNumber);
+        // can pass values as null and will work not be involved in filtering
+        return houseService.filterHouses(minPrice, maxPrice, street, city, province, bedrooms,bathrooms, streetNumber, type);
     }
 
     @PostMapping("/add-house")
