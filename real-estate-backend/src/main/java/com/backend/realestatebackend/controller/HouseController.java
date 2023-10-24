@@ -46,4 +46,14 @@ public class HouseController {
         return houseService.saveHouse(house);
     }
 
+    @PutMapping("/house-update")
+    public void updateHouse(@RequestBody House house){
+        houseService.updateHouse(house);
+    }
+
+    @DeleteMapping("/house-delete/{id}")
+    public void deleteHouse(@PathVariable Long id){
+        houseService.deleteHouse(id);
+    }
+
 }

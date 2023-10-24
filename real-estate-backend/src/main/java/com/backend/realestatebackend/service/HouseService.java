@@ -44,6 +44,15 @@ public class HouseService {
         return houseRepository.save(house);
     }
 
+    public void updateHouse(House updatedHouse){
+        if(houseRepository.findById(updatedHouse.getHouseId()).isEmpty())return;
+        houseRepository.save(updatedHouse);
+    }
+
+    public void deleteHouse(Long id){
+         houseRepository.deleteById(id);
+    }
+
 
 
 }

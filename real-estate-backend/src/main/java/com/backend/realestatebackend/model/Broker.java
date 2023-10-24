@@ -1,5 +1,7 @@
 package com.backend.realestatebackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
@@ -45,6 +47,7 @@ public class Broker {
     private Location location;
 
     @OneToMany(mappedBy = "broker")
+    @JsonIgnore
     private Set<House> houses = new HashSet<>();
 
     @Override

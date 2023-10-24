@@ -31,16 +31,10 @@ public class RealEstateBackendApplication {
 	@Bean
 	public CommandLineRunner initializeData() {
 		return args -> {
-			House_Address address1 = new House_Address(123, "Main St", "City1", "Province1", "A1B 2C3");
-			House_Address address2 = new House_Address(456, "Elm St", "City2", "Province2", "X0Y 1Z2");
-			House_Address address3 = new House_Address(790, "Oak St", "City3", "Province3", "H7Y 2B7");
-			House_Address address4 = new House_Address(789, "Oak St", "City3", "Province3", "H7Y 2B7");
-
-
-
-
-
-			// Save Houses
+			House_Address address1 = new House_Address("City1", "Main St", 123, "Province1", "A1B 2C3");
+			House_Address address2 = new House_Address("City2", "Elm St",456 , "Province2", "X0Y 1Z2");
+			House_Address address3 = new House_Address("City3", "Oak St",790, "Province3", "H7Y 2B7");
+			House_Address address4 = new House_Address("City3", "Oak St",789 , "Province3", "H7Y 2B7");
 
 
 			// Create Brokers
