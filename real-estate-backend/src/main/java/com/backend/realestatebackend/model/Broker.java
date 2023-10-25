@@ -37,8 +37,8 @@ public class Broker {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Email
-    @Column(name = "email")
+    @Email(message = "Email already exists.")
+    @Column(unique=true ,name = "email")
     private String email;
 
     @Embedded
