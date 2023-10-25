@@ -1,0 +1,29 @@
+# backend-deploy.yml
+# To-Be-Edited by Mario and Jon
+name: Backend CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main # Change this to your main branch name
+
+jobs:
+  build-backend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: "11" # You can change the Java version as needed
+
+      - name: Build and test backend
+        run: |
+          cd backend
+          ./mvnw clean install
+          # Add any additional build and test commands here
+
+    # Add deployment steps specific to your Java Spring backend here
