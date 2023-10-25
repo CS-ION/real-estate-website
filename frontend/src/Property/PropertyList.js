@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Property.css";
 import ViewingForm from "./ViewingForm";
 
