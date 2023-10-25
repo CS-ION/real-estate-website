@@ -20,6 +20,12 @@ public class HouseService {
         if(houses.isEmpty())throw new NoHousesFoundException();
         return houses;
     }
+
+    public List<House> getAllHousesNoBrokers(){
+        List<House> houses = houseRepository.findHousesWithNullBroker();
+        if(houses.isEmpty())throw new NoHousesFoundException();
+        return houses;
+    }
     public House getHouse(Long id){
         return houseRepository.findById(id).orElseThrow(()-> {throw new HouseNotFoundException(id);});
     }

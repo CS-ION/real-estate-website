@@ -44,11 +44,7 @@ public interface HouseRepository extends JpaRepository<House, Long> {
             @Param("type") House.HouseType type
     );
 
-
-
-
-
-
-
+    @Query(value = "SELECT * " + "FROM House h " + "WHERE h.broker_id IS NULL", nativeQuery = true)
+    List<House> findHousesWithNullBroker();
 
 }
