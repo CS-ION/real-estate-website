@@ -1,5 +1,5 @@
 module.exports = {
-  moduleFileExtensions: ["js", "mjs", "jsx"],
+  moduleFileExtensions: ["js", "jsx"],
   testEnvironment: "node",
   transform: {},
 };
