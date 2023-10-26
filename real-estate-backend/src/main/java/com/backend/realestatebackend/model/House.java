@@ -77,6 +77,7 @@ public class House {
 
     @ManyToOne
     @JoinColumn(name = "broker_id")
+    @NotNull(message="House must have a broker")
     private Broker broker;
 
     @Column(name = "unit")

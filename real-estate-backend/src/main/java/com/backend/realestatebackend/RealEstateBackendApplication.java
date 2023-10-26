@@ -74,11 +74,11 @@ public class RealEstateBackendApplication {
 			House house1 = new House(address3, House.HouseStatus.FOR_SALE, House.HouseType.CONDO, 100000L, 3, 2, broker1, null,500D);
 			House house2 = new House(address4, House.HouseStatus.FOR_SALE, House.HouseType.APARTMENT, 150000L, 4, 3, broker2, null,1000D);
 			House house3 = new House(address1, House.HouseStatus.FOR_SALE, House.HouseType.HOUSE, 200000L, 5, 3, broker1, "Unit A",2050D);
-			House house4 = new House(address2, House.HouseStatus.FOR_SALE, House.HouseType.HOUSE, 200000L, 5, 3, null, "Unit A",2050D);
+
 			houseService.saveHouse(house1);
 			houseService.saveHouse(house2);
 			houseService.saveHouse(house3);
-			houseService.saveHouse(house4);
+
 			// Assign Houses to Brokers
 			broker1.getHouses().add(house1);
 			broker1.getHouses().add(house2);

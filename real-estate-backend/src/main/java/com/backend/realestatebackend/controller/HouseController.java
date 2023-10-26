@@ -20,10 +20,7 @@ public class HouseController {
         return houseService.getAllHouses();
     }
 
-    @GetMapping("/all-houses/no-brokers")
-    public List<House> getAllHousesNoBrokers() {
-        return houseService.getAllHousesNoBrokers();
-    }
+
 
     @GetMapping("/{id}")
     public House getHouse(@PathVariable Long id) {

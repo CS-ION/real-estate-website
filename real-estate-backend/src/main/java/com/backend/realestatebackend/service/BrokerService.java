@@ -36,16 +36,9 @@ public class BrokerService {
     }
 
     public void deleteBroker(Long brokerId) {
-        Optional<Broker> brokerOptional = brokerRepository.findById(brokerId);
-        if (brokerOptional.isPresent()) {
-            Broker broker = brokerOptional.get();
-            Set<House> houses = broker.getHouses();
-            for (House house : houses) {
-                house.setBroker(null);
-            }
             brokerRepository.deleteById(brokerId);
         }
     }
 
 
-}
+

@@ -46,7 +46,7 @@ public class Broker {
     @Valid
     private Location location;
 
-    @OneToMany(mappedBy = "broker")
+    @OneToMany(mappedBy = "broker",cascade = CascadeType.REMOVE)
     @JsonIgnore
     private Set<House> houses = new HashSet<>();
 
