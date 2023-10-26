@@ -1,12 +1,12 @@
-import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
-import ViewingForm from "../ViewingForm";
+const React = require("react");
+const { render, screen, fireEvent } = require("@testing-library/react");
+const ViewingForm = require("../ViewingForm");
 
 // Mock the setViewForm function
 const mockSetViewForm = jest.fn();
 
 beforeEach(() => {
-  render(<ViewingForm setViewForm={mockSetViewForm} />);
+  render(React.createElement(ViewingForm, { setViewForm: mockSetViewForm }));
 });
 
 test("it renders the form elements", () => {
@@ -25,7 +25,7 @@ test("it renders the form elements", () => {
   expect(screen.getByText("Saturday")).toBeInTheDocument();
   expect(
     screen.getByPlaceholderText(
-      "Enter detailed description about your availability eg. time of day, etc."
+      "Enter a detailed description about your availability eg. time of day, etc."
     )
   ).toBeInTheDocument();
   expect(screen.getByText("SUBMIT REQUEST")).toBeInTheDocument();
@@ -49,7 +49,7 @@ test("it handles form submission and closes the form", () => {
   fireEvent.click(screen.getByText("Saturday"));
   fireEvent.change(
     screen.getByPlaceholderText(
-      "Enter detailed description about your availability eg. time of day, etc."
+      "Enter a detailed description about your availability eg. time of day, etc."
     ),
     { target: { value: "Sample description" } }
   );
@@ -76,7 +76,7 @@ test("it displays validation errors", () => {
   // Fill in a description longer than 300 characters
   fireEvent.change(
     screen.getByPlaceholderText(
-      "Enter detailed description about your availability eg. time of day, etc."
+      "Enter a detailed description about your availability eg. time of day, etc."
     ),
     {
       target: { value: "A".repeat(301) },
