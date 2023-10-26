@@ -3,11 +3,13 @@ package com.backend.realestatebackend.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+
+
 
 
 
@@ -21,6 +23,7 @@ public class ViewingRequest {
         this.userFirstName = userFirstName;
         this.userLastName = userLastName;
         this.userEmail = userEmail;
+        this.houseId = houseId;
         this.availabilityDescription = availabilityDescription;
         this.availability = availability;
     }

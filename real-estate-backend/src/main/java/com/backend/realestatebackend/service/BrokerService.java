@@ -38,6 +38,7 @@ public class BrokerService {
 
     public List<ViewingRequest> getViewingRequests(Long id){
         List<ViewingRequest> viewingRequests = brokerRepository.findById(id).orElseThrow().getViewingRequests();
+        System.out.println(viewingRequests);
         if(viewingRequests.isEmpty()) throw new NoViewingRequestsException();
         return viewingRequests;
     }
@@ -51,6 +52,7 @@ public class BrokerService {
             brokerRepository.deleteById(brokerId);
         }
     }
+
 
 
 
