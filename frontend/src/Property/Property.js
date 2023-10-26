@@ -1,6 +1,6 @@
 import "../App.css";
 import "./Property.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PropertyHeader from "./PropertyHeader";
 import PropertyList from "./PropertyList";
 
@@ -12,7 +12,9 @@ const Property = () => {
   useEffect(() => {
     async function getProperties() {
       try {
-        const response = await fetch("/api/houses/all-houses");
+        const response = await fetch(
+          "https://your-netlify-site-name.netlify.app/api/houses/all-houses"
+        );
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
