@@ -1,6 +1,7 @@
 import "../App.css";
 import "./Property.css";
 import { useState, useEffect } from "react";
+import axios from "axios";
 import PropertyHeader from "./PropertyHeader";
 import PropertyList from "./PropertyList";
 
@@ -12,14 +13,10 @@ const Property = () => {
   useEffect(() => {
     async function getProperties() {
       try {
-        const response = await fetch(
+        const response = await axios.get(
           "https://curious-cat-bdf32c.netlify.app/api/houses/all-houses"
         );
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setProperties(data);
+        setProperties(response.data);
       } catch (error) {
         alert("Cannot Load Data! " + error);
       }
