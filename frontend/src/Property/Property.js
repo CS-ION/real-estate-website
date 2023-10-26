@@ -14,8 +14,9 @@ const Property = () => {
     async function getProperties() {
       try {
         const response = await axios.get(
-          "https://curious-cat-bdf32c.netlify.app/api/houses/all-houses"
+          "'http://localhost:8080/api/houses/all-houses"
         );
+        console.log(response.data);
         setProperties(response.data);
       } catch (error) {
         alert("Cannot Load Data! " + error);
