@@ -20,8 +20,6 @@ public class HouseController {
         return houseService.getAllHouses();
     }
 
-
-
     @GetMapping("/{id}")
     public House getHouse(@PathVariable Long id) {
         return houseService.getHouse(id);
@@ -29,32 +27,58 @@ public class HouseController {
 
     @GetMapping("/filter")
     public List<House> getHousesByFilters(
-            @RequestParam(name = "minPrice", required = false) Long minPrice,
-            @RequestParam(name = "maxPrice", required = false) Long maxPrice,
-            @RequestParam(name = "street", required = false) String street,
-            @RequestParam(name = "city", required = false) String city,
-            @RequestParam(name = "province", required = false) String province,
-            @RequestParam(name = "bedrooms", required = false) Integer bedrooms,
-            @RequestParam(name = "bathrooms", required = false) Integer bathrooms,
-            @RequestParam(name = "type", required = false) House.HouseType type,
-            @RequestParam(name = "streetNumber", required = false) Integer streetNumber
-    ){
-        // can pass values as null and will work not be involved in filtering
-        return houseService.filterHouses(minPrice, maxPrice, street, city, province, bedrooms,bathrooms, streetNumber, type);
+            @RequestParam(name = "minPrice", required = false) String minPriceStr,
+            @RequestParam(name = "maxPrice", required = false) String maxPriceStr,
+            @RequestParam(name = "street", required = false) String streetStr,
+            @RequestParam(name = "city", required = false) String cityStr,
+            @RequestParam(name = "province", required = false) String provinceStr,
+            @RequestParam(name = "bedrooms", required = false) String bedroomsStr,
+            @RequestParam(name = "bathrooms", required = false) String bathroomsStr,
+            @RequestParam(name = "type", required = false) String typeStr,
+            @RequestParam(name = "streetNumber", required = false) String streetNumberStr) {
+
+        Long minPrice = parseLong(minPriceStr);
+        Long maxPrice = parseLong(maxPriceStr);
+        Integer bedrooms = parseInt(bedroomsStr);
+        Integer bathrooms = parseInt(bathroomsStr);
+        House.HouseType type = parseHouseType(typeStr);
+        Integer streetNumber = parseInt(streetNumberStr);
+        String street = parseString(streetStr);
+        String city = parseString(cityStr);
+        String province = parseString(provinceStr);
+
+        return houseService.filterHouses(minPrice, maxPrice, street, city, province, bedrooms, bathrooms, streetNumber,
+                type);
+    }
+
+    private Long parseLong(String str) {
+        return "null".equals(str) ? null : str != null && str.matches("-?\\d+") ? Long.parseLong(str) : null;
+    }
+
+    private Integer parseInt(String str) {
+        return "null".equals(str) ? null : str != null && str.matches("-?\\d+") ? Integer.parseInt(str) : null;
+    }
+
+    private House.HouseType parseHouseType(String str) {
+        return "null".equals(str) ? null : str != null ? House.HouseType.valueOf(str) : null;
+    }
+
+    private String parseString(String str) {
+        return "null".equals(str) ? null : str;
     }
 
     @PostMapping("/add-house")
-    public House addHouse(@Valid @RequestBody House house){
+    public House addHouse(@Valid @RequestBody House house) {
         return houseService.saveHouse(house);
     }
 
     @PutMapping("/house-update")
-    public void updateHouse(@RequestBody House house){
+    public void updateHouse(@RequestBody House house) {
         houseService.updateHouse(house);
     }
 
     @DeleteMapping("/house-delete/{id}")
-    public void deleteHouse(@PathVariable Long id){
+    public void deleteHouse(@PathVariable Long id) {
         houseService.deleteHouse(id);
     }
 

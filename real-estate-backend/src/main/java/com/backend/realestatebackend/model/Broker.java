@@ -2,6 +2,7 @@ package com.backend.realestatebackend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
@@ -10,7 +11,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -49,6 +52,13 @@ public class Broker {
     @OneToMany(mappedBy = "broker",cascade = CascadeType.REMOVE)
     @JsonIgnore
     private Set<House> houses = new HashSet<>();
+
+@Transient // fix this
+    private List<ViewingRequest> viewingRequests = new ArrayList<>();
+
+    @Column(name = "broker_description")
+    private String broker_description;
+
 
     @Override
     public boolean equals(Object obj) {

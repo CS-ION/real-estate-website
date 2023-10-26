@@ -34,6 +34,13 @@ public class ExceptionHandlerController {
                 .body(ex.getMessage());
     }
 
+
+    @ExceptionHandler(NoViewingRequestsException.class)
+    public ResponseEntity<String> handleNoHouseFound(NoViewingRequestsException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ex.getMessage());
+    }
+
     @ExceptionHandler(DuplicateAddressException.class)
     public ResponseEntity<String> handleDuplicateAddress(DuplicateAddressException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT)
