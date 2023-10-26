@@ -2,6 +2,7 @@ package com.backend.realestatebackend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
@@ -52,9 +53,12 @@ public class Broker {
     @JsonIgnore
     private Set<House> houses = new HashSet<>();
 
-
-    @Transient
+@Transient // fix this
     private List<ViewingRequest> viewingRequests = new ArrayList<>();
+
+    @Column(name = "broker_description")
+    private String broker_description;
+
 
     @Override
     public boolean equals(Object obj) {
