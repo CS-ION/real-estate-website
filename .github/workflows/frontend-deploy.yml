@@ -1,7 +1,10 @@
 # frontend-deploy.yml
 name: Frontend CI/CD Pipeline
 
-on: [push]
+on:
+  push:
+    branches:
+      - main # Change this to your main branch name
 
 jobs:
   build-frontend:
