@@ -1,3 +1,5 @@
-export const extensionsToTreatAsEsm = [".js"];
-export const testEnvironment = "node";
-export const transform = {};
+module.exports = {
+  extensionsToTreatAsEsm: [".js"],
+  testEnvironment: "node",
+  transform: {},
+};
