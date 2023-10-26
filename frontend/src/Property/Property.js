@@ -14,7 +14,7 @@ const Property = () => {
     async function getProperties() {
       try {
         const response = await axios.get(
-          "https://curious-cat-bdf32c.netlify.app/api/houses/all-houses"
+          "https://curious-cat-bdf32c.netlify.app/api/houses/"
         );
         setProperties(response.data);
       } catch (error) {
