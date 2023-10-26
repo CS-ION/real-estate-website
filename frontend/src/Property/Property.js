@@ -13,7 +13,7 @@ const Property = () => {
     async function getProperties() {
       try {
         const response = await fetch(
-          "https://your-netlify-site-name.netlify.app/api/houses/all-houses"
+          "https://curious-cat-bdf32c.netlify.app/api/houses/all-houses"
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
