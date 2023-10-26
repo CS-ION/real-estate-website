@@ -1,6 +1,5 @@
 package com.backend.realestatebackend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
@@ -83,11 +82,6 @@ public class House {
 
     @Column(name = "unit")
     private String unit;
-
-    @Column(name = "description")
-    private String house_description;
-
-
 
     @Override
     public boolean equals(Object obj) {
