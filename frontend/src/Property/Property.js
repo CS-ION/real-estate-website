@@ -28,27 +28,27 @@ const Property = () => {
     const isNumber = /^\d+$/;
     const errors = {};
 
-    if (fStreetNumber != "") {
+    if (fStreetNumber !== "") {
       if (!isNumber.test(fStreetNumber) || parseInt(fStreetNumber, 10) <= 0) {
         errors.price = "Street Number must be a positive number";
       }
     }
-    if (minPrice != "") {
+    if (minPrice !== "") {
       if (!isNumber.test(minPrice) || parseInt(minPrice, 10) <= 0) {
         errors.price = "Min Price must be a positive number";
       }
     }
-    if (maxPrice != "") {
+    if (maxPrice !== "") {
       if (!isNumber.test(maxPrice) || parseInt(maxPrice, 10) <= 0) {
         errors.price = "Max Price must be a positive number";
       }
     }
-    if (fBathrooms != "") {
+    if (fBathrooms !== "") {
       if (!isNumber.test(fBathrooms) || parseInt(fBathrooms, 10) < 1) {
         errors.price = "Bathroom must be a non-zero positive number";
       }
     }
-    if (fBedrooms != "") {
+    if (fBedrooms !== "") {
       if (!isNumber.test(fBedrooms) || parseInt(fBedrooms, 10) < 1) {
         errors.price = "Bedroom must be a non-zero positive number";
       }
