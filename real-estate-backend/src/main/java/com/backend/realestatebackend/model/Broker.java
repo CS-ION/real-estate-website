@@ -10,7 +10,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -49,6 +51,10 @@ public class Broker {
     @OneToMany(mappedBy = "broker",cascade = CascadeType.REMOVE)
     @JsonIgnore
     private Set<House> houses = new HashSet<>();
+
+
+    @Transient
+    private List<ViewingRequest> viewingRequests = new ArrayList<>();
 
     @Override
     public boolean equals(Object obj) {

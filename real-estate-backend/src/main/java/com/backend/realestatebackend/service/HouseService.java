@@ -6,7 +6,7 @@ import com.backend.realestatebackend.exception.NoHousesFoundException;
 import com.backend.realestatebackend.model.House;
 import com.backend.realestatebackend.repository.HouseRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.query.Param;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;

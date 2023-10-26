@@ -10,7 +10,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @SpringBootApplication
 @RequiredArgsConstructor
@@ -79,11 +81,40 @@ public class RealEstateBackendApplication {
 			houseService.saveHouse(house2);
 			houseService.saveHouse(house3);
 
+			User user1 = new User();
+			user1.setFirst_name("Alice");
+			user1.setLast_name("Johnson");
+			user1.setEmail("alice.j@example.com");
+			userRepository.save(user1);
+
+			User user2 = new User();
+			user2.setFirst_name("Bob");
+			user2.setLast_name("Smith");
+			user2.setEmail("bob.smith@example.com");
+			userRepository.save(user2);
+
+			User user3 = new User();
+			user3.setFirst_name("Charlie");
+			user3.setLast_name("Brown");
+			user3.setEmail("charlie.b@example.com");
+			userRepository.save(user3);
+
 			// Assign Houses to Brokers
 			broker1.getHouses().add(house1);
 			broker1.getHouses().add(house2);
 			broker2.getHouses().add(house2);
 			broker2.getHouses().add(house3);
+
+			List<String> availability = new ArrayList<>();
+			availability.add("monday");
+			availability.add("wednesday");
+			ViewingRequest viewingRequest = new ViewingRequest("Alice","Johnson","alice.j@example.com",
+					house1.getHouseId(),"I want to view your house",availability);
+
+			broker1.getViewingRequests().add(viewingRequest);
+			brokerRepository.save(broker1);
+
+
 
 
 
