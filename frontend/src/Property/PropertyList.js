@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Property.css";
 import ViewingForm from "./ViewingForm";
 
@@ -19,24 +19,32 @@ const PropertyList = ({
   setPropertyToBeUpdated,
   showViewForm,
   setShowViewForm,
+  setProperties,
 }) => {
+  const [brokerEmail, setBrokerEmail] = useState("");
   if (properties.length === 0) {
     return <p>No Properties to Display!!</p>;
   }
   return (
     <div className="property-list-container">
-      {showViewForm ? <ViewingForm setViewForm={setShowViewForm} /> : null}
+      {showViewForm ? (
+        <ViewingForm
+          setViewForm={setShowViewForm}
+          brokerEmail={brokerEmail}
+          setBrokerEmail={setBrokerEmail}
+        />
+      ) : null}
       <ul className="property-list">
         {properties.map((property) => (
           <Property
             key={property.id}
             id={property.id}
             unitNumber={property.unitNumber}
-            streetNumber={property.streetNumber}
-            streetName={property.streetName}
-            city={property.city}
-            province={property.province}
-            postalCode={property.postalCode}
+            streetNumber={property.address.streetNumber}
+            streetName={property.address.streetName}
+            city={property.address.city}
+            province={property.address.province}
+            postalCode={property.address.postalCode}
             description={property.description}
             bathrooms={property.bathrooms}
             bedrooms={property.bedrooms}
@@ -44,9 +52,12 @@ const PropertyList = ({
             price={property.price}
             type={property.type}
             status={property.status}
+            email={property.broker.email}
+            setBrokerEmail={setBrokerEmail}
             setShowForm={setShowForm}
             setShowViewForm={setShowViewForm}
             setPropertyToBeUpdated={setPropertyToBeUpdated}
+            setProperties={setProperties}
           />
         ))}
       </ul>
@@ -69,28 +80,26 @@ function Property({
   price,
   type,
   status,
+  email,
+  setBrokerEmail,
   setShowForm,
   setShowViewForm,
   setPropertyToBeUpdated,
+  setProperties,
 }) {
   const handleDelete = (propertyId) => {
+    async function deleteProperties() {
+      try {
+        const response = await axios.delete(
+          `http://localhost:8080/api/houses/house-delete/${propertyId}`
+        );
+        setProperties(response.data);
+      } catch (error) {
+        alert("Cannot Update Property! " + error);
+      }
+    }
+    deleteProperties();
     alert("Deleted Property with ID " + propertyId);
-    /* WILL IMPLEMENT WHEN INTEGRATED WITH BACKEND
-    // Send a delete request to the backend
-    fetch(`/api/properties/${propertyId}`, {
-      method: "DELETE",
-    })
-      .then((response) => {
-        if (response.ok) {
-          // Property successfully deleted, update the UI
-          // You can remove the property from the local state or re-fetch the updated property list.
-        } else {
-          // Handle errors, e.g., show an error message to the user
-        }
-      })
-      .catch((error) => {
-        // Handle network or other errors
-      });*/
   };
   const handleUpdate = () => {
     setPropertyToBeUpdated({
@@ -109,6 +118,7 @@ function Property({
       bathrooms: bathrooms,
       bedrooms: bedrooms,
     });
+    setBrokerEmail(email);
     setShowViewForm(false);
     setShowForm(true);
     window.scrollTo({
@@ -119,6 +129,7 @@ function Property({
   const handleRequestViewing = () => {
     setShowForm(false);
     setShowViewForm(true);
+
     window.scrollTo({
       top: 0,
       behavior: "smooth",

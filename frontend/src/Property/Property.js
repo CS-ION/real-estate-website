@@ -14,25 +14,21 @@ const Property = () => {
     async function getProperties() {
       try {
         const response = await axios.get(
-          "'http://localhost:8080/api/houses/all-houses"
+          "http://localhost:8080/api/houses/all-houses"
         );
-        console.log(response.data);
         setProperties(response.data);
       } catch (error) {
         alert("Cannot Load Data! " + error);
       }
     }
     getProperties();
-  }, []);
-  const addProperty = (newProperty) => {
-    setProperties([...properties, newProperty]);
-  };
+  }, [properties]);
   return (
     <div className="mainframe">
       <PropertyHeader
         showForm={showForm}
         setShowForm={setShowForm}
-        addProperty={addProperty}
+        setProperties={setProperties}
         propertyToBeUpdated={propertyToBeUpdated}
         setPropertyToBeUpdated={setPropertyToBeUpdated}
         setShowViewForm={setShowViewForm}
@@ -43,6 +39,7 @@ const Property = () => {
         setPropertyToBeUpdated={setPropertyToBeUpdated}
         showViewForm={showViewForm}
         setShowViewForm={setShowViewForm}
+        setProperties={setProperties}
       />
     </div>
   );

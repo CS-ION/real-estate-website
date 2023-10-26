@@ -5,7 +5,7 @@ import PropertyForm from "./PropertyForm";
 const PropertyHeader = ({
   showForm,
   setShowForm,
-  addProperty,
+  setProperties,
   propertyToBeUpdated,
   setPropertyToBeUpdated,
   setShowViewForm,
@@ -31,7 +31,7 @@ const PropertyHeader = ({
         {showForm || propertyToBeUpdated ? (
           <PropertyForm
             setShowForm={setShowForm}
-            addProperty={addProperty}
+            setProperties={setProperties}
             propertyToBeUpdated={propertyToBeUpdated}
             setPropertyToBeUpdated={setPropertyToBeUpdated}
           />

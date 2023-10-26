@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../App.css";
 import "./Property.css";
 
-const ViewingForm = ({ setViewForm }) => {
+const ViewingForm = ({ setViewForm, brokerEmail, setBrokerEmail }) => {
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [selectedDays, setSelectedDays] = useState("");
@@ -20,7 +20,8 @@ const ViewingForm = ({ setViewForm }) => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    // Integrate with API
+    // Integrate with Email API to send brokerEmail
+    console.log(brokerEmail);
 
     const errors = {};
 
@@ -40,6 +41,7 @@ const ViewingForm = ({ setViewForm }) => {
       return;
     }
 
+    setBrokerEmail("");
     setViewForm(false);
     alert("Message Sent");
   };
