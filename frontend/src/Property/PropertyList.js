@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Property.css";
+import axios from "axios";
 import ViewingForm from "./ViewingForm";
 
 const STATUS = [
@@ -107,11 +108,13 @@ function Property({
       status: status,
       type: type,
       unitNumber: unitNumber,
-      streetNumber: streetNumber,
-      streetName: streetName,
-      city: city,
-      province: province,
-      postalCode: postalCode,
+      address: {
+        streetNumber: streetNumber,
+        streetName: streetName,
+        city: city,
+        province: province,
+        postalCode: postalCode,
+      },
       description: description,
       area: area,
       price: price,

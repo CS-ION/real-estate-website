@@ -505,3 +505,64 @@ textarea::placeholder {
     rgb(216, 112, 147)
   );
 }
+
+/* FILTER CONTAINER */
+.filter-container {
+  background-color: #b8b8b8;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sub-container-1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+}
+
+.sub-container-2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+}
+
+.filter-container input,
+.filter-container select {
+  background-color: rgb(228, 210, 187);
+  border: 1px solid chocolate;
+  border-radius: 5px;
+  color: black;
+  font-weight: bold;
+  font-size: 16px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.filter-container button {
+  background-image: linear-gradient(
+    135deg,
+    rgb(106, 233, 255),
+    rgb(222, 240, 213),
+    rgb(109, 255, 109),
+    rgb(241, 255, 50)
+  );
+  cursor: pointer;
+  border: 2px solid rgb(86, 37, 2);
+  border-radius: 20px;
+  padding: 5px;
+  font-family: "Coiny", sans-serif;
+  text-transform: uppercase;
+  font-size: 15px;
+  transition: 0.3s;
+}
+
+.filter-container button:hover {
+  transform: scale(1.05);
+}
