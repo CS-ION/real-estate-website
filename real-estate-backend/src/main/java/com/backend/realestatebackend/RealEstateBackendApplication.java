@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Bean;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @SpringBootApplication
 @RequiredArgsConstructor
 public class RealEstateBackendApplication {
@@ -22,24 +21,19 @@ public class RealEstateBackendApplication {
 
 	private final UserRepository userRepository;
 
-	private final  BrokerRepository brokerRepository;
-
-
-
+	private final BrokerRepository brokerRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(RealEstateBackendApplication.class, args);
 	}
 
-
 	@Bean
 	public CommandLineRunner initializeData() {
 		return args -> {
 			House_Address address1 = new House_Address("City1", "Main St", 123, "Province1", "A1B 2C3");
-			House_Address address2 = new House_Address("City2", "Elm St",456 , "Province2", "X0Y 1Z2");
-			House_Address address3 = new House_Address("City3", "Oak St",790, "Province3", "H7Y 2B7");
-			House_Address address4 = new House_Address("City3", "Oak St",789 , "Province3", "H7Y 2B7");
-
+			House_Address address2 = new House_Address("City2", "Elm St", 456, "Province2", "X0Y 1Z2");
+			House_Address address3 = new House_Address("City3", "Oak St", 790, "Province3", "H7Y 2B7");
+			House_Address address4 = new House_Address("City3", "Oak St", 789, "Province3", "H7Y 2B7");
 
 			// Create Brokers
 			Broker broker1 = new Broker();
@@ -79,9 +73,12 @@ public class RealEstateBackendApplication {
 			brokerRepository.save(broker3);
 			brokerRepository.save(broker4);
 
-			House house1 = new House(address3, House.HouseStatus.FOR_SALE, House.HouseType.CONDO, 100000L, 3, 2, broker1, null,500D);
-			House house2 = new House(address4, House.HouseStatus.FOR_SALE, House.HouseType.APARTMENT, 150000L, 4, 3, broker2, null,1000D);
-			House house3 = new House(address1, House.HouseStatus.FOR_SALE, House.HouseType.HOUSE, 200000L, 5, 3, broker1, "Unit A",2050D);
+			House house1 = new House(address3, House.HouseStatus.FOR_SALE, House.HouseType.CONDO, 100000L, 3, 2,
+					broker1, null, 500D);
+			House house2 = new House(address4, House.HouseStatus.FOR_SALE, House.HouseType.APARTMENT, 150000L, 4, 3,
+					broker2, null, 1000D);
+			House house3 = new House(address1, House.HouseStatus.FOR_SALE, House.HouseType.HOUSE, 200000L, 5, 3,
+					broker1, "Unit A", 2050D);
 
 			house1.setHouse_description("House description");
 			house2.setHouse_description("House description");
@@ -118,8 +115,8 @@ public class RealEstateBackendApplication {
 			List<String> availability = new ArrayList<>();
 			availability.add("monday");
 			availability.add("wednesday");
-			ViewingRequest viewingRequest = new ViewingRequest("Alice","Johnson","alice.j@example.com",
-					house1.getHouseId(),"I want to view your house",availability);
+			ViewingRequest viewingRequest = new ViewingRequest("Alice", "Johnson", "alice.j@example.com",
+					house1.getHouseId(), "I want to view your house", availability);
 
 			broker1 = brokerRepository.findById(broker1.getBrokerId()).get();
 			broker1.getViewingRequests().add(viewingRequest);
@@ -129,15 +126,7 @@ public class RealEstateBackendApplication {
 
 			// saving view request not working
 
-
-
-
-
-
 		};
 	}
-
-
-
 
 }
