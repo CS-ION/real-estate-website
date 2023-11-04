@@ -121,7 +121,6 @@ function Property({
       bathrooms: bathrooms,
       bedrooms: bedrooms,
     });
-    setBrokerEmail(email);
     setShowViewForm(false);
     setShowForm(true);
     window.scrollTo({
@@ -132,7 +131,7 @@ function Property({
   const handleRequestViewing = () => {
     setShowForm(false);
     setShowViewForm(true);
-
+    setBrokerEmail(email);
     window.scrollTo({
       top: 0,
       behavior: "smooth",

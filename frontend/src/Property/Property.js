@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import PropertyHeader from "./PropertyHeader";
 import PropertyList from "./PropertyList";
+import supabase from "./supabase";
 
 const Property = () => {
   const [properties, setProperties] = useState([]);
