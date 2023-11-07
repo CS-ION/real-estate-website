@@ -44,6 +44,9 @@ public class Broker {
     @Column(unique=true ,name = "email")
     private String email;
 
+    @Column(name = "description")
+    private String broker_description;
+
     @Embedded
     @NotNull
     @Valid
@@ -53,11 +56,13 @@ public class Broker {
     @JsonIgnore
     private Set<House> houses = new HashSet<>();
 
-@Transient // fix this
-    private List<ViewingRequest> viewingRequests = new ArrayList<>();
-
-    @Column(name = "broker_description")
-    private String broker_description;
+    @ManyToMany
+    @JoinTable(
+            name = "broker_viewing_requests",
+            joinColumns = @JoinColumn(name = "broker_id"),
+            inverseJoinColumns = @JoinColumn(name = "viewing_request_id")
+    )
+    private Set<ViewingRequest> viewingRequests = new HashSet<>();
 
 
     @Override

@@ -3,6 +3,7 @@ package com.backend.realestatebackend;
 import com.backend.realestatebackend.model.*;
 import com.backend.realestatebackend.repository.BrokerRepository;
 import com.backend.realestatebackend.repository.UserRepository;
+import com.backend.realestatebackend.repository.ViewingRequestRepository;
 import com.backend.realestatebackend.service.HouseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -22,6 +23,8 @@ public class RealEstateBackendApplication {
 	private final UserRepository userRepository;
 
 	private final BrokerRepository brokerRepository;
+
+	private final ViewingRequestRepository viewingRequestRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(RealEstateBackendApplication.class, args);
@@ -112,19 +115,19 @@ public class RealEstateBackendApplication {
 			broker2.getHouses().add(house2);
 			broker2.getHouses().add(house3);
 
-			List<String> availability = new ArrayList<>();
-			availability.add("monday");
-			availability.add("wednesday");
-			ViewingRequest viewingRequest = new ViewingRequest("Alice", "Johnson", "alice.j@example.com",
-					house1.getHouseId(), "I want to view your house", availability);
-
-			broker1 = brokerRepository.findById(broker1.getBrokerId()).get();
+			// Create a viewing request
+			ViewingRequest viewingRequest = new ViewingRequest(user1.getFirst_name(), user1.getLast_name(), user1.getEmail(), house1.getHouseId(),user1.getId() ,broker1.getBrokerId(),"Some description", List.of("Monday", "Wednesday"));
+			viewingRequestRepository.save(viewingRequest);
+			user1.getViewingRequests().add(viewingRequest);
 			broker1.getViewingRequests().add(viewingRequest);
-			System.out.println(broker1.getViewingRequests());
-			broker1.setFirstName("Alexander");
+
+			userRepository.save(user1);
 			brokerRepository.save(broker1);
 
-			// saving view request not working
+
+
+
+
 
 		};
 	}

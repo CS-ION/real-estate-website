@@ -34,8 +34,12 @@ public class BrokerController {
     }
 
     @GetMapping("/viewing-requests/{id}")
-    public List<ViewingRequest> getViewingRequests(@PathVariable Long id){return brokerService.getViewingRequests(id);}
+    public Set<ViewingRequest> getViewingRequests(@PathVariable Long id){return brokerService.getViewingRequests(id);}
 
+    @DeleteMapping("/request-viewing/{broker_id}/{request_id}")
+    public void deleteRequest(@PathVariable Long broker_id, @PathVariable Long request_id){
+        brokerService.deleteBrokerViewingRequest(broker_id,request_id);
+    }
     @PostMapping("/add-broker")
     public Broker addBroker(@RequestBody @Valid Broker broker){
         return brokerService.addBroker(broker);
