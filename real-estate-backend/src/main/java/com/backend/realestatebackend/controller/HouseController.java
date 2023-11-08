@@ -67,9 +67,9 @@ public class HouseController {
         return "null".equals(str) ? null : str;
     }
 
-    @PostMapping("/add-house")
-    public House addHouse(@Valid @RequestBody House house) {
-        return houseService.saveHouse(house);
+    @PostMapping("/add-house/{brokerId}")
+    public House addHouse(@Valid @RequestBody House house,@PathVariable Long brokerId) {
+        return houseService.saveHouse(house,brokerId);
     }
 
     @PutMapping("/house-update")

@@ -33,10 +33,10 @@ public class RealEstateBackendApplication {
 	@Bean
 	public CommandLineRunner initializeData() {
 		return args -> {
-			House_Address address1 = new House_Address("City1", "Main St", 123, "Province1", "A1B 2C3");
-			House_Address address2 = new House_Address("City2", "Elm St", 456, "Province2", "X0Y 1Z2");
-			House_Address address3 = new House_Address("City3", "Oak St", 790, "Province3", "H7Y 2B7");
-			House_Address address4 = new House_Address("City3", "Oak St", 789, "Province3", "H7Y 2B7");
+			House_Address address1 = new House_Address("City1", "Nova Scotia", 123, "Main St", "A1B 2C3");
+			House_Address address2 = new House_Address("City2", "Manitoba", 456, "Elm St", "X0Y 1Z2");
+			House_Address address3 = new House_Address("City3", "Quebec", 790, "Oak St", "H7Y 2B7");
+			House_Address address4 = new House_Address("City3", "Yukon", 789, "Oak St", "H7Y 2B7");
 
 			// Create Brokers
 			Broker broker1 = new Broker();
@@ -44,7 +44,7 @@ public class RealEstateBackendApplication {
 			broker1.setLastName("Doe");
 			broker1.setPhoneNumber("+1 (123)-456-7890");
 			broker1.setEmail("john.doe@example.com");
-			broker1.setLocation(new Location("City1", "Province1"));
+			broker1.setLocation(new Location("City1", "Ontario"));
 			broker1.setBroker_description("Broker description");
 
 			Broker broker2 = new Broker();
@@ -52,7 +52,7 @@ public class RealEstateBackendApplication {
 			broker2.setLastName("Smith");
 			broker2.setPhoneNumber("+1 (456)-789-0123");
 			broker2.setEmail("jane.smith@example.com");
-			broker2.setLocation(new Location("City2", "Province2"));
+			broker2.setLocation(new Location("City2", "Quebec"));
 			broker2.setBroker_description("Broker description");
 
 			Broker broker3 = new Broker();
@@ -60,7 +60,7 @@ public class RealEstateBackendApplication {
 			broker3.setLastName("Smith");
 			broker3.setPhoneNumber("+1 (123)-456-7890");
 			broker3.setEmail("john.dove@example.com");
-			broker3.setLocation(new Location("City1", "Province1"));
+			broker3.setLocation(new Location("City1", "Quebec"));
 			broker3.setBroker_description("Broker description");
 
 			Broker broker4 = new Broker();
@@ -68,7 +68,7 @@ public class RealEstateBackendApplication {
 			broker4.setLastName("Dan");
 			broker4.setPhoneNumber("+1 (123)-456-7890");
 			broker4.setEmail("john.doel@example.com");
-			broker4.setLocation(new Location("City1", "Province1"));
+			broker4.setLocation(new Location("City1", "Nova Scotia"));
 			broker4.setBroker_description("Broker description");
 
 			brokerRepository.save(broker1);
@@ -77,19 +77,22 @@ public class RealEstateBackendApplication {
 			brokerRepository.save(broker4);
 
 			House house1 = new House(address3, House.HouseStatus.FOR_SALE, House.HouseType.CONDO, 100000L, 3, 2,
-					broker1, null, 500D);
+					broker1, 1, 500D);
 			House house2 = new House(address4, House.HouseStatus.FOR_SALE, House.HouseType.APARTMENT, 150000L, 4, 3,
-					broker2, null, 1000D);
+					broker2, 2, 1000D);
 			House house3 = new House(address1, House.HouseStatus.FOR_SALE, House.HouseType.HOUSE, 200000L, 5, 3,
-					broker1, "Unit A", 2050D);
+					broker1, null, 2050D);
+
+
+
 
 			house1.setHouse_description("House description");
 			house2.setHouse_description("House description");
 			house3.setHouse_description("House description");
 			house1.setStatus(House.HouseStatus.FOR_LEASE);
-			houseService.saveHouse(house1);
-			houseService.saveHouse(house2);
-			houseService.saveHouse(house3);
+			houseService.saveHouse(house1,1L);
+			houseService.saveHouse(house2,2L);
+			houseService.saveHouse(house3,1L);
 
 			User user1 = new User();
 			user1.setFirst_name("Alice");
@@ -110,10 +113,7 @@ public class RealEstateBackendApplication {
 			userRepository.save(user3);
 
 			// Assign Houses to Brokers
-			broker1.getHouses().add(house1);
-			broker1.getHouses().add(house2);
-			broker2.getHouses().add(house2);
-			broker2.getHouses().add(house3);
+
 
 			// Create a viewing request
 			ViewingRequest viewingRequest = new ViewingRequest(user1.getFirst_name(), user1.getLast_name(), user1.getEmail(), house1.getHouseId(),user1.getId() ,broker1.getBrokerId(),"Some description", List.of("Monday", "Wednesday"));
