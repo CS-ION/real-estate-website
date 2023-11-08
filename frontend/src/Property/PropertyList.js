@@ -15,7 +15,6 @@ const PropertyList = ({
   setPropertyToBeUpdated,
   showViewForm,
   setShowViewForm,
-  setProperties,
   setCrud,
 }) => {
   const [brokerEmail, setBrokerEmail] = useState("");
@@ -55,7 +54,6 @@ const PropertyList = ({
             setShowForm={setShowForm}
             setShowViewForm={setShowViewForm}
             setPropertyToBeUpdated={setPropertyToBeUpdated}
-            setProperties={setProperties}
             setCrud={setCrud}
           />
         ))}
@@ -85,7 +83,6 @@ function Property({
   setShowForm,
   setShowViewForm,
   setPropertyToBeUpdated,
-  setProperties,
   setCrud,
 }) {
   const handleDelete = (propertyId) => {
@@ -94,14 +91,13 @@ function Property({
         const response = await axios.delete(
           `http://localhost:8080/api/houses/house-delete/${propertyId}`
         );
-        setProperties(response.data);
+        setCrud((crud) => !crud);
       } catch (error) {
-        alert("Cannot Update Property! " + error);
+        alert("Cannot Delete Property! " + error);
       }
     }
     deleteProperties();
     alert("Deleted Property with ID " + propertyId);
-    setCrud((crud) => !crud);
   };
   const handleUpdate = () => {
     setPropertyToBeUpdated(property);

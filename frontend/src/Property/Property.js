@@ -92,7 +92,6 @@ const Property = () => {
       <PropertyHeader
         showForm={showForm}
         setShowForm={setShowForm}
-        setProperties={setProperties}
         propertyToBeUpdated={propertyToBeUpdated}
         setPropertyToBeUpdated={setPropertyToBeUpdated}
         setShowViewForm={setShowViewForm}
@@ -194,7 +193,6 @@ const Property = () => {
         setPropertyToBeUpdated={setPropertyToBeUpdated}
         showViewForm={showViewForm}
         setShowViewForm={setShowViewForm}
-        setProperties={setProperties}
         setCrud={setCrud}
       />
     </div>

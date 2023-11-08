@@ -1,63 +1,44 @@
 import "../App.css";
 import "./Broker.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import BrokerHeader from "./BrokerHeader";
 import BrokerList from "./BrokerList";
 
 const Broker = () => {
-  const [brokers, setBrokers] = useState([
-    {
-      id: "B28299",
-      fname: "Bola",
-      lname: "Ghattas",
-      city: "Montreal",
-      province: "Quebec",
-      phone: "514-456-7890",
-      email: "bola@gmail.com",
-      description:
-        "I am a very enamoured real estate dealer with various properties",
-    },
-    {
-      id: "B28269",
-      fname: "Dhingra",
-      lname: "Dingu",
-      city: "Montreal",
-      province: "Quebec",
-      phone: "514-496-7888",
-      email: "dhingra@gmail.com",
-      description:
-        "I am a very enamoured real estate dealer with various properties",
-    },
-    {
-      id: "B26299",
-      fname: "Ivan",
-      lname: "Ghattas",
-      city: "Montreal",
-      province: "Quebec",
-      phone: "514-667-7890",
-      email: "ivan@gmail.com",
-      description:
-        "I am a very enamoured real estate dealer with various properties",
-    },
-  ]);
+  const [brokers, setBrokers] = useState([]);
   const [brokerToBeUpdated, setBrokerToBeUpdated] = useState(null);
   const [showForm, setShowForm] = useState(false);
-  const addBroker = (newBroker) => {
-    setBrokers([...brokers, newBroker]);
-  };
+  const [crud, setCrud] = useState(false);
+
+  useEffect(() => {
+    async function getBrokers() {
+      try {
+        const response = await axios.get(
+          "http://localhost:8080/api/brokers/all-brokers"
+        );
+        setBrokers(response.data);
+      } catch (error) {
+        alert("Cannot Load Data! " + error);
+      }
+    }
+    getBrokers();
+  }, [crud]);
+
   return (
     <div className="mainframe">
       <BrokerHeader
         showForm={showForm}
         setShowForm={setShowForm}
-        addBroker={addBroker}
         brokerToBeUpdated={brokerToBeUpdated}
         setBrokerToBeUpdated={setBrokerToBeUpdated}
+        setCrud={setCrud}
       />
       <BrokerList
         brokers={brokers}
         setShowForm={setShowForm}
         setBrokerToBeUpdated={setBrokerToBeUpdated}
+        setCrud={setCrud}
       />
     </div>
   );

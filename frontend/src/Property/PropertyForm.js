@@ -4,7 +4,6 @@ import "./Property.css";
 
 const PropertyForm = ({
   setShowForm,
-  setProperties,
   propertyToBeUpdated,
   setPropertyToBeUpdated,
   setCrud,
@@ -137,7 +136,6 @@ const PropertyForm = ({
     } else {
       async function addProperties() {
         try {
-          console.log(newProperty);
           const response = await axios.post(
             "http://localhost:8080/api/houses/add-house/2",
             newProperty
