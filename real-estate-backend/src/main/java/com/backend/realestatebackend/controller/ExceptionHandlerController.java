@@ -23,7 +23,14 @@ public class ExceptionHandlerController {
 
 
     @ExceptionHandler(NoBrokersFoundException.class)
-    public ResponseEntity<String> handleNoHousesFoundException(NoBrokersFoundException ex) {
+    public ResponseEntity<String> handleNoBrokersFoundException(NoBrokersFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ex.getMessage());
+    }
+
+
+    @ExceptionHandler(NoUsersFoundException.class)
+    public ResponseEntity<String> handleNoUsersFoundException(NoUsersFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(ex.getMessage());
     }
@@ -34,6 +41,13 @@ public class ExceptionHandlerController {
                 .body(ex.getMessage());
     }
 
+    // make custom exception for Broker not found
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<String> handleNoUserFound(UserNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ex.getMessage());
+    }
 
     @ExceptionHandler(NoViewingRequestsException.class)
     public ResponseEntity<String> handleNoHouseFound(NoViewingRequestsException ex) {
