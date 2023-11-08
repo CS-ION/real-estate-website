@@ -1,6 +1,7 @@
 package com.backend.realestatebackend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
@@ -16,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class House {
 
     public House(House_Address address, HouseStatus status, HouseType type, Long price, Integer numberOfBedrooms,
-                 Integer numberOfBathrooms, Broker broker, String unit,Double area) {
+                 Integer numberOfBathrooms, Broker broker, Integer unit,Double area) {
         this.address = address;
         this.status = status;
         this.type = type;
@@ -26,11 +27,6 @@ public class House {
         this.numberOfBathrooms = numberOfBathrooms;
         this.broker = broker;
         this.unit = unit;
-
-        // Check if this is what's needed for the unit field
-        if (type != HouseType.HOUSE) {
-            this.unit = "Default Unit";
-        }
     }
 
 
@@ -76,13 +72,13 @@ public class House {
     @Min(value = 0, message = "Number of bathrooms cannot be negative")
     private Integer numberOfBathrooms;
 
+    @JsonProperty(value = "broker", required = false)
     @ManyToOne
     @JoinColumn(name = "broker_id")
-    @NotNull(message="House must have a broker")
     private Broker broker;
 
     @Column(name = "unit")
-    private String unit;
+    private Integer unit;
 
     @Column(name = "description")
     private String house_description;

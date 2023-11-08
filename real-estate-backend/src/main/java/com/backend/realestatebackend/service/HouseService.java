@@ -16,6 +16,8 @@ import java.util.List;
 public class HouseService {
     private final HouseRepository houseRepository;
 
+    private final BrokerService brokerService;
+
     public List<House> getAllHouses() {
         List<House> houses = houseRepository.findAll();
         if (houses.isEmpty())
@@ -46,10 +48,11 @@ public class HouseService {
         return houses;
     }
 
-    public House saveHouse(House house) {
+    public House saveHouse(House house,Long brokerId) {
         houseRepository.findByAddress(house.getAddress()).ifPresent((h) -> {
             throw new DuplicateAddressException();
         });
+        house.setBroker(brokerService.getBroker(brokerId));
         return houseRepository.save(house);
     }
 
