@@ -35,16 +35,17 @@ const PropertyList = ({
         {properties.map((property) => (
           <Property
             key={property.id}
+            property={property}
             id={property.id}
             unitNumber={property.unitNumber}
             streetNumber={property.address.streetNumber}
-            streetName={property.address.streetName}
+            streetName={property.address.street}
             city={property.address.city}
             province={property.address.province}
             postalCode={property.address.postalCode}
-            description={property.description}
-            bathrooms={property.bathrooms}
-            bedrooms={property.bedrooms}
+            description={property.house_description}
+            bathrooms={property.numberOfBathrooms}
+            bedrooms={property.numberOfBedrooms}
             area={property.area}
             price={property.price}
             type={property.type}
@@ -65,6 +66,7 @@ const PropertyList = ({
 
 function Property({
   id,
+  property,
   unitNumber,
   streetNumber,
   streetName,
@@ -102,24 +104,7 @@ function Property({
     setCrud((crud) => !crud);
   };
   const handleUpdate = () => {
-    setPropertyToBeUpdated({
-      id: id,
-      status: status,
-      type: type,
-      unitNumber: unitNumber,
-      address: {
-        streetNumber: streetNumber,
-        streetName: streetName,
-        city: city,
-        province: province,
-        postalCode: postalCode,
-      },
-      description: description,
-      area: area,
-      price: price,
-      bathrooms: bathrooms,
-      bedrooms: bedrooms,
-    });
+    setPropertyToBeUpdated(property);
     setShowViewForm(false);
     setShowForm(true);
     window.scrollTo({
