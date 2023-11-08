@@ -329,7 +329,7 @@ textarea::placeholder {
 }
 
 /* FILTER CONTAINER */
-.filter-container {
+.bfilter-container {
   background-color: #b8b8b8;
   border: 2px solid #ccc;
   border-radius: 5px;
@@ -345,8 +345,8 @@ textarea::placeholder {
   gap: 50px;
 }
 
-.filter-container input,
-.filter-container select {
+.bfilter-container input,
+.bfilter-container select {
   background-color: rgb(228, 210, 187);
   border: 2px solid chocolate;
   border-radius: 5px;
@@ -357,7 +357,7 @@ textarea::placeholder {
   font-family: "Montserrat", sans-serif;
 }
 
-.filter-container button {
+.bfilter-container button {
   background-image: linear-gradient(
     135deg,
     rgb(106, 233, 255),
@@ -376,6 +376,6 @@ textarea::placeholder {
   transition: 0.3s;
 }
 
-.filter-container button:hover {
+.bfilter-container button:hover {
   transform: scale(1.05);
 }

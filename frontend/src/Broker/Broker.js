@@ -71,7 +71,7 @@ const Broker = () => {
         setBrokerToBeUpdated={setBrokerToBeUpdated}
         setCrud={setCrud}
       />
-      <form className="filter-container">
+      <form className="bfilter-container">
         <input
           className="city-name"
           type="text"
