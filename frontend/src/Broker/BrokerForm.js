@@ -94,7 +94,7 @@ const BrokerForm = ({
       async function addBrokers() {
         try {
           const response = await axios.post(
-            "http://localhost:8080/api/brokers/add-broker/",
+            "http://localhost:8080/api/brokers/add-broker",
             newBroker
           );
           setCrud(response.data);
