@@ -4,13 +4,13 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import PropertyHeader from "./PropertyHeader";
 import PropertyList from "./PropertyList";
-import supabase from "./supabase";
 
 const Property = () => {
   const [properties, setProperties] = useState([]);
   const [propertyToBeUpdated, setPropertyToBeUpdated] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [showViewForm, setShowViewForm] = useState(false);
+  const [crud, setCrud] = useState(false);
   // Filter criteria states
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
@@ -85,7 +85,7 @@ const Property = () => {
       }
     }
     getProperties();
-  }, [properties]);
+  }, [crud]);
 
   return (
     <div className="mainframe">
@@ -96,6 +96,7 @@ const Property = () => {
         propertyToBeUpdated={propertyToBeUpdated}
         setPropertyToBeUpdated={setPropertyToBeUpdated}
         setShowViewForm={setShowViewForm}
+        setCrud={setCrud}
       />
       <form className="filter-container" onSubmit={handleSubmit}>
         <div className="sub-container-1">
@@ -194,6 +195,7 @@ const Property = () => {
         showViewForm={showViewForm}
         setShowViewForm={setShowViewForm}
         setProperties={setProperties}
+        setCrud={setCrud}
       />
     </div>
   );

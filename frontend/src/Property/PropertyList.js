@@ -21,6 +21,7 @@ const PropertyList = ({
   showViewForm,
   setShowViewForm,
   setProperties,
+  setCrud,
 }) => {
   const [brokerEmail, setBrokerEmail] = useState("");
   if (properties.length === 0) {
@@ -59,6 +60,7 @@ const PropertyList = ({
             setShowViewForm={setShowViewForm}
             setPropertyToBeUpdated={setPropertyToBeUpdated}
             setProperties={setProperties}
+            setCrud={setCrud}
           />
         ))}
       </ul>
@@ -87,6 +89,7 @@ function Property({
   setShowViewForm,
   setPropertyToBeUpdated,
   setProperties,
+  setCrud,
 }) {
   const handleDelete = (propertyId) => {
     async function deleteProperties() {
@@ -101,6 +104,7 @@ function Property({
     }
     deleteProperties();
     alert("Deleted Property with ID " + propertyId);
+    setCrud((crud) => !crud);
   };
   const handleUpdate = () => {
     setPropertyToBeUpdated({

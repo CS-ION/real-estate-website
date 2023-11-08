@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Property.css";
-import supabase from "./supabase";
 
 const PropertyForm = ({
   setShowForm,
   setProperties,
   propertyToBeUpdated,
   setPropertyToBeUpdated,
+  setCrud,
 }) => {
   const [status, setStatus] = useState("");
   const [type, setType] = useState("");
@@ -149,7 +149,7 @@ const PropertyForm = ({
       addProperties();
       alert("Property Added");
     }
-
+    setCrud((crud) => !crud);
     setShowForm(false);
   };
 

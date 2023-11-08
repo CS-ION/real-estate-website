@@ -9,6 +9,7 @@ const PropertyHeader = ({
   propertyToBeUpdated,
   setPropertyToBeUpdated,
   setShowViewForm,
+  setCrud,
 }) => {
   return (
     <div className="property-listing-header">
@@ -34,6 +35,7 @@ const PropertyHeader = ({
             setProperties={setProperties}
             propertyToBeUpdated={propertyToBeUpdated}
             setPropertyToBeUpdated={setPropertyToBeUpdated}
+            setCrud={setCrud}
           />
         ) : null}
       </div>
