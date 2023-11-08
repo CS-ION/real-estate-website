@@ -102,7 +102,6 @@ const PropertyForm = ({
     //Will Add broker when registration is implemented
     //Will add viewing requests when integrated better with project
     const newProperty = {
-      houseId: propertyToBeUpdated ? propertyToBeUpdated.houseId : null,
       status: status,
       type: type,
       unitNumber: unitNumber === "" ? null : unitNumber,
@@ -118,17 +117,17 @@ const PropertyForm = ({
       price: price,
       numberOfBathrooms: bathrooms,
       numberOfBedrooms: bedrooms,
-      broker: propertyToBeUpdated ? propertyToBeUpdated.broker : null, //replace null with the broker who is registering
     };
 
     if (propertyToBeUpdated) {
+      newProperty.houseId = propertyToBeUpdated.houseId;
       async function updateProperties() {
         try {
           const response = await axios.put(
-            "http://localhost:8080/api/houses/house-update",
+            "http://localhost:8080/api/houses/house-update/",
             newProperty
           );
-          setProperties(response.data);
+          setCrud(response.data);
         } catch (error) {
           alert("Cannot Update Property! " + error);
         }
@@ -138,11 +137,12 @@ const PropertyForm = ({
     } else {
       async function addProperties() {
         try {
+          console.log(newProperty);
           const response = await axios.post(
-            "http://localhost:8080/api/houses/add-house",
+            "http://localhost:8080/api/houses/add-house/2",
             newProperty
           );
-          setProperties(response.data);
+          setCrud(response.data);
         } catch (error) {
           alert("Cannot Add Property! " + error);
         }
@@ -180,7 +180,7 @@ const PropertyForm = ({
               value={unitNumber}
               onChange={(e) => setUnitNumber(e.target.value)}
               placeholder="Unit #"
-              disabled={type !== "Condo" && type !== "Apartment"}
+              disabled={type !== "CONDO" && type !== "APARTMENT"}
             />
 
             <input

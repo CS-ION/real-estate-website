@@ -36,7 +36,7 @@ const PropertyList = ({
           <Property
             key={property.id}
             property={property}
-            id={property.id}
+            id={property.houseId}
             unitNumber={property.unitNumber}
             streetNumber={property.address.streetNumber}
             streetName={property.address.street}
