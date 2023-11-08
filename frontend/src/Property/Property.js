@@ -64,7 +64,7 @@ const Property = () => {
       try {
         const url = `http://localhost:8080/api/houses/filter?minPrice=${minPrice}&maxPrice=${maxPrice}&city=${fCity}&province=${fProvince}&bedrooms=${fBedrooms}&bathrooms=${fBathrooms}&type=${fType}&streetNumber=${fStreetNumber}&streetName=${fStreetName}`;
         const response = await axios.get(url);
-        setProperties(response.data);
+        setCrud(response.data);
       } catch (error) {
         alert("Cannot Filter Data! " + error);
       }
