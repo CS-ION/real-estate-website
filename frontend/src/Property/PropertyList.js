@@ -3,15 +3,10 @@ import "./Property.css";
 import axios from "axios";
 import ViewingForm from "./ViewingForm";
 
-const STATUS = [
-  { name: "For Sale", color: "#3b82f6" },
-  { name: "To Lease", color: "#16a34a" },
-];
-
 const TYPE = [
-  { name: "Condo", color: "#ef4444" },
-  { name: "Apartment", color: "#eab308" },
-  { name: "House", color: "#db2777" },
+  { name: "CONDO", color: "#ef4444" },
+  { name: "APARTMENT", color: "#eab308" },
+  { name: "HOUSE", color: "#db2777" },
 ];
 
 const PropertyList = ({
@@ -188,9 +183,7 @@ function Property({
         <span
           className="status"
           style={{
-            backgroundColor: STATUS.find(
-              (statusObj) => statusObj.name === status
-            ).color,
+            backgroundColor: status === "FOR_SALE" ? "#3b82f6" : "#16a34a",
           }}
         >
           {status}
