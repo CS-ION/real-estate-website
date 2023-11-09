@@ -12,6 +12,7 @@ const Property = () => {
   const [showViewForm, setShowViewForm] = useState(false);
   const [crud, setCrud] = useState(false);
   // Filter criteria states
+  const [displayProperties, setDisplayProperties] = useState([]);
   const [minPrice, setMinPrice] = useState(null);
   const [maxPrice, setMaxPrice] = useState(null);
   const [fStreetName, setFStreetName] = useState(null);
@@ -94,8 +95,7 @@ const Property = () => {
           "&streetNumber=" +
           Number(fStreetNumber);
         const response = await axios.get(url);
-        console.log(response.data);
-        setCrud(response.data);
+        setDisplayProperties(response.data);
       } catch (error) {
         alert("Cannot Filter Data! " + error);
       }
@@ -111,6 +111,7 @@ const Property = () => {
           "http://localhost:8080/api/houses/all-houses"
         );
         setProperties(response.data);
+        setDisplayProperties(response.data);
       } catch (error) {
         alert("Cannot Load Data! " + error);
       }
@@ -219,7 +220,7 @@ const Property = () => {
         <button type="Submit">Apply Filters</button>
       </form>
       <PropertyList
-        properties={properties}
+        properties={displayProperties}
         setShowForm={setShowForm}
         setPropertyToBeUpdated={setPropertyToBeUpdated}
         showViewForm={showViewForm}
