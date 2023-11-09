@@ -31,7 +31,6 @@ const LoginForm = ({ setUser }) => {
           );
           const token = response.data.token;
           const decodedToken = decodeJwt(token);
-          console.log("Decoded Token:", decodedToken);
           setUser(decodedToken);
         } catch (error) {
           alert("Cannot Login!", error);
@@ -47,7 +46,6 @@ const LoginForm = ({ setUser }) => {
           );
           const token = response.data.token;
           const decodedToken = decodeJwt(token);
-          console.log("Decoded Token:", decodedToken);
           setUser(decodedToken);
         } catch (error) {
           alert("Cannot Login!", error);

@@ -92,7 +92,6 @@ const RegisterForm = ({ setUser }) => {
           );
           const token = response.data.token;
           const decodedToken = decodeJwt(token);
-          console.log("Decoded Token:", decodedToken);
           setUser(decodedToken);
         } catch (error) {
           alert("Cannot register user", error);
@@ -120,7 +119,6 @@ const RegisterForm = ({ setUser }) => {
           );
           const token = response.data.token;
           const decodedToken = decodeJwt(token);
-          console.log("Decoded Token:", decodedToken);
           setUser(decodedToken);
         } catch (error) {
           alert("Cannot register user", error);

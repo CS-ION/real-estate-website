@@ -74,14 +74,27 @@ const Property = () => {
 
     async function filterProperties() {
       try {
-        const url = `http://localhost:8080/api/houses/filter?minPrice=${Number(
-          minPrice
-        )}&maxPrice=${Number(
-          maxPrice
-        )}&street=${fStreetName}&city=${fCity}&province=${fProvince}&bedrooms=${fBedrooms}&bathrooms=${fBathrooms}&type=${fType}&streetNumber=${Number(
-          fStreetNumber
-        )}`;
+        const url =
+          "http://localhost:8080/api/houses/filter?minPrice=" +
+          Number(minPrice) +
+          "&maxPrice=" +
+          Number(maxPrice) +
+          "&street=" +
+          fStreetName +
+          "&city=" +
+          fCity +
+          "&province=" +
+          fProvince +
+          "&bedrooms=" +
+          fBedrooms +
+          "&bathrooms=" +
+          fBathrooms +
+          "&type=" +
+          fType +
+          "&streetNumber=" +
+          Number(fStreetNumber);
         const response = await axios.get(url);
+        console.log(response.data);
         setCrud(response.data);
       } catch (error) {
         alert("Cannot Filter Data! " + error);
