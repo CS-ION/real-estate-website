@@ -4,7 +4,7 @@ name: Frontend CI/CD Pipeline
 on:
   push:
     branches:
-      - main # Change this to your main branch name
+      - main
 
 jobs:
   build-frontend:
