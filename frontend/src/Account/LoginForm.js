@@ -1,6 +1,14 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Account.css";
+
+function decodeJwt(token) {
+  const base64Url = token.split(".")[1];
+  const base64 = base64Url.replace("-", "+").replace("_", "/");
+  const payload = JSON.parse(atob(base64));
+  return payload;
+}
 
 const LoginForm = ({ setUser }) => {
   const [email, setEmail] = useState("");
@@ -13,7 +21,22 @@ const LoginForm = ({ setUser }) => {
       email: email,
       password: password,
     };
-    setUser(user);
+
+    async function addUser(user) {
+      try {
+        const response = await axios.post(
+          "http://localhost:8080/api/auth/authenticate-user",
+          user
+        );
+        const token = response.data.token;
+        const decodedToken = decodeJwt(token);
+        console.log("Decoded Token:", decodedToken);
+        setUser(decodedToken);
+      } catch (error) {
+        alert("Cannot Login!", error);
+      }
+    }
+    addUser(user);
     navigate("/Property");
   };
 

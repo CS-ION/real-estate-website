@@ -1,6 +1,14 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Account.css";
+
+function decodeJwt(token) {
+  const base64Url = token.split(".")[1];
+  const base64 = base64Url.replace("-", "+").replace("_", "/");
+  const payload = JSON.parse(atob(base64));
+  return payload;
+}
 
 const RegisterForm = ({ setUser }) => {
   const [type, setType] = useState("");
@@ -75,6 +83,23 @@ const RegisterForm = ({ setUser }) => {
       userObject.password = password;
       userObject.first_name = fname;
       userObject.last_name = lname;
+
+      async function addUser(userObject) {
+        try {
+          const response = await axios.post(
+            "http://localhost:8080/api/auth/register-user",
+            userObject
+          );
+          const token = response.data.token;
+          const decodedToken = decodeJwt(token);
+          console.log("Decoded Token:", decodedToken);
+          setUser(decodedToken);
+        } catch (error) {
+          alert("Cannot register user", error);
+        }
+      }
+
+      addUser(userObject);
     } else if (type === "BROKER") {
       userObject.firstName = fname;
       userObject.lastName = lname;
@@ -87,7 +112,6 @@ const RegisterForm = ({ setUser }) => {
       userObject.broker_description = description;
     }
 
-    setUser(userObject);
     navigate("/Property");
 
     // Integrate with Email API to send brokerEmail

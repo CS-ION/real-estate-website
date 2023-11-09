@@ -23,7 +23,7 @@ const Broker = () => {
       return;
     }
 
-    if (fProvince != "" && fCity != "") {
+    if (fProvince !== "" && fCity !== "") {
       setFBrokers(
         brokers.filter((broker) => {
           return (
@@ -32,13 +32,13 @@ const Broker = () => {
           );
         })
       );
-    } else if (fProvince != "") {
+    } else if (fProvince !== "") {
       setFBrokers(
         brokers.filter((broker) => {
           return broker.location.province === fProvince;
         })
       );
-    } else if (fCity != "") {
+    } else if (fCity !== "") {
       setFBrokers(
         brokers.filter((broker) => {
           return broker.location.city === fCity;
