@@ -18,7 +18,7 @@ const PropertyList = ({
   setShowViewForm,
   setCrud,
 }) => {
-  const [brokerEmail, setBrokerEmail] = useState("");
+  const [houseId, setHouseId] = useState("");
   if (properties.length === 0) {
     return <p>No Properties to Display!!</p>;
   }
@@ -26,9 +26,10 @@ const PropertyList = ({
     <div className="property-list-container">
       {showViewForm ? (
         <ViewingForm
+          user={user}
           setViewForm={setShowViewForm}
-          brokerEmail={brokerEmail}
-          setBrokerEmail={setBrokerEmail}
+          houseId={houseId}
+          setHouseId={setHouseId}
         />
       ) : null}
       <ul className="property-list">
@@ -51,8 +52,7 @@ const PropertyList = ({
             price={property.price}
             type={property.type}
             status={property.status}
-            email={property.broker.email}
-            setBrokerEmail={setBrokerEmail}
+            setHouseId={setHouseId}
             setShowForm={setShowForm}
             setShowViewForm={setShowViewForm}
             setPropertyToBeUpdated={setPropertyToBeUpdated}
@@ -81,8 +81,7 @@ function Property({
   price,
   type,
   status,
-  email,
-  setBrokerEmail,
+  setHouseId,
   setShowForm,
   setShowViewForm,
   setPropertyToBeUpdated,
@@ -122,7 +121,7 @@ function Property({
   const handleRequestViewing = () => {
     setShowForm(false);
     setShowViewForm(true);
-    setBrokerEmail(email);
+    setHouseId(id);
     window.scrollTo({
       top: 0,
       behavior: "smooth",

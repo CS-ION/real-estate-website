@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Account.css";
+import "../App.css";
 
 function decodeJwt(token) {
   const base64Url = token.split(".")[1];

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "../App.css";
 import "./Account.css";
 
 function decodeJwt(token) {
@@ -22,6 +23,7 @@ const LoginForm = ({ setUser }) => {
       email: email,
       password: password,
     };
+    console.log(user);
     if (type === "USER") {
       async function addUser(user) {
         try {
@@ -68,7 +70,7 @@ const LoginForm = ({ setUser }) => {
           style={{ width: 200 }}
         >
           <option value="">User Type:</option>
-          <option value="BUYER">Buyer/Renter</option>
+          <option value="USER">Buyer/Renter</option>
           <option value="BROKER">Broker</option>
         </select>
 

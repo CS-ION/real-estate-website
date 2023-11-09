@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import axios from "axios";
 import "../App.css";
 import "./Property.css";
 
-const ViewingForm = ({ setViewForm, brokerEmail, setBrokerEmail }) => {
+const ViewingForm = ({ user, setViewForm, houseId, setHouseId }) => {
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
+  const [email, setEmail] = useState("");
   const [selectedDays, setSelectedDays] = useState("");
   const [description, setDescription] = useState("");
 
@@ -20,14 +22,14 @@ const ViewingForm = ({ setViewForm, brokerEmail, setBrokerEmail }) => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    // Integrate with Email API to send brokerEmail
-    console.log(brokerEmail);
 
+    const isEmailValid = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
     const errors = {};
 
     if (
       fname === "" ||
       lname === "" ||
+      email === "" ||
       description === "" ||
       !selectedDays.length
     ) {
@@ -36,14 +38,38 @@ const ViewingForm = ({ setViewForm, brokerEmail, setBrokerEmail }) => {
     if (description.length > 300) {
       errors.description = "Description must be 300 characters or less";
     }
+    if (!isEmailValid.test(email)) {
+      errors.email = "Enter valid email address";
+    }
     if (Object.keys(errors).length > 0) {
       alert("Validation errors: " + Object.values(errors).join("\n"));
       return;
     }
 
-    setBrokerEmail("");
+    const messageBody = {
+      userFirstName: fname,
+      userLastName: lname,
+      userEmail: email,
+      availability_description: description,
+      availability: selectedDays,
+    };
+
+    async function sentViewingRequest() {
+      try {
+        const response = await axios.post(
+          "http://localhost:8080/api/users//request-viewing/${user.id}/${houseId}",
+          messageBody
+        );
+        alert("Request Sent");
+      } catch (error) {
+        alert("Error sending request!", error);
+      }
+    }
+
+    sentViewingRequest();
+
+    setHouseId("");
     setViewForm(false);
-    alert("Message Sent");
   };
 
   return (
@@ -67,6 +93,14 @@ const ViewingForm = ({ setViewForm, brokerEmail, setBrokerEmail }) => {
               placeholder="Last Name"
             />
           </div>
+
+          <input
+            className="email"
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email Address"
+          />
 
           <div className="days">
             <label>Select the days you are available:</label>
