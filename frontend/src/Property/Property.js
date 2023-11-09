@@ -138,7 +138,7 @@ const Property = () => {
         </div>
         <div className="sub-container-2">
           <select
-            className="province-name"
+            className="province"
             value={fProvince}
             onChange={(e) => setFProvince(e.target.value)}
           >
