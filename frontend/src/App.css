@@ -47,3 +47,13 @@ body {
 .nav-item a:hover {
   text-decoration: underline;
 }
+
+/* LOGIN REGISTER FORMS */
+
+.login-register {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  margin: 20px;
+}

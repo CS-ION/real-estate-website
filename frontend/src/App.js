@@ -4,8 +4,15 @@ import Broker from "./Broker/Broker";
 import Login from "./Account/LoginForm";
 import Register from "./Account/RegisterForm";
 import "./App.css";
+import { useState } from "react";
 
 function App() {
+  const [user, setUser] = useState(null);
+  const propertyRoutes =
+    user !== null ? <Route path="Property" element={<Property />} /> : null;
+  const brokerRoutes =
+    user !== null ? <Route path="Broker" element={<Broker />} /> : null;
+
   return (
     <div className="app-container">
       <nav className="navbar">
@@ -16,20 +23,20 @@ function App() {
           <li className="nav-item">
             <Link to="Broker">Broker</Link>
           </li>
-          <li className="nav-item">
-            <Link to="Login">Login</Link>
-          </li>
-          <li className="nav-item">
-            <Link to="Register">Register</Link>
-          </li>
           {/* Add more navigation items here */}
         </ul>
       </nav>
+
+      {user === null ? (
+        <div className="login-register">
+          <Login />
+          <Register />
+        </div>
+      ) : null}
+
       <Routes>
-        <Route path="Property" element={<Property />} />
-        <Route path="Broker" element={<Broker />} />
-        <Route path="Login" element={<Login />} />
-        <Route path="Register" element={<Register />} />
+        {propertyRoutes}
+        {brokerRoutes}
         {/* Add more routes for other components */}
       </Routes>
     </div>

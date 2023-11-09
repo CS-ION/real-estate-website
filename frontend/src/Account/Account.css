@@ -13,6 +13,14 @@
   border-radius: 50px;
 }
 
+.form-contents-login {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin: 10px;
+}
+
+.form-contents-login input,
 .form-contents input {
   background-color: rgb(228, 210, 187);
   border: 4px solid chocolate;
