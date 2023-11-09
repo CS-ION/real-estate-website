@@ -1,13 +1,20 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Account.css";
 
-const LoginForm = () => {
+const LoginForm = ({ setUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    // Integrate with Email API to send brokerEmail
+    const user = {
+      email: email,
+      password: password,
+    };
+    setUser(user);
+    navigate("/Property");
   };
 
   return (

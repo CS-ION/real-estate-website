@@ -1,6 +1,7 @@
 /* LOGIN FORM */
 
-.login-viewing-form {
+.login-viewing-form,
+.create-acc-form {
   background-color: rgb(219, 196, 163);
   margin-top: 60px;
   padding: 16px 30px;

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Account.css";
 
-const RegisterForm = () => {
+const RegisterForm = ({ setUser }) => {
   const [type, setType] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,6 +14,8 @@ const RegisterForm = () => {
   const [description, setDescription] = useState("");
 
   const descriptionLength = description.length;
+
+  const navigate = useNavigate();
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -47,16 +50,7 @@ const RegisterForm = () => {
         errors.password = "Password must be greater than 6 characters";
       }
     } else if (type === "BUYER") {
-      if (
-        fname === "" ||
-        lname === "" ||
-        email === "" ||
-        phone === "" ||
-        city === "" ||
-        province === "" ||
-        description === "" ||
-        password === ""
-      ) {
+      if (fname === "" || lname === "" || email === "" || password === "") {
         errors.requiredFields = "All fields are mandatory";
       }
       if (!isEmailValid.test(email)) {
@@ -74,11 +68,33 @@ const RegisterForm = () => {
       return;
     }
 
+    const userObject = {};
+
+    if (type === "BUYER") {
+      userObject.email = email;
+      userObject.password = password;
+      userObject.first_name = fname;
+      userObject.last_name = lname;
+    } else if (type === "BROKER") {
+      userObject.firstName = fname;
+      userObject.lastName = lname;
+      userObject.email = email;
+      userObject.phoneNumber = phone;
+      userObject.location = {
+        city: city,
+        province: province,
+      };
+      userObject.broker_description = description;
+    }
+
+    setUser(userObject);
+    navigate("/Property");
+
     // Integrate with Email API to send brokerEmail
   };
 
   return (
-    <form className="login-viewing-form" onSubmit={handleFormSubmit}>
+    <form className="create-acc-form" onSubmit={handleFormSubmit}>
       <div className="form-contents">
         <select
           className="province-name"

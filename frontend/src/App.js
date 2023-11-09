@@ -29,8 +29,8 @@ function App() {
 
       {user === null ? (
         <div className="login-register">
-          <Login />
-          <Register />
+          <Login setUser={setUser} />
+          <Register setUser={setUser} />
         </div>
       ) : null}
 
