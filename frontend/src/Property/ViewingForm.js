@@ -47,17 +47,20 @@ const ViewingForm = ({ user, setViewForm, houseId, setHouseId }) => {
     }
 
     const messageBody = {
-      userFirstName: fname,
-      userLastName: lname,
-      userEmail: email,
+      first_name: fname,
+      last_Name: lname,
+      email: email,
       availability_description: description,
       availability: selectedDays,
     };
 
     async function sentViewingRequest() {
       try {
+        console.log(messageBody);
+        console.log(user.id);
+        console.log(houseId);
         const response = await axios.post(
-          "http://localhost:8080/api/users//request-viewing/${user.id}/${houseId}",
+          `http://localhost:8080/api/users/request-viewing/${user.id}/${houseId}`,
           messageBody
         );
         alert("Request Sent");
