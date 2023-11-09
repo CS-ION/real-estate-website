@@ -31,8 +31,7 @@ public class SecurityConfiguration {
                         auth.requestMatchers(new AntPathRequestMatcher("/api/auth/**")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/api/users/**")).hasAuthority("USER")
                                 .requestMatchers(new AntPathRequestMatcher("/api/brokers/**")).hasAuthority("BROKER")
-                                .requestMatchers(new AntPathRequestMatcher("/api/houses/**"))
-                                .hasAnyAuthority("USER", "BROKER")
+                                .requestMatchers(new AntPathRequestMatcher("/api/houses/**")).permitAll()
 
                                 .anyRequest().authenticated()
 
