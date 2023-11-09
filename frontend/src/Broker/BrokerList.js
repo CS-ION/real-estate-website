@@ -1,7 +1,13 @@
 import React from "react";
+import axios from "axios";
 import "./Broker.css";
 
-const BrokerList = ({ brokers, setShowForm, setBrokerToBeUpdated }) => {
+const BrokerList = ({
+  brokers,
+  setShowForm,
+  setBrokerToBeUpdated,
+  setCrud,
+}) => {
   if (brokers.length === 0) {
     return <p>No Brokers to Display!!</p>;
   }
@@ -10,17 +16,19 @@ const BrokerList = ({ brokers, setShowForm, setBrokerToBeUpdated }) => {
       <ul className="broker-list">
         {brokers.map((broker) => (
           <Broker
-            key={broker.id}
-            id={broker.id}
-            fname={broker.fname}
-            lname={broker.lname}
-            city={broker.city}
-            province={broker.province}
+            key={broker.brokerId}
+            broker={broker}
+            id={broker.brokerId}
+            fname={broker.firstName}
+            lname={broker.lastName}
+            city={broker.location.city}
+            province={broker.location.province}
             email={broker.email}
-            phone={broker.phone}
-            description={broker.description}
+            phone={broker.phoneNumber}
+            description={broker.broker_description}
             setShowForm={setShowForm}
             setBrokerToBeUpdated={setBrokerToBeUpdated}
+            setCrud={setCrud}
           />
         ))}
       </ul>
@@ -30,6 +38,7 @@ const BrokerList = ({ brokers, setShowForm, setBrokerToBeUpdated }) => {
 
 function Broker({
   id,
+  broker,
   fname,
   lname,
   city,
@@ -39,53 +48,24 @@ function Broker({
   description,
   setShowForm,
   setBrokerToBeUpdated,
+  setCrud,
 }) {
-  const handleDelete = () => {
-    alert("Deleted Broker with ID " + id);
-    /* WILL IMPLEMENT WHEN INTEGRATED WITH BACKEND
-    // Send a delete request to the backend
-    fetch(`/api/properties/${propertyId}`, {
-      method: "DELETE",
-    })
-      .then((response) => {
-        if (response.ok) {
-          // Property successfully deleted, update the UI
-          // You can remove the property from the local state or re-fetch the updated property list.
-        } else {
-          // Handle errors, e.g., show an error message to the user
-        }
-      })
-      .catch((error) => {
-        // Handle network or other errors
-      });*/
+  const handleDelete = (brokerId) => {
+    async function deleteBrokers() {
+      try {
+        const response = await axios.delete(
+          `http://localhost:8080/api/brokers/delete-broker/${brokerId}`
+        );
+        setCrud((crud) => !crud);
+      } catch (error) {
+        alert("Cannot Delete Broker! " + error);
+      }
+    }
+    deleteBrokers();
+    alert("Deleted Broker with ID " + brokerId);
   };
   const handleUpdate = () => {
-    setBrokerToBeUpdated({
-      id: id,
-      fname: fname,
-      lname: lname,
-      city: city,
-      province: province,
-      email: email,
-      phone: phone,
-      description: description,
-    });
-    console.log(
-      JSON.stringify(
-        {
-          id: id,
-          fname: fname,
-          lname: lname,
-          city: city,
-          province: province,
-          email: email,
-          phone: phone,
-          description: description,
-        },
-        null,
-        2
-      )
-    );
+    setBrokerToBeUpdated(broker);
     setShowForm(true);
     window.scrollTo({
       top: 0,
@@ -116,7 +96,7 @@ function Broker({
         <button className="update" onClick={handleUpdate}>
           Update
         </button>
-        <button className="delete" onClick={handleDelete}>
+        <button className="delete" onClick={() => handleDelete(id)}>
           Delete
         </button>
       </div>

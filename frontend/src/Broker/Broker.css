@@ -327,3 +327,55 @@ textarea::placeholder {
     rgb(202, 110, 110)
   );
 }
+
+/* FILTER CONTAINER */
+.bfilter-container {
+  background-color: #b8b8b8;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  margin-left: 140px;
+  margin-right: 140px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 50px;
+}
+
+.bfilter-container input,
+.bfilter-container select {
+  background-color: rgb(228, 210, 187);
+  border: 2px solid chocolate;
+  border-radius: 5px;
+  color: black;
+  font-weight: bold;
+  font-size: 24px;
+  padding: 5px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.bfilter-container button {
+  background-image: linear-gradient(
+    135deg,
+    rgb(106, 233, 255),
+    rgb(222, 240, 213),
+    rgb(109, 255, 109),
+    rgb(241, 255, 50)
+  );
+  cursor: pointer;
+  border: 2px solid rgb(86, 37, 2);
+  border-radius: 20px;
+  padding: 5px;
+  font-family: "Coiny", sans-serif;
+  text-transform: uppercase;
+  font-size: 20px;
+  padding: 10px;
+  transition: 0.3s;
+}
+
+.bfilter-container button:hover {
+  transform: scale(1.05);
+}

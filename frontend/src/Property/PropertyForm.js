@@ -4,7 +4,6 @@ import "./Property.css";
 
 const PropertyForm = ({
   setShowForm,
-  setProperties,
   propertyToBeUpdated,
   setPropertyToBeUpdated,
   setCrud,
@@ -24,7 +23,7 @@ const PropertyForm = ({
   const [bedrooms, setBedrooms] = useState(1);
 
   useEffect(() => {
-    if (type !== "Condo" && type !== "Apartment") {
+    if (type !== "CONDO" && type !== "APARTMENT") {
       setUnitNumber("");
     }
   }, [type]);
@@ -34,16 +33,16 @@ const PropertyForm = ({
       setStatus(propertyToBeUpdated.status);
       setType(propertyToBeUpdated.type);
       setUnitNumber(propertyToBeUpdated.unitNumber);
-      setStreetNumber(propertyToBeUpdated.streetNumber);
-      setStreetName(propertyToBeUpdated.streetName);
-      setCity(propertyToBeUpdated.city);
-      setProvince(propertyToBeUpdated.province);
-      setPostalCode(propertyToBeUpdated.postalCode);
-      setDescription(propertyToBeUpdated.description);
+      setStreetNumber(propertyToBeUpdated.address.streetNumber);
+      setStreetName(propertyToBeUpdated.address.street);
+      setCity(propertyToBeUpdated.address.city);
+      setProvince(propertyToBeUpdated.address.province);
+      setPostalCode(propertyToBeUpdated.address.postalCode);
+      setDescription(propertyToBeUpdated.house_description);
       setSquareFeet(propertyToBeUpdated.area);
       setPrice(propertyToBeUpdated.price);
-      setBathrooms(propertyToBeUpdated.bathrooms);
-      setBedrooms(propertyToBeUpdated.bedrooms);
+      setBathrooms(propertyToBeUpdated.numberOfBathrooms);
+      setBedrooms(propertyToBeUpdated.numberOfBedrooms);
     }
   }, [propertyToBeUpdated]);
 
@@ -52,7 +51,7 @@ const PropertyForm = ({
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    const isPostalCodeValid = /^[A-Z]\d{1}[A-Z]-\d{1}[A-Z]\d{1}$/;
+    const isPostalCodeValid = /^[A-Z]\d{1}[A-Z] \d{1}[A-Z]\d{1}$/;
     const isNumber = /^\d+$/;
     const errors = {};
 
@@ -71,7 +70,7 @@ const PropertyForm = ({
       errors.requiredFields = "All fields are mandatory";
     }
     if (
-      type !== "House" &&
+      type !== "HOUSE" &&
       (!unitNumber ||
         !isNumber.test(unitNumber) ||
         parseInt(unitNumber, 10) <= 0)
@@ -102,32 +101,32 @@ const PropertyForm = ({
     //Will Add broker when registration is implemented
     //Will add viewing requests when integrated better with project
     const newProperty = {
-      id: propertyToBeUpdated ? propertyToBeUpdated.id : null,
       status: status,
       type: type,
       unitNumber: unitNumber === "" ? null : unitNumber,
       address: {
         streetNumber: streetNumber,
-        streetName: streetName,
+        street: streetName,
         city: city,
         province: province,
         postalCode: postalCode,
       },
-      description: description,
+      house_description: description,
       area: squareFeet,
       price: price,
-      bathrooms: bathrooms,
-      bedrooms: bedrooms,
+      numberOfBathrooms: bathrooms,
+      numberOfBedrooms: bedrooms,
     };
 
     if (propertyToBeUpdated) {
+      newProperty.houseId = propertyToBeUpdated.houseId;
       async function updateProperties() {
         try {
           const response = await axios.put(
-            "http://localhost:8080/api/houses/house-update",
+            "http://localhost:8080/api/houses/house-update/",
             newProperty
           );
-          setProperties(response.data);
+          setCrud(response.data);
         } catch (error) {
           alert("Cannot Update Property! " + error);
         }
@@ -138,10 +137,10 @@ const PropertyForm = ({
       async function addProperties() {
         try {
           const response = await axios.post(
-            "http://localhost:8080/api/houses/add-house",
+            "http://localhost:8080/api/houses/add-house/2",
             newProperty
           );
-          setProperties(response.data);
+          setCrud(response.data);
         } catch (error) {
           alert("Cannot Add Property! " + error);
         }
@@ -160,15 +159,15 @@ const PropertyForm = ({
           <div className="status-type">
             <select value={status} onChange={(e) => setStatus(e.target.value)}>
               <option value="">Choose Status:</option>
-              <option value="For Sale">For Sale</option>
-              <option value="To Lease">To Lease</option>
+              <option value="FOR_SALE">For Sale</option>
+              <option value="TO_LEASE">To Lease</option>
             </select>
 
             <select value={type} onChange={(e) => setType(e.target.value)}>
               <option value="">Choose Type:</option>
-              <option value="Condo">Condo</option>
-              <option value="Apartment">Apartment</option>
-              <option value="House">House</option>
+              <option value="CONDO">Condo</option>
+              <option value="APARTMENT">Apartment</option>
+              <option value="HOUSE">House</option>
             </select>
           </div>
 
@@ -179,7 +178,7 @@ const PropertyForm = ({
               value={unitNumber}
               onChange={(e) => setUnitNumber(e.target.value)}
               placeholder="Unit #"
-              disabled={type !== "Condo" && type !== "Apartment"}
+              disabled={type !== "CONDO" && type !== "APARTMENT"}
             />
 
             <input

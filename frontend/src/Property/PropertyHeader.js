@@ -32,7 +32,6 @@ const PropertyHeader = ({
         {showForm || propertyToBeUpdated ? (
           <PropertyForm
             setShowForm={setShowForm}
-            setProperties={setProperties}
             propertyToBeUpdated={propertyToBeUpdated}
             setPropertyToBeUpdated={setPropertyToBeUpdated}
             setCrud={setCrud}

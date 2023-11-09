@@ -1,9 +1,18 @@
 import { Link, Route, Routes } from "react-router-dom";
 import Property from "./Property/Property";
 import Broker from "./Broker/Broker";
+import Login from "./Account/LoginForm";
+import Register from "./Account/RegisterForm";
 import "./App.css";
+import { useState } from "react";
 
 function App() {
+  const [user, setUser] = useState(null);
+  const propertyRoutes =
+    user !== null ? <Route path="Property" element={<Property />} /> : null;
+  const brokerRoutes =
+    user !== null ? <Route path="Broker" element={<Broker />} /> : null;
+
   return (
     <div className="app-container">
       <nav className="navbar">
@@ -17,9 +26,17 @@ function App() {
           {/* Add more navigation items here */}
         </ul>
       </nav>
+
+      {user === null ? (
+        <div className="login-register">
+          <Login setUser={setUser} />
+          <Register setUser={setUser} />
+        </div>
+      ) : null}
+
       <Routes>
-        <Route path="Property" element={<Property />} />
-        <Route path="Broker" element={<Broker />} />
+        {propertyRoutes}
+        {brokerRoutes}
         {/* Add more routes for other components */}
       </Routes>
     </div>
