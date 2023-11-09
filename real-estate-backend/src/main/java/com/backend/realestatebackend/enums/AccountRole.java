@@ -1,2 +1,6 @@
-package com.backend.realestatebackend.enums;public enum AccountRole {
+package com.backend.realestatebackend.enums;
+
+public enum AccountRole {
+    USER,
+    BROKER
 }

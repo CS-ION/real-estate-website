@@ -1,42 +1,41 @@
 package com.backend.realestatebackend.model;
 
+import com.backend.realestatebackend.enums.AccountRole;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Broker {
+@Builder
+public class Broker implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "broker_id")
     private Long brokerId;
 
-    @NotBlank
+
     @Size(min = 2, max = 50)
     @Column(name = "first_name")
     private String firstName;
 
-    @NotBlank
+
     @Size(min = 2, max = 50)
     @Column(name = "last_name")
     private String lastName;
 
-    @Pattern(regexp = "^(\\+\\d{1,3}[-.\\s]?)?\\(\\d{1,4}\\)[-.\s]?\\d{1,4}[-.\\s]?\\d{1,9}$")
+    //@Pattern(regexp = "^(\\+\\d{1,3}[-.\\s]?)?\\(\\d{1,4}\\)[-.\s]?\\d{1,4}[-.\\s]?\\d{1,9}$")
     @Column(name = "phone_number")
     private String phoneNumber;
 
@@ -48,7 +47,6 @@ public class Broker {
     private String broker_description;
 
     @Embedded
-    @NotNull
     @Valid
     private Location location;
 
@@ -64,6 +62,12 @@ public class Broker {
     )
     private Set<ViewingRequest> viewingRequests = new HashSet<>();
 
+    @Column(name = "role")
+    @JsonIgnore
+    private AccountRole role = AccountRole.BROKER;
+
+    private String password;
+
 
     @Override
     public boolean equals(Object obj) {
@@ -71,5 +75,35 @@ public class Broker {
         if (obj == null || getClass() != obj.getClass()) return false;
         Broker otherBroker = (Broker) obj;
         return this.brokerId.equals(otherBroker.brokerId);
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

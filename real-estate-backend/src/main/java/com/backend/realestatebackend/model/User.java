@@ -1,14 +1,22 @@
 package com.backend.realestatebackend.model;
 
+import com.backend.realestatebackend.enums.AccountRole;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,27 +24,29 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+@Builder
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
 
-    @NotBlank
-    @NotNull
+
     @Column(name = "first_name")
     private String first_name;
 
-    @NotBlank
-    @NotNull
+
     @Column(name = "last_name")
     private String last_name;
 
     @Email(message = "Not a valid email")
     @Column(name = "user_email")
-    @NotNull
     private String email;
+
+    private String password;
+
+
 
     @ManyToMany
     @JoinTable(
@@ -53,4 +63,39 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "viewing_request_id")
     )
     private Set<ViewingRequest> viewingRequests = new HashSet<>();
+
+    @Column(name = "role")
+    @JsonIgnore
+    @Enumerated(EnumType.STRING)
+    private AccountRole role = AccountRole.USER;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

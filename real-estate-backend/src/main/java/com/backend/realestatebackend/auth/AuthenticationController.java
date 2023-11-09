@@ -1,4 +1,4 @@
-package com.backend.realestatebackend.controller;
+package com.backend.realestatebackend.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -11,17 +11,35 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
-    @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody RegisterRequest request
-    ){
 
+    private final AuthenticationService authenticationService;
+    @PostMapping("/register-user")
+    public ResponseEntity<AuthenticationReponse> registerUser(
+            @RequestBody RegisterRequestUser request
+    ){
+        return ResponseEntity.ok(authenticationService.registerUser(request));
     }
 
-    @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> register(
+    @PostMapping("/authenticate-user")
+    public ResponseEntity<AuthenticationReponse> authenticateUser(
             @RequestBody AuthenticationRequest request
     ){
-
+        return ResponseEntity.ok(authenticationService.authenticateUser(request));
     }
+
+    @PostMapping("/register-broker")
+    public ResponseEntity<AuthenticationReponse> registerBroker(
+            @RequestBody RegisterRequestBroker request
+    ){
+        return ResponseEntity.ok(authenticationService.registerBroker(request));
+    }
+
+    @PostMapping("/authenticate-broker")
+    public ResponseEntity<AuthenticationReponse> authenticateBroker(
+            @RequestBody AuthenticationRequest request
+    ){
+        return ResponseEntity.ok(authenticationService.authenticateBroker(request));
+    }
+
+
 }
