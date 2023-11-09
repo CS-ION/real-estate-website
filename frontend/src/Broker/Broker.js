@@ -1,63 +1,115 @@
 import "../App.css";
 import "./Broker.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import BrokerHeader from "./BrokerHeader";
 import BrokerList from "./BrokerList";
 
 const Broker = () => {
-  const [brokers, setBrokers] = useState([
-    {
-      id: "B28299",
-      fname: "Bola",
-      lname: "Ghattas",
-      city: "Montreal",
-      province: "Quebec",
-      phone: "514-456-7890",
-      email: "bola@gmail.com",
-      description:
-        "I am a very enamoured real estate dealer with various properties",
-    },
-    {
-      id: "B28269",
-      fname: "Dhingra",
-      lname: "Dingu",
-      city: "Montreal",
-      province: "Quebec",
-      phone: "514-496-7888",
-      email: "dhingra@gmail.com",
-      description:
-        "I am a very enamoured real estate dealer with various properties",
-    },
-    {
-      id: "B26299",
-      fname: "Ivan",
-      lname: "Ghattas",
-      city: "Montreal",
-      province: "Quebec",
-      phone: "514-667-7890",
-      email: "ivan@gmail.com",
-      description:
-        "I am a very enamoured real estate dealer with various properties",
-    },
-  ]);
+  const [brokers, setBrokers] = useState([]);
   const [brokerToBeUpdated, setBrokerToBeUpdated] = useState(null);
   const [showForm, setShowForm] = useState(false);
-  const addBroker = (newBroker) => {
-    setBrokers([...brokers, newBroker]);
+  const [crud, setCrud] = useState(false);
+  // Filter criteria states
+  const [fBrokers, setFBrokers] = useState([]);
+  const [fCity, setFCity] = useState("");
+  const [fProvince, setFProvince] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (fProvince === "" && fCity === "") {
+      alert("Please Enter Correct Filers");
+      return;
+    }
+
+    if (fProvince != "" && fCity != "") {
+      setFBrokers(
+        brokers.filter((broker) => {
+          return (
+            broker.location.province === fProvince &&
+            broker.location.city === fCity
+          );
+        })
+      );
+    } else if (fProvince != "") {
+      setFBrokers(
+        brokers.filter((broker) => {
+          return broker.location.province === fProvince;
+        })
+      );
+    } else if (fCity != "") {
+      setFBrokers(
+        brokers.filter((broker) => {
+          return broker.location.city === fCity;
+        })
+      );
+    }
   };
+
+  useEffect(() => {
+    async function getBrokers() {
+      try {
+        const response = await axios.get(
+          "http://localhost:8080/api/brokers/all-brokers"
+        );
+        setBrokers(response.data);
+        setFBrokers(response.data);
+      } catch (error) {
+        alert("Cannot Load Data! " + error);
+      }
+    }
+    getBrokers();
+  }, [crud]);
+
   return (
     <div className="mainframe">
       <BrokerHeader
         showForm={showForm}
         setShowForm={setShowForm}
-        addBroker={addBroker}
         brokerToBeUpdated={brokerToBeUpdated}
         setBrokerToBeUpdated={setBrokerToBeUpdated}
+        setCrud={setCrud}
       />
+      <form className="bfilter-container">
+        <input
+          className="city-name"
+          type="text"
+          value={fCity}
+          onChange={(e) => setFCity(e.target.value)}
+          placeholder="City"
+        />
+
+        <select
+          className="province-name"
+          value={fProvince}
+          onChange={(e) => setFProvince(e.target.value)}
+        >
+          <option value="">Province:</option>
+          <option value="Ontario">Ontario</option>
+          <option value="Quebec">Quebec</option>
+          <option value="Nova Scotia">Nova Scotia</option>
+          <option value="Manitoba">Manitoba</option>
+          <option value="British Columbia">British Columbia</option>
+          <option value="Prince Edward Island">Prince Edward Island</option>
+          <option value="Saskatchewan">Saskatchewan</option>
+          <option value="Alberta">Alberta</option>
+          <option value="Newfoundland and Labrador">
+            Newfoundland and Labrador
+          </option>
+          <option value="Northwest Territories">Northwest Territories</option>
+          <option value="Yukon">Yukon</option>
+          <option value="Nunavut">Nunavut</option>
+        </select>
+
+        <button onClick={handleSubmit}>Apply Filters</button>
+        <button onClick={() => setFBrokers(brokers)}>All Brokers</button>
+      </form>
       <BrokerList
-        brokers={brokers}
+        brokers={fBrokers}
         setShowForm={setShowForm}
         setBrokerToBeUpdated={setBrokerToBeUpdated}
+        setCrud={setCrud}
       />
     </div>
   );

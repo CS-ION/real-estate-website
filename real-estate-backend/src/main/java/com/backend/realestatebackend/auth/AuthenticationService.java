@@ -39,8 +39,7 @@ public class AuthenticationService {
                 .role(AccountRole.USER)
                 .build();
         User user2 = repository.save(user);
-        System.out.println(user2);
-        var jwtToken = jwtService.generateToken(user);
+        var jwtToken = jwtService.generateToken(user2.getId(),user2.getRole().toString(),user);
         return AuthenticationReponse.builder().token(jwtToken).build();
     }
 
@@ -57,8 +56,8 @@ public class AuthenticationService {
                 .viewingRequests(new HashSet<>())
                 .role(AccountRole.BROKER)
                 .build();
-        brokerRepository.save(broker);
-        var jwtToken = jwtService.generateToken(broker);
+        Broker broker2 = brokerRepository.save(broker);
+        var jwtToken = jwtService.generateToken(broker2.getBrokerId(),broker2.getRole().toString(),broker);
         return AuthenticationReponse.builder().token(jwtToken).build();
     }
 
@@ -68,7 +67,7 @@ public class AuthenticationService {
                 authenticationRequest.getPassword()
         ));
         var user = repository.findByEmail(authenticationRequest.getEmail()).orElseThrow();
-        var jwtToken = jwtService.generateToken(user);
+        var jwtToken = jwtService.generateToken(user.getId(),user.getRole().toString(),user);
         return AuthenticationReponse.builder().token(jwtToken).build();
     }
     public AuthenticationReponse authenticateBroker(AuthenticationRequest authenticationRequest){
@@ -78,7 +77,7 @@ public class AuthenticationService {
         ));
         System.out.println(authenticationRequest.getEmail());
         var broker = brokerRepository.findByEmail(authenticationRequest.getEmail()).orElseThrow();
-        var jwtToken = jwtService.generateToken(broker);
+        var jwtToken = jwtService.generateToken(broker.getBrokerId(),broker.getRole().toString(),broker);
         return AuthenticationReponse.builder().token(jwtToken).build();
     }
 }

@@ -5,9 +5,9 @@ import BrokerForm from "./BrokerForm";
 const BrokerHeader = ({
   showForm,
   setShowForm,
-  addBroker,
   brokerToBeUpdated,
   setBrokerToBeUpdated,
+  setCrud,
 }) => {
   return (
     <div className="broker-listing-header">
@@ -27,9 +27,9 @@ const BrokerHeader = ({
         {showForm || brokerToBeUpdated ? (
           <BrokerForm
             setShowForm={setShowForm}
-            addBroker={addBroker}
             brokerToBeUpdated={brokerToBeUpdated}
             setBrokerToBeUpdated={setBrokerToBeUpdated}
+            setCrud={setCrud}
           />
         ) : null}
       </div>
