@@ -5,7 +5,7 @@ import axios from "axios";
 import BrokerHeader from "./BrokerHeader";
 import BrokerList from "./BrokerList";
 
-const Broker = () => {
+const Broker = ({ user }) => {
   const [brokers, setBrokers] = useState([]);
   const [brokerToBeUpdated, setBrokerToBeUpdated] = useState(null);
   const [showForm, setShowForm] = useState(false);
@@ -65,6 +65,7 @@ const Broker = () => {
   return (
     <div className="mainframe">
       <BrokerHeader
+        user={user}
         showForm={showForm}
         setShowForm={setShowForm}
         brokerToBeUpdated={brokerToBeUpdated}
@@ -106,6 +107,7 @@ const Broker = () => {
         <button onClick={() => setFBrokers(brokers)}>All Brokers</button>
       </form>
       <BrokerList
+        user={user}
         brokers={fBrokers}
         setShowForm={setShowForm}
         setBrokerToBeUpdated={setBrokerToBeUpdated}

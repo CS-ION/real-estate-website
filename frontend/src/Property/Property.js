@@ -5,7 +5,7 @@ import axios from "axios";
 import PropertyHeader from "./PropertyHeader";
 import PropertyList from "./PropertyList";
 
-const Property = () => {
+const Property = ({ user }) => {
   const [properties, setProperties] = useState([]);
   const [propertyToBeUpdated, setPropertyToBeUpdated] = useState(null);
   const [showForm, setShowForm] = useState(false);
@@ -23,6 +23,8 @@ const Property = () => {
   const [fType, setFType] = useState(null);
   const [fStatus, setFStatus] = useState(null);
   const [fStreetNumber, setFStreetNumber] = useState(null);
+
+  console.log(user);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -122,6 +124,7 @@ const Property = () => {
   return (
     <div className="mainframe">
       <PropertyHeader
+        user={user}
         showForm={showForm}
         setShowForm={setShowForm}
         propertyToBeUpdated={propertyToBeUpdated}
@@ -129,7 +132,7 @@ const Property = () => {
         setShowViewForm={setShowViewForm}
         setCrud={setCrud}
       />
-      <form className="filter-container" onSubmit={handleSubmit}>
+      <form className="filter-container">
         <div className="sub-container-1">
           <select value={fStatus} onChange={(e) => setFStatus(e.target.value)}>
             <option value="">Choose Status:</option>
@@ -217,9 +220,13 @@ const Property = () => {
             onChange={(e) => setFBathrooms(e.target.value)}
           />
         </div>
-        <button type="Submit">Apply Filters</button>
+        <button onClick={handleSubmit}>Apply Filters</button>
+        <button onClick={() => setDisplayProperties(properties)}>
+          All Properties
+        </button>
       </form>
       <PropertyList
+        user={user}
         properties={displayProperties}
         setShowForm={setShowForm}
         setPropertyToBeUpdated={setPropertyToBeUpdated}

@@ -3,6 +3,7 @@ import "./Broker.css";
 import BrokerForm from "./BrokerForm";
 
 const BrokerHeader = ({
+  user,
   showForm,
   setShowForm,
   brokerToBeUpdated,
@@ -16,6 +17,10 @@ const BrokerHeader = ({
         <button
           className="showForm"
           onClick={() => {
+            if (user.role === "USER") {
+              alert("Unauthorized to add brokers!");
+              return;
+            }
             setShowForm((show) => !show);
             setBrokerToBeUpdated(null);
           }}

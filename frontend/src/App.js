@@ -9,9 +9,13 @@ import { useState } from "react";
 function App() {
   const [user, setUser] = useState(null);
   const propertyRoutes =
-    user !== null ? <Route path="Property" element={<Property />} /> : null;
+    user !== null ? (
+      <Route path="Property" element={<Property user={user} />} />
+    ) : null;
   const brokerRoutes =
-    user !== null ? <Route path="Broker" element={<Broker />} /> : null;
+    user !== null ? (
+      <Route path="Broker" element={<Broker user={user} />} />
+    ) : null;
 
   return (
     <div className="app-container">

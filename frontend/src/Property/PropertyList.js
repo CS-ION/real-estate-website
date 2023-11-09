@@ -10,6 +10,7 @@ const TYPE = [
 ];
 
 const PropertyList = ({
+  user,
   properties,
   setShowForm,
   setPropertyToBeUpdated,
@@ -34,6 +35,7 @@ const PropertyList = ({
         {properties.map((property) => (
           <Property
             key={property.id}
+            user={user}
             property={property}
             id={property.houseId}
             unitNumber={property.unitNumber}
@@ -64,6 +66,7 @@ const PropertyList = ({
 
 function Property({
   id,
+  user,
   property,
   unitNumber,
   streetNumber,
@@ -86,6 +89,10 @@ function Property({
   setCrud,
 }) {
   const handleDelete = (propertyId) => {
+    if (user.role === "USER") {
+      alert("Unauthorized to update properties!");
+      return;
+    }
     async function deleteProperties() {
       try {
         const response = await axios.delete(
@@ -100,6 +107,10 @@ function Property({
     alert("Deleted Property with ID " + propertyId);
   };
   const handleUpdate = () => {
+    if (user.role === "USER") {
+      alert("Unauthorized to delete properties!");
+      return;
+    }
     setPropertyToBeUpdated(property);
     setShowViewForm(false);
     setShowForm(true);

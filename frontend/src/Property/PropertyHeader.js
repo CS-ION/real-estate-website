@@ -3,9 +3,9 @@ import "./Property.css";
 import PropertyForm from "./PropertyForm";
 
 const PropertyHeader = ({
+  user,
   showForm,
   setShowForm,
-  setProperties,
   propertyToBeUpdated,
   setPropertyToBeUpdated,
   setShowViewForm,
@@ -18,6 +18,10 @@ const PropertyHeader = ({
         <button
           className="showForm"
           onClick={() => {
+            if (user.role === "USER") {
+              alert("Unauthorized to add properties!");
+              return;
+            }
             setShowForm((show) => !show);
             if (!showForm) {
               setShowViewForm(false);
