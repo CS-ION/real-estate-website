@@ -12,16 +12,16 @@ const Property = () => {
   const [showViewForm, setShowViewForm] = useState(false);
   const [crud, setCrud] = useState(false);
   // Filter criteria states
-  const [minPrice, setMinPrice] = useState("");
-  const [maxPrice, setMaxPrice] = useState("");
-  const [fStreetName, setFStreetName] = useState("");
-  const [fCity, setFCity] = useState("");
-  const [fProvince, setFProvince] = useState("");
-  const [fBedrooms, setFBedrooms] = useState("");
-  const [fBathrooms, setFBathrooms] = useState("");
-  const [fType, setFType] = useState("");
-  const [fStatus, setFStatus] = useState("");
-  const [fStreetNumber, setFStreetNumber] = useState("");
+  const [minPrice, setMinPrice] = useState(null);
+  const [maxPrice, setMaxPrice] = useState(null);
+  const [fStreetName, setFStreetName] = useState(null);
+  const [fCity, setFCity] = useState(null);
+  const [fProvince, setFProvince] = useState(null);
+  const [fBedrooms, setFBedrooms] = useState(null);
+  const [fBathrooms, setFBathrooms] = useState(null);
+  const [fType, setFType] = useState(null);
+  const [fStatus, setFStatus] = useState(null);
+  const [fStreetNumber, setFStreetNumber] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,27 +29,27 @@ const Property = () => {
     const isNumber = /^\d+$/;
     const errors = {};
 
-    if (fStreetNumber !== "") {
+    if (fStreetNumber !== null) {
       if (!isNumber.test(fStreetNumber) || parseInt(fStreetNumber, 10) <= 0) {
         errors.price = "Street Number must be a positive number";
       }
     }
-    if (minPrice !== "") {
+    if (minPrice !== null) {
       if (!isNumber.test(minPrice) || parseInt(minPrice, 10) <= 0) {
         errors.price = "Min Price must be a positive number";
       }
     }
-    if (maxPrice !== "") {
+    if (maxPrice !== null) {
       if (!isNumber.test(maxPrice) || parseInt(maxPrice, 10) <= 0) {
         errors.price = "Max Price must be a positive number";
       }
     }
-    if (fBathrooms !== "") {
+    if (fBathrooms !== null) {
       if (!isNumber.test(fBathrooms) || parseInt(fBathrooms, 10) < 1) {
         errors.price = "Bathroom must be a non-zero positive number";
       }
     }
-    if (fBedrooms !== "") {
+    if (fBedrooms !== null) {
       if (!isNumber.test(fBedrooms) || parseInt(fBedrooms, 10) < 1) {
         errors.price = "Bedroom must be a non-zero positive number";
       }
@@ -62,7 +62,7 @@ const Property = () => {
 
     async function filterProperties() {
       try {
-        const url = `http://localhost:8080/api/houses/filter?minPrice=${minPrice}&maxPrice=${maxPrice}&city=${fCity}&province=${fProvince}&bedrooms=${fBedrooms}&bathrooms=${fBathrooms}&type=${fType}&streetNumber=${fStreetNumber}&streetName=${fStreetName}`;
+        const url = `http://localhost:8080/api/houses/filter?minPrice=${minPrice}&maxPrice=${maxPrice}&city=${fCity}&province=${fProvince}&bedrooms=${fBedrooms}&bathrooms=${fBathrooms}&type=${fType}&streetNumber=${fStreetNumber}&street=${fStreetName}`;
         const response = await axios.get(url);
         setCrud(response.data);
       } catch (error) {
