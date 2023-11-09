@@ -32,7 +32,7 @@ const PropertyForm = ({
     if (propertyToBeUpdated) {
       setStatus(propertyToBeUpdated.status);
       setType(propertyToBeUpdated.type);
-      setUnitNumber(propertyToBeUpdated.unitNumber);
+      setUnitNumber(propertyToBeUpdated.unit);
       setStreetNumber(propertyToBeUpdated.address.streetNumber);
       setStreetName(propertyToBeUpdated.address.street);
       setCity(propertyToBeUpdated.address.city);
@@ -160,7 +160,7 @@ const PropertyForm = ({
             <select value={status} onChange={(e) => setStatus(e.target.value)}>
               <option value="">Choose Status:</option>
               <option value="FOR_SALE">For Sale</option>
-              <option value="TO_LEASE">To Lease</option>
+              <option value="FOR_LEASE">To Lease</option>
             </select>
 
             <select value={type} onChange={(e) => setType(e.target.value)}>
@@ -214,7 +214,7 @@ const PropertyForm = ({
             >
               <option value="">Province:</option>
               <option value="Ontario">Ontario</option>
-              <option value="Apartment">Quebec</option>
+              <option value="Quebec">Quebec</option>
               <option value="Nova Scotia">Nova Scotia</option>
               <option value="Manitoba">Manitoba</option>
               <option value="British Columbia">British Columbia</option>
