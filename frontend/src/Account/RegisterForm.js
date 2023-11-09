@@ -101,20 +101,36 @@ const RegisterForm = ({ setUser }) => {
 
       addUser(userObject);
     } else if (type === "BROKER") {
-      userObject.firstName = fname;
-      userObject.lastName = lname;
+      userObject.first_name = fname;
+      userObject.last_name = lname;
       userObject.email = email;
+      userObject.password = password;
       userObject.phoneNumber = phone;
       userObject.location = {
         city: city,
         province: province,
       };
       userObject.broker_description = description;
+
+      async function addBroker(userObject) {
+        try {
+          const response = await axios.post(
+            "http://localhost:8080/api/auth/register-broker",
+            userObject
+          );
+          const token = response.data.token;
+          const decodedToken = decodeJwt(token);
+          console.log("Decoded Token:", decodedToken);
+          setUser(decodedToken);
+        } catch (error) {
+          alert("Cannot register user", error);
+        }
+      }
+
+      addBroker(userObject);
     }
 
     navigate("/Property");
-
-    // Integrate with Email API to send brokerEmail
   };
 
   return (

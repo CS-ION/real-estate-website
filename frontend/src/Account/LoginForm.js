@@ -11,6 +11,7 @@ function decodeJwt(token) {
 }
 
 const LoginForm = ({ setUser }) => {
+  const [type, setType] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -21,28 +22,58 @@ const LoginForm = ({ setUser }) => {
       email: email,
       password: password,
     };
-
-    async function addUser(user) {
-      try {
-        const response = await axios.post(
-          "http://localhost:8080/api/auth/authenticate-user",
-          user
-        );
-        const token = response.data.token;
-        const decodedToken = decodeJwt(token);
-        console.log("Decoded Token:", decodedToken);
-        setUser(decodedToken);
-      } catch (error) {
-        alert("Cannot Login!", error);
+    if (type === "USER") {
+      async function addUser(user) {
+        try {
+          const response = await axios.post(
+            "http://localhost:8080/api/auth/authenticate-user",
+            user
+          );
+          const token = response.data.token;
+          const decodedToken = decodeJwt(token);
+          console.log("Decoded Token:", decodedToken);
+          setUser(decodedToken);
+        } catch (error) {
+          alert("Cannot Login!", error);
+        }
       }
+      addUser(user);
+    } else if (type === "BROKER") {
+      async function addBroker(user) {
+        try {
+          const response = await axios.post(
+            "http://localhost:8080/api/auth/authenticate-broker",
+            user
+          );
+          const token = response.data.token;
+          const decodedToken = decodeJwt(token);
+          console.log("Decoded Token:", decodedToken);
+          setUser(decodedToken);
+        } catch (error) {
+          alert("Cannot Login!", error);
+        }
+      }
+      addBroker(user);
+    } else {
+      alert("Cannot Login! Enter details correctly");
     }
-    addUser(user);
     navigate("/Property");
   };
 
   return (
     <form className="login-viewing-form" onSubmit={handleFormSubmit}>
       <div className="form-contents-login">
+        <select
+          className="province-name"
+          value={type}
+          onChange={(e) => setType(e.target.value)}
+          style={{ width: 200 }}
+        >
+          <option value="">User Type:</option>
+          <option value="BUYER">Buyer/Renter</option>
+          <option value="BROKER">Broker</option>
+        </select>
+
         <input
           className="email"
           type="text"

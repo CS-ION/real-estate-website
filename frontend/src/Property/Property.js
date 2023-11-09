@@ -60,9 +60,27 @@ const Property = () => {
       return;
     }
 
+    console.log(
+      minPrice,
+      maxPrice,
+      fCity,
+      fProvince,
+      fBedrooms,
+      fBathrooms,
+      fType,
+      fStreetName,
+      fStreetNumber
+    );
+
     async function filterProperties() {
       try {
-        const url = `http://localhost:8080/api/houses/filter?minPrice=${minPrice}&maxPrice=${maxPrice}&city=${fCity}&province=${fProvince}&bedrooms=${fBedrooms}&bathrooms=${fBathrooms}&type=${fType}&streetNumber=${fStreetNumber}&street=${fStreetName}`;
+        const url = `http://localhost:8080/api/houses/filter?minPrice=${Number(
+          minPrice
+        )}&maxPrice=${Number(
+          maxPrice
+        )}&street=${fStreetName}&city=${fCity}&province=${fProvince}&bedrooms=${fBedrooms}&bathrooms=${fBathrooms}&type=${fType}&streetNumber=${Number(
+          fStreetNumber
+        )}`;
         const response = await axios.get(url);
         setCrud(response.data);
       } catch (error) {
@@ -101,15 +119,15 @@ const Property = () => {
         <div className="sub-container-1">
           <select value={fStatus} onChange={(e) => setFStatus(e.target.value)}>
             <option value="">Choose Status:</option>
-            <option value="For Sale">For Sale</option>
-            <option value="To Lease">To Lease</option>
+            <option value="FOR_SALE">For Sale</option>
+            <option value="T0_LEASE">To Lease</option>
           </select>
 
           <select value={fType} onChange={(e) => setFType(e.target.value)}>
             <option value="">Choose Type:</option>
-            <option value="Condo">Condo</option>
-            <option value="Apartment">Apartment</option>
-            <option value="House">House</option>
+            <option value="CONDO">Condo</option>
+            <option value="APARTMENT">Apartment</option>
+            <option value="HOUSE">House</option>
           </select>
 
           <input
