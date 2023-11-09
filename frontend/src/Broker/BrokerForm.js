@@ -53,7 +53,7 @@ const BrokerForm = ({
       errors.email = "Enter valid email address";
     }
     if (!isPhoneValid.test(phone)) {
-      errors.phone = "Enter valid phone number (DDD-DDD-DDDD)";
+      errors.phone = "Enter valid phone number +1 (DDD)-DDD-DDDD";
     }
     if (description.length > 300) {
       errors.description = "Description must be 300 characters or less";

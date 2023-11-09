@@ -16,6 +16,64 @@ const RegisterForm = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+
+    const isEmailValid = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+    const isPhoneValid = /^\+1 \(\d{3}\)-\d{3}-\d{4}$/;
+    const errors = {};
+
+    if (type === "BROKER") {
+      if (
+        fname === "" ||
+        lname === "" ||
+        email === "" ||
+        phone === "" ||
+        city === "" ||
+        province === "" ||
+        description === "" ||
+        password === ""
+      ) {
+        errors.requiredFields = "All fields are mandatory";
+      }
+      if (!isEmailValid.test(email)) {
+        errors.email = "Enter valid email address";
+      }
+      if (!isPhoneValid.test(phone)) {
+        errors.phone = "Enter valid phone number +1 (DDD)-DDD-DDDD";
+      }
+      if (description.length > 300) {
+        errors.description = "Description must be 300 characters or less";
+      }
+      if (password.length <= 6) {
+        errors.password = "Password must be greater than 6 characters";
+      }
+    } else if (type === "BUYER") {
+      if (
+        fname === "" ||
+        lname === "" ||
+        email === "" ||
+        phone === "" ||
+        city === "" ||
+        province === "" ||
+        description === "" ||
+        password === ""
+      ) {
+        errors.requiredFields = "All fields are mandatory";
+      }
+      if (!isEmailValid.test(email)) {
+        errors.email = "Enter valid email address";
+      }
+      if (password.length <= 6) {
+        errors.password = "Password must be greater than 6 characters";
+      }
+    } else {
+      errors.type = "User Type is required";
+    }
+
+    if (Object.keys(errors).length > 0) {
+      alert("Validation errors: " + Object.values(errors).join("\n"));
+      return;
+    }
+
     // Integrate with Email API to send brokerEmail
   };
 
@@ -47,7 +105,7 @@ const RegisterForm = () => {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
+            placeholder="Password (>6 chars)"
           />
         </div>
 
