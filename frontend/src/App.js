@@ -27,6 +27,15 @@ function App() {
           <li className="nav-item">
             <Link to="Broker">Broker</Link>
           </li>
+          <li className="nav-item">
+            <span
+              onClick={() =>
+                user ? setUser(null) : alert("Please Login First")
+              }
+            >
+              Log Out
+            </span>
+          </li>
           {/* Add more navigation items here */}
         </ul>
       </nav>
