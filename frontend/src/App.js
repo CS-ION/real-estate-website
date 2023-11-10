@@ -1,11 +1,13 @@
 import { Link, Route, Routes } from "react-router-dom";
+import { useState } from "react";
+import "./App.css";
+
 import Property from "./Property/Property";
 import Broker from "./Broker/Broker";
 import Login from "./Account/LoginForm";
 import Register from "./Account/RegisterForm";
 import Dashboard from "./Account/Dashboard";
-import "./App.css";
-import { useState } from "react";
+import Mortgage from "./Mortgage/MortgageCalculator";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -21,6 +23,8 @@ function App() {
     user !== null ? (
       <Route path="Broker" element={<Broker user={user} />} />
     ) : null;
+  const mortgageRoutes =
+    user !== null ? <Route path="Mortgage" element={<Mortgage />} /> : null;
 
   return (
     <div className="app-container">
@@ -34,6 +38,9 @@ function App() {
           </li>
           <li className="nav-item">
             <Link to="Broker">Broker</Link>
+          </li>
+          <li className="nav-item">
+            <Link to="Mortgage">Mortgage Calculator</Link>
           </li>
           <li className="nav-item">
             <span
@@ -59,7 +66,7 @@ function App() {
         {propertyRoutes}
         {brokerRoutes}
         {dashboardRoutes}
-        {/* Add more routes for other components */}
+        {mortgageRoutes}
       </Routes>
     </div>
   );
