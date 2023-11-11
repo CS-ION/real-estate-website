@@ -10,6 +10,7 @@
   border-radius: 50px;
   background-color: rgb(219, 196, 163);
   gap: 16px;
+  width: 60%;
 }
 
 .heading {
@@ -60,4 +61,15 @@
 
 .mortgage_contents button:hover {
   transform: scale(1.05);
+}
+
+.result {
+  font-weight: bold;
+  font-family: "Montserrat", sans-serif;
+}
+
+.error {
+  font-weight: bold;
+  font-family: "Montserrat", sans-serif;
+  color: red;
 }

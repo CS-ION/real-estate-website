@@ -14,7 +14,13 @@ const MortgageCalculator = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const calculateMonthlyPayment = () => {
-    const inputs = [loanAmount, interestRate, loanTerm];
+    const inputs = [
+      loanAmount,
+      interestRate,
+      loanTerm,
+      propertyTax,
+      insuranceAmount,
+    ];
     if (
       inputs.some((input) => isNaN(parseFloat(input)) || parseFloat(input) <= 0)
     ) {
@@ -34,13 +40,31 @@ const MortgageCalculator = () => {
 
     const mortgagePayment = (numerator / denominator).toFixed(2);
 
-    // Consider property tax, insurance, PMI, and HOA fees if applicable
-    const totalMonthlyPayment =
+    let totalMonthlyPayment =
       parseFloat(mortgagePayment) +
       parseFloat(propertyTax) +
-      parseFloat(insuranceAmount) +
-      parseFloat(pmiAmount) +
-      parseFloat(hoaFees);
+      parseFloat(insuranceAmount);
+
+    if (!isNaN(parseFloat(pmiAmount))) {
+      if (parseFloat(pmiAmount) >= 0) {
+        totalMonthlyPayment += parseFloat(pmiAmount);
+      } else {
+        setErrorMessage(
+          "Please enter valid positive numbers for required fields."
+        );
+        return;
+      }
+    }
+    if (!isNaN(parseFloat(hoaFees)) && parseFloat(hoaFees) >= 0) {
+      if (parseFloat(hoaFees) >= 0) {
+        totalMonthlyPayment += parseFloat(hoaFees);
+      } else {
+        setErrorMessage(
+          "Please enter valid positive numbers for required fields."
+        );
+        return;
+      }
+    }
 
     setMonthlyPayment(totalMonthlyPayment.toFixed(2));
     setErrorMessage("");
@@ -94,13 +118,13 @@ const MortgageCalculator = () => {
           type="number"
           value={insuranceAmount}
           onChange={(e) => setInsuranceAmount(e.target.value)}
-          placeholder="Homeowners Insurance ($)"
+          placeholder="Home Insurance ($)"
         />
         <input
           type="number"
           value={pmiAmount}
           onChange={(e) => setPmiAmount(e.target.value)}
-          placeholder="PMI Amount ($)"
+          placeholder="PMI ($) *Optional*"
         />
       </div>
       <div className="mortgage_contents">
@@ -108,17 +132,17 @@ const MortgageCalculator = () => {
           type="number"
           value={hoaFees}
           onChange={(e) => setHoaFees(e.target.value)}
-          placeholder="HOA Fees ($):"
+          placeholder="HOA ($) *Optional*"
         />
       </div>
       <div className="mortgage_contents">
         <button onClick={calculateMonthlyPayment}>Calculate</button>
         <button onClick={handleReset}>Reset</button>
       </div>
-      {errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}
+      {errorMessage && <div className="error">{errorMessage}</div>}
       {monthlyPayment !== null && (
         <div>
-          <h2>Monthly Payment: ${monthlyPayment}</h2>
+          <h2 className="result">Monthly Payment: ${monthlyPayment}</h2>
         </div>
       )}
     </div>
