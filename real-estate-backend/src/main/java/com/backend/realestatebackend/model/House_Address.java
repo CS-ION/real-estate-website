@@ -1,9 +1,7 @@
 package com.backend.realestatebackend.model;
 
-import jakarta.persistence.Column;
+
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

@@ -1,6 +1,7 @@
 package com.backend.realestatebackend.controller;
 
 import com.backend.realestatebackend.model.Broker;
+import com.backend.realestatebackend.model.BuyOffer;
 import com.backend.realestatebackend.model.House;
 import com.backend.realestatebackend.model.ViewingRequest;
 import com.backend.realestatebackend.service.BrokerService;
@@ -40,6 +41,16 @@ public class BrokerController {
     public void deleteRequest(@PathVariable Long broker_id, @PathVariable Long request_id){
         brokerService.deleteBrokerViewingRequest(broker_id,request_id);
     }
+
+    @GetMapping("/buy-offers/{id}")
+    public Set<BuyOffer> getBuyOffers(@PathVariable Long id){return brokerService.getBroker(id).getBuyOffers();}
+
+    @DeleteMapping("/buy-offers/{broker_id}/{buy_offer_id}")
+    public void deleteBuyOffer(@PathVariable Long broker_id, @PathVariable Long buy_offer_id){
+        
+    }
+
+
     @PostMapping("/add-broker")
     public Broker addBroker(@RequestBody @Valid Broker broker){
         return brokerService.addBroker(broker);
@@ -49,4 +60,6 @@ public class BrokerController {
     public void deleteBroker(@PathVariable Long id){
         brokerService.deleteBroker(id);
     }
+
+    
 }

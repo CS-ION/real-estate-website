@@ -62,6 +62,14 @@ public class Broker implements UserDetails {
     )
     private Set<ViewingRequest> viewingRequests = new HashSet<>();
 
+    @ManyToMany
+    @JoinTable(
+            name = "broker_buy_offers",
+            joinColumns = @JoinColumn(name = "broker_id"),
+            inverseJoinColumns = @JoinColumn(name = "buy_offer_id")
+    )
+    private Set<BuyOffer> buyOffers = new HashSet<>();
+
     @Column(name = "role")
     @JsonIgnore
     private AccountRole role = AccountRole.BROKER;

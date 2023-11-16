@@ -3,14 +3,13 @@ package com.backend.realestatebackend.service;
 
 import com.backend.realestatebackend.exception.*;
 import com.backend.realestatebackend.model.Broker;
+import com.backend.realestatebackend.model.BuyOffer;
 import com.backend.realestatebackend.model.User;
 import com.backend.realestatebackend.model.ViewingRequest;
-import com.backend.realestatebackend.repository.BrokerRepository;
-import com.backend.realestatebackend.repository.HouseRepository;
+import com.backend.realestatebackend.repository.BuyOfferRepository;
 import com.backend.realestatebackend.repository.UserRepository;
 import com.backend.realestatebackend.repository.ViewingRequestRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +22,7 @@ public class UserService {
     private final HouseService houseService;
     private final BrokerService brokerService;
     private final ViewingRequestRepository viewingRequestRepository;
+    private final BuyOfferRepository buyOfferRepository;
 
 
 
@@ -75,6 +75,28 @@ public class UserService {
         Broker broker = brokerService.getBroker(viewingRequest.getBrokerId());
         if (!user.getViewingRequests().contains(viewingRequest) && !broker.getViewingRequests().contains(viewingRequest)) {
             viewingRequestRepository.delete(viewingRequest);
+        }
+    }
+
+    public void buyOffer(Long userId, Long houseId, String offerDescription, Long offerPrice){
+        User user = userRepository.findById(userId).orElseThrow();
+        Broker broker = houseService.getHouse(houseId).getBroker();
+        BuyOffer buyOffer = new BuyOffer(user.getFirst_name(), user.getLast_name(), user.getEmail(), houseId,userId,broker.getBrokerId(),offerDescription, offerPrice);
+        user.getBuyOffers().add(buyOffer);
+        broker.getBuyOffers().add(buyOffer);
+        buyOfferRepository.save(buyOffer);
+        userRepository.save(user);
+        brokerService.updateBroker(broker);
+    }
+
+    public void deleteBuyOffer(Long userId, Long buyOfferId) {
+        User user = userRepository.findById(userId).orElseThrow();
+        BuyOffer buyOffer = buyOfferRepository.findById(buyOfferId).orElseThrow();
+        user.getBuyOffers().remove(buyOffer);
+        userRepository.save(user);
+        Broker broker = brokerService.getBroker(buyOffer.getBrokerId());
+        if (!user.getBuyOffers().contains(buyOffer) && !broker.getBuyOffers().contains(buyOffer)) {
+            buyOfferRepository.delete(buyOffer);
         }
     }
 }
