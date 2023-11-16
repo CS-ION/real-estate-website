@@ -1,0 +1,75 @@
+.mortgage_calculator {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  padding: 16px;
+  margin: 50px;
+  font-size: 24px;
+  border: 2px solid brown;
+  border-radius: 50px;
+  background-color: rgb(219, 196, 163);
+  gap: 16px;
+  width: 60%;
+}
+
+.heading {
+  font-weight: bold;
+  font-family: "Coiny", sans-serif;
+}
+
+.mortgage_contents {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.mortgage_calculator input {
+  background-color: rgb(228, 210, 187);
+  border: 4px solid chocolate;
+  border-radius: 10px;
+  padding: 16px;
+  color: inherit;
+  font-weight: bold;
+  font-size: 16px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.mortgage_contents button {
+  border: 2px solid rgb(86, 37, 2);
+  font-family: "Coiny", sans-serif;
+  line-height: 1;
+  text-transform: uppercase;
+  font-size: 15px;
+  padding: 16px;
+  background-image: linear-gradient(
+    135deg,
+    brown,
+    chocolate,
+    burlywood,
+    yellow
+  );
+  color: inherit;
+  border-radius: 30px;
+  cursor: pointer;
+  width: 200px;
+  height: 70px;
+  font-size: 20px;
+  transition: 0.3s;
+}
+
+.mortgage_contents button:hover {
+  transform: scale(1.05);
+}
+
+.result {
+  font-weight: bold;
+  font-family: "Montserrat", sans-serif;
+}
+
+.error {
+  font-weight: bold;
+  font-family: "Montserrat", sans-serif;
+  color: red;
+}

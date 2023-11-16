@@ -5,13 +5,14 @@ import axios from "axios";
 import PropertyHeader from "./PropertyHeader";
 import PropertyList from "./PropertyList";
 
-const Property = () => {
+const Property = ({ user }) => {
   const [properties, setProperties] = useState([]);
   const [propertyToBeUpdated, setPropertyToBeUpdated] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [showViewForm, setShowViewForm] = useState(false);
   const [crud, setCrud] = useState(false);
   // Filter criteria states
+  const [displayProperties, setDisplayProperties] = useState([]);
   const [minPrice, setMinPrice] = useState(null);
   const [maxPrice, setMaxPrice] = useState(null);
   const [fStreetName, setFStreetName] = useState(null);
@@ -22,6 +23,8 @@ const Property = () => {
   const [fType, setFType] = useState(null);
   const [fStatus, setFStatus] = useState(null);
   const [fStreetNumber, setFStreetNumber] = useState(null);
+
+  console.log(user);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -60,11 +63,41 @@ const Property = () => {
       return;
     }
 
+    console.log(
+      minPrice,
+      maxPrice,
+      fCity,
+      fProvince,
+      fBedrooms,
+      fBathrooms,
+      fType,
+      fStreetName,
+      fStreetNumber
+    );
+
     async function filterProperties() {
       try {
-        const url = `http://localhost:8080/api/houses/filter?minPrice=${minPrice}&maxPrice=${maxPrice}&city=${fCity}&province=${fProvince}&bedrooms=${fBedrooms}&bathrooms=${fBathrooms}&type=${fType}&streetNumber=${fStreetNumber}&street=${fStreetName}`;
+        const url =
+          "http://localhost:8080/api/houses/filter?minPrice=" +
+          Number(minPrice) +
+          "&maxPrice=" +
+          Number(maxPrice) +
+          "&street=" +
+          fStreetName +
+          "&city=" +
+          fCity +
+          "&province=" +
+          fProvince +
+          "&bedrooms=" +
+          fBedrooms +
+          "&bathrooms=" +
+          fBathrooms +
+          "&type=" +
+          fType +
+          "&streetNumber=" +
+          Number(fStreetNumber);
         const response = await axios.get(url);
-        setCrud(response.data);
+        setDisplayProperties(response.data);
       } catch (error) {
         alert("Cannot Filter Data! " + error);
       }
@@ -80,6 +113,7 @@ const Property = () => {
           "http://localhost:8080/api/houses/all-houses"
         );
         setProperties(response.data);
+        setDisplayProperties(response.data);
       } catch (error) {
         alert("Cannot Load Data! " + error);
       }
@@ -90,6 +124,7 @@ const Property = () => {
   return (
     <div className="mainframe">
       <PropertyHeader
+        user={user}
         showForm={showForm}
         setShowForm={setShowForm}
         propertyToBeUpdated={propertyToBeUpdated}
@@ -97,19 +132,19 @@ const Property = () => {
         setShowViewForm={setShowViewForm}
         setCrud={setCrud}
       />
-      <form className="filter-container" onSubmit={handleSubmit}>
+      <form className="filter-container">
         <div className="sub-container-1">
           <select value={fStatus} onChange={(e) => setFStatus(e.target.value)}>
             <option value="">Choose Status:</option>
-            <option value="For Sale">For Sale</option>
-            <option value="To Lease">To Lease</option>
+            <option value="FOR_SALE">For Sale</option>
+            <option value="T0_LEASE">To Lease</option>
           </select>
 
           <select value={fType} onChange={(e) => setFType(e.target.value)}>
             <option value="">Choose Type:</option>
-            <option value="Condo">Condo</option>
-            <option value="Apartment">Apartment</option>
-            <option value="House">House</option>
+            <option value="CONDO">Condo</option>
+            <option value="APARTMENT">Apartment</option>
+            <option value="HOUSE">House</option>
           </select>
 
           <input
@@ -185,10 +220,14 @@ const Property = () => {
             onChange={(e) => setFBathrooms(e.target.value)}
           />
         </div>
-        <button type="Submit">Apply Filters</button>
+        <button onClick={handleSubmit}>Apply Filters</button>
+        <button onClick={() => setDisplayProperties(properties)}>
+          All Properties
+        </button>
       </form>
       <PropertyList
-        properties={properties}
+        user={user}
+        properties={displayProperties}
         setShowForm={setShowForm}
         setPropertyToBeUpdated={setPropertyToBeUpdated}
         showViewForm={showViewForm}

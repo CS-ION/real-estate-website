@@ -44,8 +44,14 @@ body {
   color: #fff;
 }
 
-.nav-item a:hover {
+.nav-item a:hover,
+.nav-item span:hover {
   text-decoration: underline;
+  cursor: pointer;
+}
+
+.logout {
+  margin: auto;
 }
 
 /* LOGIN REGISTER FORMS */

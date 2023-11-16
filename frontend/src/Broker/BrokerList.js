@@ -3,6 +3,7 @@ import axios from "axios";
 import "./Broker.css";
 
 const BrokerList = ({
+  user,
   brokers,
   setShowForm,
   setBrokerToBeUpdated,
@@ -17,6 +18,7 @@ const BrokerList = ({
         {brokers.map((broker) => (
           <Broker
             key={broker.brokerId}
+            user={user}
             broker={broker}
             id={broker.brokerId}
             fname={broker.firstName}
@@ -38,6 +40,7 @@ const BrokerList = ({
 
 function Broker({
   id,
+  user,
   broker,
   fname,
   lname,
@@ -51,6 +54,10 @@ function Broker({
   setCrud,
 }) {
   const handleDelete = (brokerId) => {
+    if (user.role === "USER") {
+      alert("Unauthorized to delete properties!");
+      return;
+    }
     async function deleteBrokers() {
       try {
         const response = await axios.delete(
@@ -65,6 +72,10 @@ function Broker({
     alert("Deleted Broker with ID " + brokerId);
   };
   const handleUpdate = () => {
+    if (user.role === "USER") {
+      alert("Unauthorized to update properties!");
+      return;
+    }
     setBrokerToBeUpdated(broker);
     setShowForm(true);
     window.scrollTo({

@@ -29,12 +29,17 @@ public class SecurityConfiguration {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers(new AntPathRequestMatcher("/api/auth/**")).permitAll()
+<<<<<<< HEAD
                                 // .requestMatchers(new AntPathRequestMatcher("/api/users/**")).hasAuthority("USER")
                                 // .requestMatchers(new AntPathRequestMatcher("/api/brokers/**")).hasAuthority("BROKER")
                                 .requestMatchers(new AntPathRequestMatcher("/api/users/**")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/api/brokers/**")).permitAll()
 
 
+=======
+                                .requestMatchers(new AntPathRequestMatcher("/api/users/**")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/api/brokers/**")).permitAll()
+>>>>>>> 4c4d49a73686141fb028b797dbd5c6b0d183f54f
                                 .requestMatchers(new AntPathRequestMatcher("/api/houses/**")).permitAll()
                                 //.hasAnyAuthority("USER", "BROKER")
 

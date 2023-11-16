@@ -10,6 +10,7 @@ const TYPE = [
 ];
 
 const PropertyList = ({
+  user,
   properties,
   setShowForm,
   setPropertyToBeUpdated,
@@ -17,7 +18,7 @@ const PropertyList = ({
   setShowViewForm,
   setCrud,
 }) => {
-  const [brokerEmail, setBrokerEmail] = useState("");
+  const [houseId, setHouseId] = useState("");
   if (properties.length === 0) {
     return <p>No Properties to Display!!</p>;
   }
@@ -25,15 +26,17 @@ const PropertyList = ({
     <div className="property-list-container">
       {showViewForm ? (
         <ViewingForm
+          user={user}
           setViewForm={setShowViewForm}
-          brokerEmail={brokerEmail}
-          setBrokerEmail={setBrokerEmail}
+          houseId={houseId}
+          setHouseId={setHouseId}
         />
       ) : null}
       <ul className="property-list">
         {properties.map((property) => (
           <Property
             key={property.id}
+            user={user}
             property={property}
             id={property.houseId}
             unitNumber={property.unitNumber}
@@ -49,8 +52,7 @@ const PropertyList = ({
             price={property.price}
             type={property.type}
             status={property.status}
-            email={property.broker.email}
-            setBrokerEmail={setBrokerEmail}
+            setHouseId={setHouseId}
             setShowForm={setShowForm}
             setShowViewForm={setShowViewForm}
             setPropertyToBeUpdated={setPropertyToBeUpdated}
@@ -64,6 +66,7 @@ const PropertyList = ({
 
 function Property({
   id,
+  user,
   property,
   unitNumber,
   streetNumber,
@@ -78,14 +81,17 @@ function Property({
   price,
   type,
   status,
-  email,
-  setBrokerEmail,
+  setHouseId,
   setShowForm,
   setShowViewForm,
   setPropertyToBeUpdated,
   setCrud,
 }) {
   const handleDelete = (propertyId) => {
+    if (user.role === "USER") {
+      alert("Unauthorized to update properties!");
+      return;
+    }
     async function deleteProperties() {
       try {
         const response = await axios.delete(
@@ -100,6 +106,10 @@ function Property({
     alert("Deleted Property with ID " + propertyId);
   };
   const handleUpdate = () => {
+    if (user.role === "USER") {
+      alert("Unauthorized to delete properties!");
+      return;
+    }
     setPropertyToBeUpdated(property);
     setShowViewForm(false);
     setShowForm(true);
@@ -111,7 +121,7 @@ function Property({
   const handleRequestViewing = () => {
     setShowForm(false);
     setShowViewForm(true);
-    setBrokerEmail(email);
+    setHouseId(id);
     window.scrollTo({
       top: 0,
       behavior: "smooth",
