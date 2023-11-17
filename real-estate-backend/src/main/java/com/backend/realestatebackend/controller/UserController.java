@@ -68,6 +68,7 @@ public class UserController {
                                @RequestBody Map<String, Object> requestBody) {
                                 String offerDescription = (String) requestBody.get("offerDescription");
                                 Long offerPrice = Long.parseLong(requestBody.get("offer_price").toString());
+                            
         userService.buyOffer(user_id, house_id, offerDescription, offerPrice);
     }
 

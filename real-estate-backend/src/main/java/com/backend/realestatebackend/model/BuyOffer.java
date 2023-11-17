@@ -22,7 +22,8 @@ public class BuyOffer {
                           String userEmail,Long houseId,
                           Long userId,Long brokerId,
                           String offerDescription,
-                          Long offer_price){
+                          Long offer_price,
+                          String status){
         this.userFirstName = userFirstName;
         this.userLastName = userLastName;
         this.userEmail = userEmail;
@@ -31,6 +32,7 @@ public class BuyOffer {
         this.brokerId = brokerId;
         this.offer_price = offer_price;
         this.offerDescription = offerDescription;
+        this.status = status;
     }
 
     @NotBlank
@@ -49,5 +51,6 @@ public class BuyOffer {
     private Long houseId;
     private Long offer_price;
     private String offerDescription;
+    private String status;
 
 }

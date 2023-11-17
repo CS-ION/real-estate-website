@@ -73,6 +73,12 @@ public class BrokerService {
         }
     }
 
+    public void updateOfferStatus(Long offer_id,String status){
+        BuyOffer buyOffer = buyOfferRepository.findById(offer_id).orElseThrow();
+        buyOffer.setStatus(status);
+        buyOfferRepository.save(buyOffer);
+    }
+
     
 
     public Broker addBroker(Broker broker){

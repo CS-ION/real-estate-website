@@ -47,9 +47,13 @@ public class BrokerController {
 
     @DeleteMapping("/buy-offers/{broker_id}/{buy_offer_id}")
     public void deleteBuyOffer(@PathVariable Long broker_id, @PathVariable Long buy_offer_id){
-        
+        brokerService.deleteBuyOffer(broker_id, buy_offer_id);
     }
 
+    @PutMapping("/buy-offers/update-status/{offer_id}")
+    public void changeStatus(@PathVariable Long offer_id,@RequestParam String status){
+        brokerService.updateOfferStatus(offer_id, status);
+    }
 
     @PostMapping("/add-broker")
     public Broker addBroker(@RequestBody @Valid Broker broker){

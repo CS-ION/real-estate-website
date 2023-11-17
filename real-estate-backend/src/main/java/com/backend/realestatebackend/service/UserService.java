@@ -81,7 +81,7 @@ public class UserService {
     public void buyOffer(Long userId, Long houseId, String offerDescription, Long offerPrice){
         User user = userRepository.findById(userId).orElseThrow();
         Broker broker = houseService.getHouse(houseId).getBroker();
-        BuyOffer buyOffer = new BuyOffer(user.getFirst_name(), user.getLast_name(), user.getEmail(), houseId,userId,broker.getBrokerId(),offerDescription, offerPrice);
+        BuyOffer buyOffer = new BuyOffer(user.getFirst_name(), user.getLast_name(), user.getEmail(), houseId,userId,broker.getBrokerId(),offerDescription, offerPrice,"Pending");
         user.getBuyOffers().add(buyOffer);
         broker.getBuyOffers().add(buyOffer);
         buyOfferRepository.save(buyOffer);
