@@ -59,7 +59,7 @@ const ViewingForm = ({ user, setViewForm, houseId, setHouseId }) => {
         console.log(messageBody);
         console.log(user.id);
         console.log(houseId);
-        const response = await axios.post(
+        await axios.post(
           `http://localhost:8080/api/users/request-viewing/${user.id}/${houseId}`,
           messageBody
         );

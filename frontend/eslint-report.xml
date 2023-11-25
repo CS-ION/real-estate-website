@@ -1,9 +1,0 @@
-
-> testing@0.1.0 lint
-> eslint src --format=unix
-
-C:\Users\asadr\FK-X_FL-X-soen341projectF2023\frontend\src\Broker\BrokerList.js:63:15: 'response' is assigned a value but never used. [Warning/no-unused-vars]
-C:\Users\asadr\FK-X_FL-X-soen341projectF2023\frontend\src\Property\PropertyList.js:97:15: 'response' is assigned a value but never used. [Warning/no-unused-vars]
-C:\Users\asadr\FK-X_FL-X-soen341projectF2023\frontend\src\Property\ViewingForm.js:2:1: Parsing error: Unexpected token (2:1) [Error]
-
-3 problems
