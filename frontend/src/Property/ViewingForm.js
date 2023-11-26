@@ -1,12 +1,4 @@
 import React, { useState } from "react";
-<<<<<<< HEAD
-import "../App.css";
-import "./Property.css";
-
-const ViewingForm = ({ setViewForm, brokerEmail, setBrokerEmail }) => {
-  const [fname, setFname] = useState("");
-  const [lname, setLname] = useState("");
-=======
 import axios from "axios";
 import "../App.css";
 import "./Property.css";
@@ -15,7 +7,6 @@ const ViewingForm = ({ user, setViewForm, houseId, setHouseId }) => {
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [email, setEmail] = useState("");
->>>>>>> 4c4d49a73686141fb028b797dbd5c6b0d183f54f
   const [selectedDays, setSelectedDays] = useState("");
   const [description, setDescription] = useState("");
 
@@ -31,23 +22,14 @@ const ViewingForm = ({ user, setViewForm, houseId, setHouseId }) => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-<<<<<<< HEAD
-    // Integrate with Email API to send brokerEmail
-    console.log(brokerEmail);
-
-=======
 
     const isEmailValid = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
->>>>>>> 4c4d49a73686141fb028b797dbd5c6b0d183f54f
     const errors = {};
 
     if (
       fname === "" ||
       lname === "" ||
-<<<<<<< HEAD
-=======
       email === "" ||
->>>>>>> 4c4d49a73686141fb028b797dbd5c6b0d183f54f
       description === "" ||
       !selectedDays.length
     ) {
@@ -56,22 +38,14 @@ const ViewingForm = ({ user, setViewForm, houseId, setHouseId }) => {
     if (description.length > 300) {
       errors.description = "Description must be 300 characters or less";
     }
-<<<<<<< HEAD
-=======
     if (!isEmailValid.test(email)) {
       errors.email = "Enter valid email address";
     }
->>>>>>> 4c4d49a73686141fb028b797dbd5c6b0d183f54f
     if (Object.keys(errors).length > 0) {
       alert("Validation errors: " + Object.values(errors).join("\n"));
       return;
     }
 
-<<<<<<< HEAD
-    setBrokerEmail("");
-    setViewForm(false);
-    alert("Message Sent");
-=======
     const messageBody = {
       first_name: fname,
       last_Name: lname,
@@ -85,7 +59,7 @@ const ViewingForm = ({ user, setViewForm, houseId, setHouseId }) => {
         console.log(messageBody);
         console.log(user.id);
         console.log(houseId);
-        const response = await axios.post(
+        await axios.post(
           `http://localhost:8080/api/users/request-viewing/${user.id}/${houseId}`,
           messageBody
         );
@@ -99,7 +73,6 @@ const ViewingForm = ({ user, setViewForm, houseId, setHouseId }) => {
 
     setHouseId("");
     setViewForm(false);
->>>>>>> 4c4d49a73686141fb028b797dbd5c6b0d183f54f
   };
 
   return (
@@ -124,8 +97,6 @@ const ViewingForm = ({ user, setViewForm, houseId, setHouseId }) => {
             />
           </div>
 
-<<<<<<< HEAD
-=======
           <input
             className="email"
             type="text"
@@ -134,7 +105,6 @@ const ViewingForm = ({ user, setViewForm, houseId, setHouseId }) => {
             placeholder="Email Address"
           />
 
->>>>>>> 4c4d49a73686141fb028b797dbd5c6b0d183f54f
           <div className="days">
             <label>Select the days you are available:</label>
             <div className="theDays">

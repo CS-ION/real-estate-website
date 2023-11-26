@@ -94,7 +94,7 @@ function Property({
     }
     async function deleteProperties() {
       try {
-        const response = await axios.delete(
+        await axios.delete(
           `http://localhost:8080/api/houses/house-delete/${propertyId}`
         );
         setCrud((crud) => !crud);
