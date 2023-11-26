@@ -35,7 +35,6 @@ public class Broker implements UserDetails {
     @Column(name = "last_name")
     private String lastName;
 
-    //@Pattern(regexp = "^(\\+\\d{1,3}[-.\\s]?)?\\(\\d{1,4}\\)[-.\s]?\\d{1,4}[-.\\s]?\\d{1,9}$")
     @Column(name = "phone_number")
     private String phoneNumber;
 
@@ -45,6 +44,7 @@ public class Broker implements UserDetails {
 
     @Column(name = "description")
     private String broker_description;
+
 
     @Embedded
     @Valid
@@ -76,7 +76,10 @@ public class Broker implements UserDetails {
 
     private String password;
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(brokerId);
+    }
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;

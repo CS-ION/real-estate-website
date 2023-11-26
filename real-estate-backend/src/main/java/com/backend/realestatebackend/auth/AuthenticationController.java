@@ -10,9 +10,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
-public class AuthenticationController {
+final public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
+
+    @PostMapping("/authenticate-admin")
+    public ResponseEntity<AuthenticationReponse> authenticateAdmin(
+            @RequestBody AuthenticationRequest request
+    ){
+        return ResponseEntity.ok(authenticationService.authenticateAdminCredentials(request.getEmail(), request.getPassword()));
+    }
     @PostMapping("/register-user")
     public ResponseEntity<AuthenticationReponse> registerUser(
             @RequestBody RegisterRequestUser request
@@ -40,6 +47,8 @@ public class AuthenticationController {
     ){
         return ResponseEntity.ok(authenticationService.authenticateBroker(request));
     }
+
+
 
 
 }

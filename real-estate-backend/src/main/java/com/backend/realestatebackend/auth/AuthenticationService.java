@@ -8,10 +8,13 @@ import com.backend.realestatebackend.repository.BrokerRepository;
 import com.backend.realestatebackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 @Service
@@ -27,6 +30,25 @@ public class AuthenticationService {
     private final JwtService jwtService;
 
     private final AuthenticationManager authenticationManager;
+
+    public AuthenticationReponse authenticateAdminCredentials(String username, String password) {
+        String adminUsername = "admin";
+        String adminPassword = "adminpassword";
+
+        if (adminUsername.equals(username) && adminPassword.equals(password)) {
+            var user = User.builder()
+                    .email(username)
+                    .password(password)
+                    .role(AccountRole.USER)
+                    .build();
+            var adminToken = jwtService.generateToken(0L, "ADMIN", user);
+            return AuthenticationReponse.builder().token(adminToken).build();
+        } else {
+            throw new BadCredentialsException("Invalid admin credentials");
+        }
+    }
+
+
 
     public AuthenticationReponse registerUser(RegisterRequestUser registerRequest){
         var user = User.builder()

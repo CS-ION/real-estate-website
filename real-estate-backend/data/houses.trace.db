@@ -1,0 +1,23 @@
+2023-11-24 19:37:29 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "DESCRIPTION CHARACTER VARYING(255)": "'Bob Smith is a seasoned real estate professional with a passion for helping cli... (642)"; SQL statement:
+insert into broker (description,email,first_name,last_name,city,province,password,phone_number,role,broker_id) values (?,?,?,?,?,?,?,?,?,default) [22001-214]
+2023-11-24 19:38:16 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "DESCRIPTION CHARACTER VARYING(255)": "'Bob Smith is a seasoned real estate professional with a passion for helping cli... (642)"; SQL statement:
+insert into broker (description,email,first_name,last_name,city,province,password,phone_number,role,broker_id) values (?,?,?,?,?,?,?,?,?,default) [22001-214]
+2023-11-24 19:39:32 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "DESCRIPTION CHARACTER VARYING(255)": "'Bob Smith is a seasoned real estate professional with a passion for helping cli... (642)"; SQL statement:
+insert into broker (description,email,first_name,last_name,city,province,password,phone_number,role,broker_id) values (?,?,?,?,?,?,?,?,?,default) [22001-214]
+2023-11-24 19:39:47 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "DESCRIPTION CHARACTER VARYING(255)": "'Bob Smith is a seasoned real estate professional with a passion for helping cli... (642)"; SQL statement:
+insert into broker (description,email,first_name,last_name,city,province,password,phone_number,role,broker_id) values (?,?,?,?,?,?,?,?,?,default) [22001-214]
+2023-11-24 19:40:17 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-214]
+2023-11-24 19:42:04 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-214]
+2023-11-24 19:43:53 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-214]
+2023-11-24 19:48:41 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-214]
+2023-11-24 20:02:39 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]AND h.status = 'FOR_SALE'"; SQL statement:
+AND h.status = 'FOR_SALE' [42000-214]

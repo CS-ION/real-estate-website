@@ -26,7 +26,8 @@ public interface HouseRepository extends JpaRepository<House, Long> {
                         "    AND (:bedrooms IS NULL OR h.bedrooms = :bedrooms)\n" +
                         "    AND (:bathrooms IS NULL OR h.bathrooms = :bathrooms)\n" +
                         "    AND (:streetNumber IS NULL OR h.street_number = :streetNumber)" +
-                        "    AND (:type IS NULL OR h.type = :type);", nativeQuery = true)
+                        "    AND (:type IS NULL OR h.type = :type)"+
+                        "    AND h.status = 'FOR_SALE';", nativeQuery = true)
         List<House> findByFilters(
                         @Param("minPrice") Long minPrice,
                         @Param("maxPrice") Long maxPrice,

@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -83,7 +85,10 @@ public class House {
     @Column(name = "description")
     private String house_description;
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(houseId);
+    }
 
     @Override
     public boolean equals(Object obj) {
