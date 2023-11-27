@@ -22,6 +22,8 @@ const PropertyList = ({
   setCrud,
 }) => {
   const [houseId, setHouseId] = useState("");
+  console.log("AT LIST");
+  console.log(properties);
   if (properties.length === 0) {
     return <p>No Properties to Display!!</p>;
   }
@@ -106,7 +108,6 @@ function Property({
   setPropertyToBeUpdated,
   setCrud,
 }) {
-  console.log(property);
   const handleDelete = (propertyId) => {
     if (user.role === "USER" || user.id !== brokerId) {
       alert("Unauthorized to delete properties!");
