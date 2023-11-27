@@ -53,7 +53,7 @@ const Broker = ({ user }) => {
         setBrokers(response.data);
         setFBrokers(response.data);
       } catch (error) {
-        alert("Cannot Load Data! " + error);
+        console.log("Cannot Load Broker Data! " + error);
       }
     }
     getBrokers();

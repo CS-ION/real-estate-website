@@ -114,7 +114,7 @@ const Property = ({ user }) => {
         setProperties(response.data);
         setDisplayProperties(response.data);
       } catch (error) {
-        alert("Cannot Load Data! " + error);
+        console.log("Cannot Load Property Data! " + error);
       }
     }
     getProperties();
