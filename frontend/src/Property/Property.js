@@ -10,6 +10,7 @@ const Property = ({ user }) => {
   const [propertyToBeUpdated, setPropertyToBeUpdated] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [showViewForm, setShowViewForm] = useState(false);
+  const [showOfferForm, setShowOfferForm] = useState(false);
   const [crud, setCrud] = useState(false);
   // Filter criteria states
   const [displayProperties, setDisplayProperties] = useState([]);
@@ -23,8 +24,6 @@ const Property = ({ user }) => {
   const [fType, setFType] = useState(null);
   const [fStatus, setFStatus] = useState(null);
   const [fStreetNumber, setFStreetNumber] = useState(null);
-
-  console.log(user);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -130,6 +129,7 @@ const Property = ({ user }) => {
         propertyToBeUpdated={propertyToBeUpdated}
         setPropertyToBeUpdated={setPropertyToBeUpdated}
         setShowViewForm={setShowViewForm}
+        setShowOfferForm={setShowOfferForm}
         setCrud={setCrud}
       />
       <form className="filter-container">
@@ -232,6 +232,8 @@ const Property = ({ user }) => {
         setPropertyToBeUpdated={setPropertyToBeUpdated}
         showViewForm={showViewForm}
         setShowViewForm={setShowViewForm}
+        showOfferForm={showOfferForm}
+        setShowOfferForm={setShowOfferForm}
         setCrud={setCrud}
       />
     </div>

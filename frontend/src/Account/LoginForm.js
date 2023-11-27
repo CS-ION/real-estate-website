@@ -23,7 +23,6 @@ const LoginForm = ({ setUser }) => {
       email: email,
       password: password,
     };
-    console.log(user);
     if (type === "USER") {
       async function addUser(user) {
         try {
@@ -54,6 +53,21 @@ const LoginForm = ({ setUser }) => {
         }
       }
       addBroker(user);
+    } else if (type === "ADMIN") {
+      async function addAdmin(user) {
+        try {
+          const response = await axios.post(
+            "http://localhost:8080/api/auth/authenticate-admin",
+            user
+          );
+          const token = response.data.token;
+          const decodedToken = decodeJwt(token);
+          setUser(decodedToken);
+        } catch (error) {
+          alert("Cannot Login!", error);
+        }
+      }
+      addAdmin(user);
     } else {
       alert("Cannot Login! Enter details correctly");
     }
@@ -72,6 +86,7 @@ const LoginForm = ({ setUser }) => {
           <option value="">User Type:</option>
           <option value="USER">Buyer/Renter</option>
           <option value="BROKER">Broker</option>
+          <option value="ADMIN">Admin</option>
         </select>
 
         <input

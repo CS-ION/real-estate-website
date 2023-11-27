@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Property.css";
 import axios from "axios";
 import ViewingForm from "./ViewingForm";
+import OfferForm from "./OfferForm";
 
 const TYPE = [
   { name: "CONDO", color: "#ef4444" },
@@ -16,6 +17,8 @@ const PropertyList = ({
   setPropertyToBeUpdated,
   showViewForm,
   setShowViewForm,
+  showOfferForm,
+  setShowOfferForm,
   setCrud,
 }) => {
   const [houseId, setHouseId] = useState("");
@@ -28,6 +31,14 @@ const PropertyList = ({
         <ViewingForm
           user={user}
           setViewForm={setShowViewForm}
+          houseId={houseId}
+          setHouseId={setHouseId}
+        />
+      ) : null}
+      {showOfferForm ? (
+        <OfferForm
+          user={user}
+          setShowOfferForm={setShowOfferForm}
           houseId={houseId}
           setHouseId={setHouseId}
         />
@@ -52,9 +63,13 @@ const PropertyList = ({
             price={property.price}
             type={property.type}
             status={property.status}
+            brokerId={property.broker.brokerId}
+            fname={property.broker.firstName}
+            lname={property.broker.lastName}
             setHouseId={setHouseId}
             setShowForm={setShowForm}
             setShowViewForm={setShowViewForm}
+            setShowOfferForm={setShowOfferForm}
             setPropertyToBeUpdated={setPropertyToBeUpdated}
             setCrud={setCrud}
           />
@@ -81,15 +96,20 @@ function Property({
   price,
   type,
   status,
+  brokerId,
+  fname,
+  lname,
   setHouseId,
   setShowForm,
   setShowViewForm,
+  setShowOfferForm,
   setPropertyToBeUpdated,
   setCrud,
 }) {
+  console.log(property);
   const handleDelete = (propertyId) => {
-    if (user.role === "USER") {
-      alert("Unauthorized to update properties!");
+    if (user.role === "USER" || user.id !== brokerId) {
+      alert("Unauthorized to delete properties!");
       return;
     }
     async function deleteProperties() {
@@ -103,10 +123,10 @@ function Property({
       }
     }
     deleteProperties();
-    alert("Deleted Property with ID " + propertyId);
+    alert("Deleted Property with broker " + fname + " " + lname);
   };
   const handleUpdate = () => {
-    if (user.role === "USER") {
+    if (user.role === "USER" || user.id !== brokerId) {
       alert("Unauthorized to delete properties!");
       return;
     }
@@ -119,8 +139,27 @@ function Property({
     });
   };
   const handleRequestViewing = () => {
+    if (user.role !== "USER") {
+      alert("Unauthorized to request viewings!");
+      return;
+    }
     setShowForm(false);
+    setShowOfferForm(false);
     setShowViewForm(true);
+    setHouseId(id);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+  const handleBuyOffer = () => {
+    if (user.role !== "USER") {
+      alert("Unauthorized to submit offers!");
+      return;
+    }
+    setShowForm(false);
+    setShowViewForm(false);
+    setShowOfferForm(true);
     setHouseId(id);
     window.scrollTo({
       top: 0,
@@ -159,6 +198,9 @@ function Property({
             </div>
           </div>
         </div>
+        <div className="li-broker">
+          <strong>{"Broker Name: " + fname + " " + lname}</strong>
+        </div>
         <div className="li-description">{description}</div>
       </div>
       <div className="prop-buttons">
@@ -170,6 +212,9 @@ function Property({
         </button>
         <button className="request-viewing" onClick={handleRequestViewing}>
           Request Viewing
+        </button>
+        <button className="buy-offer" onClick={handleBuyOffer}>
+          Submit Offer
         </button>
         <span
           className="status"
