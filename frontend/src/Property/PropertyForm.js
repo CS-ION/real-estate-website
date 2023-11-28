@@ -119,14 +119,10 @@ const PropertyForm = ({
 
     if (propertyToBeUpdated) {
       newProperty.houseId = propertyToBeUpdated.houseId;
-      newProperty.broker = propertyToBeUpdated.broker;
-      newProperty.viewingRequests = propertyToBeUpdated.viewingRequests;
-      newProperty.buyOffers = propertyToBeUpdated.buyOffers;
-      console.log(JSON.stringify(newProperty));
       async function updateProperties() {
         try {
           const response = await axios.put(
-            "http://localhost:8080/api/houses/house-update",
+            "http://localhost:8080/api/houses/house-update/" + user.id,
             newProperty
           );
           setCrud(response.data);
