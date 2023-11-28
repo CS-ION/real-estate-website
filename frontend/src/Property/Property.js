@@ -26,6 +26,12 @@ const Property = ({ user }) => {
   const [fStatus, setFStatus] = useState(null);
   const [fStreetNumber, setFStreetNumber] = useState(null);
 
+  const handleResetFilters = (e) => {
+    e.preventDefault();
+    setDisplayProperties(properties);
+    alert("Filters Removed");
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -220,9 +226,7 @@ const Property = ({ user }) => {
           />
         </div>
         <button onClick={handleSubmit}>Apply Filters</button>
-        <button onClick={() => setDisplayProperties(properties)}>
-          All Properties
-        </button>
+        <button onClick={handleResetFilters}>All Properties</button>
       </form>
       <PropertyList
         user={user}

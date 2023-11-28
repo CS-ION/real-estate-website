@@ -12,6 +12,12 @@ const Broker = ({ user }) => {
   const [fCity, setFCity] = useState("");
   const [fProvince, setFProvince] = useState("");
 
+  const handleResetFilters = (e) => {
+    e.preventDefault();
+    setFBrokers(brokers);
+    alert("Filters Removed");
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -42,6 +48,7 @@ const Broker = ({ user }) => {
         })
       );
     }
+    alert("Filters Applied");
   };
 
   useEffect(() => {
@@ -94,7 +101,7 @@ const Broker = ({ user }) => {
         </select>
 
         <button onClick={handleSubmit}>Apply Filters</button>
-        <button onClick={() => setFBrokers(brokers)}>All Brokers</button>
+        <button onClick={handleResetFilters}>All Brokers</button>
       </form>
       <BrokerList user={user} brokers={fBrokers} setCrud={setCrud} />
     </div>
