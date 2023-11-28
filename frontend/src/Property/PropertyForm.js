@@ -3,6 +3,7 @@ import axios from "axios";
 import "./Property.css";
 
 const PropertyForm = ({
+  user,
   setShowForm,
   propertyToBeUpdated,
   setPropertyToBeUpdated,
@@ -98,12 +99,10 @@ const PropertyForm = ({
       return;
     }
 
-    //Will Add broker when registration is implemented
-    //Will add viewing requests when integrated better with project
     const newProperty = {
       status: status,
       type: type,
-      unitNumber: unitNumber === "" ? null : unitNumber,
+      unitNumber: unitNumber === "" || unitNumber === null ? null : unitNumber,
       address: {
         streetNumber: streetNumber,
         street: streetName,
@@ -120,10 +119,14 @@ const PropertyForm = ({
 
     if (propertyToBeUpdated) {
       newProperty.houseId = propertyToBeUpdated.houseId;
+      newProperty.broker = propertyToBeUpdated.broker;
+      newProperty.viewingRequests = propertyToBeUpdated.viewingRequests;
+      newProperty.buyOffers = propertyToBeUpdated.buyOffers;
+      console.log(JSON.stringify(newProperty));
       async function updateProperties() {
         try {
           const response = await axios.put(
-            "http://localhost:8080/api/houses/house-update/",
+            "http://localhost:8080/api/houses/house-update",
             newProperty
           );
           setCrud(response.data);
@@ -137,7 +140,7 @@ const PropertyForm = ({
       async function addProperties() {
         try {
           const response = await axios.post(
-            "http://localhost:8080/api/houses/add-house/2",
+            "http://localhost:8080/api/houses/add-house/" + user.id,
             newProperty
           );
           setCrud(response.data);

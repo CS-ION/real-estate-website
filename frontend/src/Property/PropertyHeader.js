@@ -9,6 +9,7 @@ const PropertyHeader = ({
   propertyToBeUpdated,
   setPropertyToBeUpdated,
   setShowViewForm,
+  setShowOfferForm,
   setCrud,
 }) => {
   return (
@@ -25,6 +26,7 @@ const PropertyHeader = ({
             setShowForm((show) => !show);
             if (!showForm) {
               setShowViewForm(false);
+              setShowOfferForm(false);
             }
             setPropertyToBeUpdated(null);
           }}
@@ -35,6 +37,7 @@ const PropertyHeader = ({
       <div className="form-container">
         {showForm || propertyToBeUpdated ? (
           <PropertyForm
+            user={user}
             setShowForm={setShowForm}
             propertyToBeUpdated={propertyToBeUpdated}
             setPropertyToBeUpdated={setPropertyToBeUpdated}

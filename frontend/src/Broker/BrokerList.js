@@ -2,13 +2,7 @@ import React from "react";
 import axios from "axios";
 import "./Broker.css";
 
-const BrokerList = ({
-  user,
-  brokers,
-  setShowForm,
-  setBrokerToBeUpdated,
-  setCrud,
-}) => {
+const BrokerList = ({ user, brokers, setCrud }) => {
   if (brokers.length === 0) {
     return <p>No Brokers to Display!!</p>;
   }
@@ -19,7 +13,6 @@ const BrokerList = ({
           <Broker
             key={broker.brokerId}
             user={user}
-            broker={broker}
             id={broker.brokerId}
             fname={broker.firstName}
             lname={broker.lastName}
@@ -28,8 +21,6 @@ const BrokerList = ({
             email={broker.email}
             phone={broker.phoneNumber}
             description={broker.broker_description}
-            setShowForm={setShowForm}
-            setBrokerToBeUpdated={setBrokerToBeUpdated}
             setCrud={setCrud}
           />
         ))}
@@ -41,7 +32,6 @@ const BrokerList = ({
 function Broker({
   id,
   user,
-  broker,
   fname,
   lname,
   city,
@@ -49,12 +39,10 @@ function Broker({
   email,
   phone,
   description,
-  setShowForm,
-  setBrokerToBeUpdated,
   setCrud,
 }) {
   const handleDelete = (brokerId) => {
-    if (user.role === "USER") {
+    if (user.role !== "ADMIN") {
       alert("Unauthorized to delete properties!");
       return;
     }
@@ -70,18 +58,6 @@ function Broker({
     }
     deleteBrokers();
     alert("Deleted Broker with ID " + brokerId);
-  };
-  const handleUpdate = () => {
-    if (user.role === "USER") {
-      alert("Unauthorized to update properties!");
-      return;
-    }
-    setBrokerToBeUpdated(broker);
-    setShowForm(true);
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
   };
 
   return (
@@ -101,12 +77,11 @@ function Broker({
             <div className="li-phone">Phone: {phone}</div>
           </div>
         </div>
-        <div className="li-description">{description}</div>
+        <div className="li-description">
+          {description ? description : "No Description Provided!"}
+        </div>
       </div>
       <div className="brok-buttons">
-        <button className="update" onClick={handleUpdate}>
-          Update
-        </button>
         <button className="delete" onClick={() => handleDelete(id)}>
           Delete
         </button>

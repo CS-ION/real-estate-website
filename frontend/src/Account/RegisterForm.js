@@ -200,7 +200,7 @@ const RegisterForm = ({ setUser }) => {
           >
             <option value="">Province:</option>
             <option value="Ontario">Ontario</option>
-            <option value="Apartment">Quebec</option>
+            <option value="Quebec">Quebec</option>
             <option value="Nova Scotia">Nova Scotia</option>
             <option value="Manitoba">Manitoba</option>
             <option value="British Columbia">British Columbia</option>

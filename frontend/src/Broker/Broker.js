@@ -2,13 +2,10 @@ import "../App.css";
 import "./Broker.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import BrokerHeader from "./BrokerHeader";
 import BrokerList from "./BrokerList";
 
 const Broker = ({ user }) => {
   const [brokers, setBrokers] = useState([]);
-  const [brokerToBeUpdated, setBrokerToBeUpdated] = useState(null);
-  const [showForm, setShowForm] = useState(false);
   const [crud, setCrud] = useState(false);
   // Filter criteria states
   const [fBrokers, setFBrokers] = useState([]);
@@ -56,7 +53,7 @@ const Broker = ({ user }) => {
         setBrokers(response.data);
         setFBrokers(response.data);
       } catch (error) {
-        alert("Cannot Load Data! " + error);
+        console.log("Cannot Load Broker Data! " + error);
       }
     }
     getBrokers();
@@ -64,14 +61,7 @@ const Broker = ({ user }) => {
 
   return (
     <div className="mainframe">
-      <BrokerHeader
-        user={user}
-        showForm={showForm}
-        setShowForm={setShowForm}
-        brokerToBeUpdated={brokerToBeUpdated}
-        setBrokerToBeUpdated={setBrokerToBeUpdated}
-        setCrud={setCrud}
-      />
+      <h1 className="broker-listings">BROKER LISTINGS</h1>
       <form className="bfilter-container">
         <input
           className="city-name"
@@ -106,13 +96,7 @@ const Broker = ({ user }) => {
         <button onClick={handleSubmit}>Apply Filters</button>
         <button onClick={() => setFBrokers(brokers)}>All Brokers</button>
       </form>
-      <BrokerList
-        user={user}
-        brokers={fBrokers}
-        setShowForm={setShowForm}
-        setBrokerToBeUpdated={setBrokerToBeUpdated}
-        setCrud={setCrud}
-      />
+      <BrokerList user={user} brokers={fBrokers} setCrud={setCrud} />
     </div>
   );
 };
