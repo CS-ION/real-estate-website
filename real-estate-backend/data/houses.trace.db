@@ -21,3 +21,5 @@ org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-21
 2023-11-24 20:02:39 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]AND h.status = 'FOR_SALE'"; SQL statement:
 AND h.status = 'FOR_SALE' [42000-214]
+2023-11-27 18:16:27 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-214]

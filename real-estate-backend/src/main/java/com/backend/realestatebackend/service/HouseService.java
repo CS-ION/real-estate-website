@@ -56,9 +56,10 @@ public class HouseService {
         return houseRepository.save(house);
     }
 
-    public void updateHouse(House updatedHouse) {
+    public void updateHouse(House updatedHouse,Long brokerId) {
         if (houseRepository.findById(updatedHouse.getHouseId()).isEmpty())
             return;
+        updatedHouse.setBroker(brokerService.getBroker(brokerId));
         houseRepository.save(updatedHouse);
     }
 
