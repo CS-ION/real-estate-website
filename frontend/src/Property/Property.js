@@ -104,7 +104,8 @@ const Property = ({ user }) => {
         );
         setProperties(response.data);
         setDisplayProperties(response.data);
-        console.log("AT USE EFFECT GET");
+        console.log("GET");
+        console.log(properties);
       } catch (error) {
         console.log("Cannot Load Property Data! " + error);
       }
@@ -113,8 +114,6 @@ const Property = ({ user }) => {
     if (filters) {
       filterProperty(properties, filters, setDisplayProperties);
       setFilters(null);
-      console.log("AT USE EFFECT FILTER");
-      console.log(displayProperties);
     } else {
       getProperties();
     }

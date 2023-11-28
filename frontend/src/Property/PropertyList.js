@@ -22,8 +22,6 @@ const PropertyList = ({
   setCrud,
 }) => {
   const [houseId, setHouseId] = useState("");
-  console.log("AT LIST");
-  console.log(properties);
   if (properties.length === 0) {
     return <p>No Properties to Display!!</p>;
   }
@@ -52,7 +50,7 @@ const PropertyList = ({
             user={user}
             property={property}
             id={property.houseId}
-            unitNumber={property.unitNumber}
+            unitNumber={property.unit}
             streetNumber={property.address.streetNumber}
             streetName={property.address.street}
             city={property.address.city}
@@ -195,7 +193,8 @@ function Property({
               {area}
             </div>
             <div className="li-price">
-              <p>Price(CAD)</p>$ {price}
+              <p>Price(CAD)</p>
+              {price}
             </div>
           </div>
         </div>

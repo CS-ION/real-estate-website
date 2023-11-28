@@ -102,7 +102,8 @@ const PropertyForm = ({
     const newProperty = {
       status: status,
       type: type,
-      unitNumber: unitNumber === "" || unitNumber === null ? null : unitNumber,
+      unit:
+        unitNumber === "" || unitNumber === null ? null : Number(unitNumber),
       address: {
         streetNumber: streetNumber,
         street: streetName,
@@ -117,6 +118,9 @@ const PropertyForm = ({
       numberOfBedrooms: bedrooms,
     };
 
+    console.log("ADDING / UPDATING");
+    console.log(newProperty);
+
     if (propertyToBeUpdated) {
       newProperty.houseId = propertyToBeUpdated.houseId;
       async function updateProperties() {
@@ -125,6 +129,7 @@ const PropertyForm = ({
             "http://localhost:8080/api/houses/house-update/" + user.id,
             newProperty
           );
+          alert("Property Updated!");
           setCrud(response.data);
         } catch (error) {
           alert("Cannot Update Property! " + error);
