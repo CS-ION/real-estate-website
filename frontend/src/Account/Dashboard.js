@@ -23,7 +23,9 @@ const Dashboard = ({ user }) => {
           const response_offers = await axios.get(
             `http://localhost:8080/api/users/all-buy-offers/${user.id}`
           );
-          setOffers(response_offers.data);
+          if (response_offers.data.length) {
+            setOffers(response_offers.data);
+          }
         } catch (error) {
           console.log("Error fetching user data", error);
         }
@@ -40,7 +42,9 @@ const Dashboard = ({ user }) => {
           const response_offers = await axios.get(
             `http://localhost:8080/api/brokers/buy-offers/${user.id}`
           );
-          setOffers(response_offers.data);
+          if (response_offers.data.length) {
+            setOffers(response_offers.data);
+          }
         } catch (error) {
           console.log("Error fetching user data", error);
         }
@@ -126,7 +130,7 @@ function ViewReq({
           Days Available: {availability.join(", ")}
         </div>
         <div className="li-description">
-          {description ? description : "No description provided!"}
+          <pre>{description ? description : "No description provided!"}</pre>
         </div>
       </div>
       {user.role === "BROKER" ? (
@@ -194,7 +198,7 @@ function OfferReq({
       <div className="deets">
         <div className="li-available">Offer Price (CAD): {price}</div>
         <div className="li-description">
-          {description ? description : "No description provided!"}
+          <pre>{description ? description : "No description provided!"}</pre>
         </div>
       </div>
       <div className="brok-buttons">
