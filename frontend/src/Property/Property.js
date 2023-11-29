@@ -28,16 +28,16 @@ const Property = ({ user }) => {
 
   const handleResetFilters = (e) => {
     e.preventDefault();
-    setMinPrice(null);
-    setMaxPrice(null);
-    setFStreetName(null);
-    setFCity(null);
-    setFProvince(null);
-    setFBedrooms(null);
-    setFBathrooms(null);
-    setFType(null);
-    setFStatus(null);
-    setFStreetNumber(null);
+    setMinPrice("");
+    setMaxPrice("");
+    setFStreetName("");
+    setFCity("");
+    setFProvince("");
+    setFBedrooms("");
+    setFBathrooms("");
+    setFType("");
+    setFStatus("");
+    setFStreetNumber("");
     setDisplayProperties(properties);
     alert("Filters Removed");
   };

@@ -117,12 +117,12 @@ function Property({
           `http://localhost:8080/api/houses/house-delete/${propertyId}`
         );
         setCrud((crud) => !crud);
+        alert("Deleted Property with broker " + fname + " " + lname);
       } catch (error) {
         alert("Cannot Delete Property! " + error);
       }
     }
     deleteProperties();
-    alert("Deleted Property with broker " + fname + " " + lname);
   };
   const handleUpdate = () => {
     if (user.role === "USER" || user.id !== brokerId) {

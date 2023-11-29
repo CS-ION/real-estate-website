@@ -63,6 +63,14 @@ const Dashboard = ({ user }) => {
               key={viewingRequest.viewingRequestId}
               id={viewingRequest.viewingRequestId}
               user={user}
+              user_details={
+                viewingRequest.userFirstName +
+                " " +
+                viewingRequest.userLastName +
+                " [" +
+                viewingRequest.userEmail +
+                "]\n"
+              }
               brokerId={viewingRequest.brokerId}
               description={viewingRequest.availabilityDescription}
               availability={viewingRequest.availability}
@@ -81,6 +89,14 @@ const Dashboard = ({ user }) => {
               key={offer.buy_offer_id}
               id={offer.buy_offer_id}
               user={user}
+              user_details={
+                offer.userFirstName +
+                " " +
+                offer.userLastName +
+                " [" +
+                offer.userEmail +
+                "]\n"
+              }
               houseId={offer.houseId}
               description={offer.offerDescription}
               status={offer.status}
@@ -99,6 +115,7 @@ const Dashboard = ({ user }) => {
 function ViewReq({
   id,
   user,
+  user_details,
   brokerId,
   description,
   availability,
@@ -129,8 +146,15 @@ function ViewReq({
         <div className="li-available">
           Days Available: {availability.join(", ")}
         </div>
+        {user.role === "BROKER" ? (
+          <div className="li-available">{"Viewer: " + user_details}</div>
+        ) : null}
         <div className="li-description">
-          <pre>{description ? description : "No description provided!"}</pre>
+          <pre>
+            {description
+              ? "Property: " + description
+              : "No description provided!"}
+          </pre>
         </div>
       </div>
       {user.role === "BROKER" ? (
@@ -146,6 +170,7 @@ function ViewReq({
 
 function OfferReq({
   user,
+  user_details,
   id,
   houseId,
   description,
@@ -197,8 +222,15 @@ function OfferReq({
     <li className="request">
       <div className="deets">
         <div className="li-available">Offer Price (CAD): {price}</div>
+        {user.role === "BROKER" ? (
+          <div className="li-available">{"Buyer: " + user_details}</div>
+        ) : null}
         <div className="li-description">
-          <pre>{description ? description : "No description provided!"}</pre>
+          <pre>
+            {description
+              ? "Property: " + description
+              : "No description provided!"}
+          </pre>
         </div>
       </div>
       <div className="brok-buttons">

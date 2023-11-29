@@ -118,9 +118,6 @@ const PropertyForm = ({
       numberOfBedrooms: bedrooms,
     };
 
-    console.log("ADDING / UPDATING");
-    console.log(newProperty);
-
     if (propertyToBeUpdated) {
       newProperty.houseId = propertyToBeUpdated.houseId;
       async function updateProperties() {
