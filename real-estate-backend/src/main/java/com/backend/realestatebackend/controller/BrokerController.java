@@ -36,6 +36,11 @@ final public class BrokerController {
     public void deleteRequest(@PathVariable final Long broker_id, @PathVariable final Long request_id){
         brokerService.deleteBrokerViewingRequest(broker_id,request_id);
     }
+
+    @PutMapping("/request_viewing/update-status/{request_id}")
+    public void changeStatusViewing(@PathVariable final Long request_id,@RequestParam String status){
+        brokerService.updateViewStatus(request_id, status);
+    }
     @GetMapping("/buy-offers/{id}")
     public Set<BuyOffer> getBuyOffers(@PathVariable final Long id){ return brokerService.getBroker(id).getBuyOffers();}
     @DeleteMapping("/buy-offers/{broker_id}/{buy_offer_id}")
@@ -46,6 +51,8 @@ final public class BrokerController {
     public void changeStatus(@PathVariable final Long offer_id,@RequestParam String status){
         brokerService.updateOfferStatus(offer_id, status);
     }
+
+
     @PostMapping("/add-broker")
     public Broker addBroker(@RequestBody @Valid final Broker broker){
         return brokerService.addBroker(broker);
