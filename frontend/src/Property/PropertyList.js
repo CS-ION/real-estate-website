@@ -204,18 +204,26 @@ function Property({
         <div className="li-description">{description}</div>
       </div>
       <div className="prop-buttons">
-        <button className="update" onClick={handleUpdate}>
-          Update
-        </button>
-        <button className="delete" onClick={() => handleDelete(id)}>
-          Delete
-        </button>
-        <button className="request-viewing" onClick={handleRequestViewing}>
-          Request Viewing
-        </button>
-        <button className="buy-offer" onClick={handleBuyOffer}>
-          Submit Offer
-        </button>
+        {user.role === "BROKER" ? (
+          <>
+            <button className="update" onClick={handleUpdate}>
+              Update
+            </button>
+            <button className="delete" onClick={() => handleDelete(id)}>
+              Delete
+            </button>{" "}
+          </>
+        ) : null}
+        {user.role === "USER" ? (
+          <>
+            <button className="request-viewing" onClick={handleRequestViewing}>
+              Request Viewing
+            </button>
+            <button className="buy-offer" onClick={handleBuyOffer}>
+              Submit Offer
+            </button>
+          </>
+        ) : null}
         <span
           className="status"
           style={{

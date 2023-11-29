@@ -14,6 +14,8 @@ const Broker = ({ user }) => {
 
   const handleResetFilters = (e) => {
     e.preventDefault();
+    setFCity("");
+    setFProvince("");
     setFBrokers(brokers);
     alert("Filters Removed");
   };
@@ -44,7 +46,7 @@ const Broker = ({ user }) => {
     } else if (fCity !== "") {
       setFBrokers(
         brokers.filter((broker) => {
-          return broker.location.city === fCity;
+          return broker.location.city.toLowerCase() === fCity.toLowerCase();
         })
       );
     }

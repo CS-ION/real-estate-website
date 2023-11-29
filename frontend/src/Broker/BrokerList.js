@@ -82,9 +82,11 @@ function Broker({
         </div>
       </div>
       <div className="brok-buttons">
-        <button className="delete" onClick={() => handleDelete(id)}>
-          Delete
-        </button>
+        {user.role === "ADMIN" ? (
+          <button className="delete" onClick={() => handleDelete(id)}>
+            Delete
+          </button>
+        ) : null}
       </div>
     </li>
   );

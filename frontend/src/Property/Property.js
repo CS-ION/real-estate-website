@@ -28,6 +28,16 @@ const Property = ({ user }) => {
 
   const handleResetFilters = (e) => {
     e.preventDefault();
+    setMinPrice(null);
+    setMaxPrice(null);
+    setFStreetName(null);
+    setFCity(null);
+    setFProvince(null);
+    setFBedrooms(null);
+    setFBathrooms(null);
+    setFType(null);
+    setFStatus(null);
+    setFStreetNumber(null);
     setDisplayProperties(properties);
     alert("Filters Removed");
   };
@@ -110,8 +120,6 @@ const Property = ({ user }) => {
         );
         setProperties(response.data);
         setDisplayProperties(response.data);
-        console.log("GET");
-        console.log(properties);
       } catch (error) {
         console.log("Cannot Load Property Data! " + error);
       }
