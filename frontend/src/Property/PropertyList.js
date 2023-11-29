@@ -22,8 +22,6 @@ const PropertyList = ({
   setCrud,
 }) => {
   const [houseId, setHouseId] = useState("");
-  console.log("AT LIST");
-  console.log(properties);
   if (properties.length === 0) {
     return <p>No Properties to Display!!</p>;
   }
@@ -52,7 +50,7 @@ const PropertyList = ({
             user={user}
             property={property}
             id={property.houseId}
-            unitNumber={property.unitNumber}
+            unitNumber={property.unit}
             streetNumber={property.address.streetNumber}
             streetName={property.address.street}
             city={property.address.city}
@@ -119,12 +117,12 @@ function Property({
           `http://localhost:8080/api/houses/house-delete/${propertyId}`
         );
         setCrud((crud) => !crud);
+        alert("Deleted Property with broker " + fname + " " + lname);
       } catch (error) {
         alert("Cannot Delete Property! " + error);
       }
     }
     deleteProperties();
-    alert("Deleted Property with broker " + fname + " " + lname);
   };
   const handleUpdate = () => {
     if (user.role === "USER" || user.id !== brokerId) {
@@ -195,7 +193,8 @@ function Property({
               {area}
             </div>
             <div className="li-price">
-              <p>Price(CAD)</p>$ {price}
+              <p>Price(CAD)</p>
+              {price}
             </div>
           </div>
         </div>
@@ -205,18 +204,26 @@ function Property({
         <div className="li-description">{description}</div>
       </div>
       <div className="prop-buttons">
-        <button className="update" onClick={handleUpdate}>
-          Update
-        </button>
-        <button className="delete" onClick={() => handleDelete(id)}>
-          Delete
-        </button>
-        <button className="request-viewing" onClick={handleRequestViewing}>
-          Request Viewing
-        </button>
-        <button className="buy-offer" onClick={handleBuyOffer}>
-          Submit Offer
-        </button>
+        {user.role === "BROKER" ? (
+          <>
+            <button className="update" onClick={handleUpdate}>
+              Update
+            </button>
+            <button className="delete" onClick={() => handleDelete(id)}>
+              Delete
+            </button>{" "}
+          </>
+        ) : null}
+        {user.role === "USER" ? (
+          <>
+            <button className="request-viewing" onClick={handleRequestViewing}>
+              Request Viewing
+            </button>
+            <button className="buy-offer" onClick={handleBuyOffer}>
+              Submit Offer
+            </button>
+          </>
+        ) : null}
         <span
           className="status"
           style={{

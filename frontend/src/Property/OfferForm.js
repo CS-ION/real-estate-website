@@ -36,6 +36,23 @@ const OfferForm = ({ user, setShowOfferForm, houseId, setHouseId }) => {
 
     async function sentBuyOffer() {
       try {
+        const response = await axios.get(
+          `http://localhost:8080/api/houses/${houseId}`
+        );
+        const house = response.data;
+        messageBody.offerDescription =
+          house.address.streetNumber +
+          " " +
+          house.address.street +
+          ", " +
+          house.address.city +
+          ", " +
+          house.address.province +
+          " " +
+          house.address.postalCode +
+          "\n\n" +
+          description;
+
         await axios.post(
           `http://localhost:8080/api/users/buy-offer/${user.id}/${houseId}`,
           messageBody

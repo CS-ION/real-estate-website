@@ -16,23 +16,25 @@ const PropertyHeader = ({
     <div className="property-listing-header">
       <div className="property-listing-header-contents">
         <h1 className="property-listings">PROPERTY LISTINGS</h1>
-        <button
-          className="showForm"
-          onClick={() => {
-            if (user.role === "USER") {
-              alert("Unauthorized to add properties!");
-              return;
-            }
-            setShowForm((show) => !show);
-            if (!showForm) {
-              setShowViewForm(false);
-              setShowOfferForm(false);
-            }
-            setPropertyToBeUpdated(null);
-          }}
-        >
-          {showForm || propertyToBeUpdated ? "CLOSE FORM" : "ADD A PROPERTY"}
-        </button>
+        {user.role === "BROKER" ? (
+          <button
+            className="showForm"
+            onClick={() => {
+              if (user.role === "USER") {
+                alert("Unauthorized to add properties!");
+                return;
+              }
+              setShowForm((show) => !show);
+              if (!showForm) {
+                setShowViewForm(false);
+                setShowOfferForm(false);
+              }
+              setPropertyToBeUpdated(null);
+            }}
+          >
+            {showForm || propertyToBeUpdated ? "CLOSE FORM" : "ADD A PROPERTY"}
+          </button>
+        ) : null}
       </div>
       <div className="form-container">
         {showForm || propertyToBeUpdated ? (

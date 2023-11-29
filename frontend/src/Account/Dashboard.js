@@ -10,18 +10,44 @@ const Dashboard = ({ user }) => {
 
   useEffect(() => {
     async function getViewingRequests() {
-      try {
-        const response_requests = await axios.get(
-          `http://localhost:8080/api/users/viewing-requests/${user.id}`
-        );
-        setViewingRequests(response_requests.data);
-
-        const response_offers = await axios.get(
-          `http://localhost:8080/api/users/all-buy-offers/${user.id}`
-        );
-        setOffers(response_offers.data);
-      } catch (error) {
-        console.log("Error fetching user data", error);
+      if (user.role === "USER") {
+        try {
+          const response_requests = await axios.get(
+            `http://localhost:8080/api/users/viewing-requests/${user.id}`
+          );
+          setViewingRequests(response_requests.data);
+        } catch (error) {
+          console.log("Error fetching user data", error);
+        }
+        try {
+          const response_offers = await axios.get(
+            `http://localhost:8080/api/users/all-buy-offers/${user.id}`
+          );
+          if (response_offers.data.length) {
+            setOffers(response_offers.data);
+          }
+        } catch (error) {
+          console.log("Error fetching user data", error);
+        }
+      } else if (user.role === "BROKER") {
+        try {
+          const response_requests = await axios.get(
+            `http://localhost:8080/api/brokers/viewing-requests/${user.id}`
+          );
+          setViewingRequests(response_requests.data);
+        } catch (error) {
+          console.log("Error fetching broker data", error);
+        }
+        try {
+          const response_offers = await axios.get(
+            `http://localhost:8080/api/brokers/buy-offers/${user.id}`
+          );
+          if (response_offers.data.length) {
+            setOffers(response_offers.data);
+          }
+        } catch (error) {
+          console.log("Error fetching user data", error);
+        }
       }
     }
     getViewingRequests();
@@ -35,11 +61,17 @@ const Dashboard = ({ user }) => {
           viewingRequests.map((viewingRequest) => (
             <ViewReq
               key={viewingRequest.viewingRequestId}
+              id={viewingRequest.viewingRequestId}
               user={user}
-              houseId={viewingRequest.houseId}
-              house={null}
+              user_details={
+                viewingRequest.userFirstName +
+                " " +
+                viewingRequest.userLastName +
+                " [" +
+                viewingRequest.userEmail +
+                "]\n"
+              }
               brokerId={viewingRequest.brokerId}
-              broker={null}
               description={viewingRequest.availabilityDescription}
               availability={viewingRequest.availability}
               setUpdates={setUpdates}
@@ -55,9 +87,17 @@ const Dashboard = ({ user }) => {
           offers.map((offer) => (
             <OfferReq
               key={offer.buy_offer_id}
+              id={offer.buy_offer_id}
               user={user}
+              user_details={
+                offer.userFirstName +
+                " " +
+                offer.userLastName +
+                " [" +
+                offer.userEmail +
+                "]\n"
+              }
               houseId={offer.houseId}
-              brokerId={offer.brokerId}
               description={offer.offerDescription}
               status={offer.status}
               price={offer.offer_price}
@@ -65,7 +105,7 @@ const Dashboard = ({ user }) => {
             />
           ))
         ) : (
-          <strong>No Viewing Requests Found!</strong>
+          <strong>No Offers Found!</strong>
         )}
       </ul>
     </div>
@@ -73,8 +113,9 @@ const Dashboard = ({ user }) => {
 };
 
 function ViewReq({
+  id,
   user,
-  houseId,
+  user_details,
   brokerId,
   description,
   availability,
@@ -85,6 +126,17 @@ function ViewReq({
       alert("Unauthorized to delete requests!");
       return;
     }
+    async function deleteRequest() {
+      try {
+        await axios.delete(
+          `http://localhost:8080/api/brokers/request-viewing/${brokerId}/${id}`
+        );
+      } catch (error) {
+        alert("Could not update status of the offer!");
+      }
+    }
+    deleteRequest();
+    alert("REQUEST DELETED!");
     setUpdates((updates) => !updates);
   };
 
@@ -94,8 +146,15 @@ function ViewReq({
         <div className="li-available">
           Days Available: {availability.join(", ")}
         </div>
+        {user.role === "BROKER" ? (
+          <div className="li-available">{"Viewer: " + user_details}</div>
+        ) : null}
         <div className="li-description">
-          {description ? description : "No description provided!"}
+          <pre>
+            {description
+              ? "Property: " + description
+              : "No description provided!"}
+          </pre>
         </div>
       </div>
       {user.role === "BROKER" ? (
@@ -111,22 +170,34 @@ function ViewReq({
 
 function OfferReq({
   user,
+  user_details,
+  id,
   houseId,
-  house,
-  brokerId,
-  broker,
   description,
   status,
   price,
   setUpdates,
 }) {
-  async function deleteProperties() {
+  async function deleteProperty() {
     try {
       await axios.delete(
         `http://localhost:8080/api/houses/house-delete/${houseId}`
       );
     } catch (error) {
-      alert("Cannot Delete Property! " + error);
+      console.log("Cannot Delete Property! " + error);
+    }
+  }
+  async function updateOffer(status, isSold) {
+    try {
+      await axios.put(
+        `http://localhost:8080/api/brokers/buy-offers/update-status/${id}?status=` +
+          status
+      );
+      if (isSold) {
+        deleteProperty();
+      }
+    } catch (error) {
+      alert("Could not update status of the offer! " + error);
     }
   }
   const handleAccept = () => {
@@ -134,45 +205,65 @@ function OfferReq({
       alert("Unauthorized to accept requests!");
       return;
     }
-    deleteProperties();
+    updateOffer("accepted", true);
+    alert("OFFER ACCEPTED!");
     setUpdates((updates) => !updates);
   };
-  const handleDelete = () => {
+  const handleReject = () => {
     if (user.role !== "BROKER") {
       alert("Unauthorized to delete requests!");
       return;
     }
-    deleteProperties();
+    updateOffer("rejected", false);
+    alert("OFFER REJECTED!");
     setUpdates((updates) => !updates);
   };
-
   return (
     <li className="request">
       <div className="deets">
         <div className="li-available">Offer Price (CAD): {price}</div>
+        {user.role === "BROKER" ? (
+          <div className="li-available">{"Buyer: " + user_details}</div>
+        ) : null}
         <div className="li-description">
-          {description ? description : "No description provided!"}
+          <pre>
+            {description
+              ? "Property: " + description
+              : "No description provided!"}
+          </pre>
         </div>
       </div>
       <div className="brok-buttons">
-        {user.role === "BROKER" && status === "Pending" ? (
+        {user.role === "BROKER" && status.toLowerCase() === "pending" ? (
           <>
             <button className="update" onClick={handleAccept}>
               Accept
             </button>
-            <button className="delete" onClick={handleDelete}>
+            <button className="delete" onClick={handleReject}>
               Reject
             </button>{" "}
           </>
         ) : null}
-        <span
-          className="status"
-          style={{
-            backgroundColor: status === "Pending" ? "#3b82f6" : "#16a34a",
-          }}
-        >
-          {status}
-        </span>
+        {status.toLowerCase() !== "pending" ? (
+          <span
+            className="status"
+            style={{
+              backgroundColor:
+                status.toLowerCase() === "rejected" ? "#FF0000" : "#008000",
+            }}
+          >
+            {status}
+          </span>
+        ) : (
+          <span
+            className="status"
+            style={{
+              backgroundColor: "#0000FF",
+            }}
+          >
+            {status}
+          </span>
+        )}
       </div>
     </li>
   );
