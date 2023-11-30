@@ -2,18 +2,23 @@ import "../App.css";
 import "./Broker.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import BrokerHeader from "./BrokerHeader";
 import BrokerList from "./BrokerList";
 
-const Broker = () => {
+const Broker = ({ user }) => {
   const [brokers, setBrokers] = useState([]);
-  const [brokerToBeUpdated, setBrokerToBeUpdated] = useState(null);
-  const [showForm, setShowForm] = useState(false);
   const [crud, setCrud] = useState(false);
   // Filter criteria states
   const [fBrokers, setFBrokers] = useState([]);
   const [fCity, setFCity] = useState("");
   const [fProvince, setFProvince] = useState("");
+
+  const handleResetFilters = (e) => {
+    e.preventDefault();
+    setFCity("");
+    setFProvince("");
+    setFBrokers(brokers);
+    alert("Filters Removed");
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,7 +28,7 @@ const Broker = () => {
       return;
     }
 
-    if (fProvince != "" && fCity != "") {
+    if (fProvince !== "" && fCity !== "") {
       setFBrokers(
         brokers.filter((broker) => {
           return (
@@ -32,19 +37,20 @@ const Broker = () => {
           );
         })
       );
-    } else if (fProvince != "") {
+    } else if (fProvince !== "") {
       setFBrokers(
         brokers.filter((broker) => {
           return broker.location.province === fProvince;
         })
       );
-    } else if (fCity != "") {
+    } else if (fCity !== "") {
       setFBrokers(
         brokers.filter((broker) => {
-          return broker.location.city === fCity;
+          return broker.location.city.toLowerCase() === fCity.toLowerCase();
         })
       );
     }
+    alert("Filters Applied");
   };
 
   useEffect(() => {
@@ -56,7 +62,7 @@ const Broker = () => {
         setBrokers(response.data);
         setFBrokers(response.data);
       } catch (error) {
-        alert("Cannot Load Data! " + error);
+        console.log("Cannot Load Broker Data! " + error);
       }
     }
     getBrokers();
@@ -64,13 +70,7 @@ const Broker = () => {
 
   return (
     <div className="mainframe">
-      <BrokerHeader
-        showForm={showForm}
-        setShowForm={setShowForm}
-        brokerToBeUpdated={brokerToBeUpdated}
-        setBrokerToBeUpdated={setBrokerToBeUpdated}
-        setCrud={setCrud}
-      />
+      <h1 className="broker-listings">BROKER LISTINGS</h1>
       <form className="bfilter-container">
         <input
           className="city-name"
@@ -103,14 +103,9 @@ const Broker = () => {
         </select>
 
         <button onClick={handleSubmit}>Apply Filters</button>
-        <button onClick={() => setFBrokers(brokers)}>All Brokers</button>
+        <button onClick={handleResetFilters}>All Brokers</button>
       </form>
-      <BrokerList
-        brokers={fBrokers}
-        setShowForm={setShowForm}
-        setBrokerToBeUpdated={setBrokerToBeUpdated}
-        setCrud={setCrud}
-      />
+      <BrokerList user={user} brokers={fBrokers} setCrud={setCrud} />
     </div>
   );
 };

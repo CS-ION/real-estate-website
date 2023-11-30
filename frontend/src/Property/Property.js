@@ -5,13 +5,16 @@ import axios from "axios";
 import PropertyHeader from "./PropertyHeader";
 import PropertyList from "./PropertyList";
 
-const Property = () => {
+const Property = ({ user }) => {
   const [properties, setProperties] = useState([]);
   const [propertyToBeUpdated, setPropertyToBeUpdated] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [showViewForm, setShowViewForm] = useState(false);
+  const [showOfferForm, setShowOfferForm] = useState(false);
   const [crud, setCrud] = useState(false);
   // Filter criteria states
+  const [filters, setFilters] = useState(null);
+  const [displayProperties, setDisplayProperties] = useState([]);
   const [minPrice, setMinPrice] = useState(null);
   const [maxPrice, setMaxPrice] = useState(null);
   const [fStreetName, setFStreetName] = useState(null);
@@ -23,6 +26,22 @@ const Property = () => {
   const [fStatus, setFStatus] = useState(null);
   const [fStreetNumber, setFStreetNumber] = useState(null);
 
+  const handleResetFilters = (e) => {
+    e.preventDefault();
+    setMinPrice("");
+    setMaxPrice("");
+    setFStreetName("");
+    setFCity("");
+    setFProvince("");
+    setFBedrooms("");
+    setFBathrooms("");
+    setFType("");
+    setFStatus("");
+    setFStreetNumber("");
+    setDisplayProperties(properties);
+    alert("Filters Removed");
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -30,27 +49,42 @@ const Property = () => {
     const errors = {};
 
     if (fStreetNumber !== null) {
-      if (!isNumber.test(fStreetNumber) || parseInt(fStreetNumber, 10) <= 0) {
-        errors.price = "Street Number must be a positive number";
+      if (
+        fStreetNumber !== "" &&
+        (!isNumber.test(fStreetNumber) || parseInt(fStreetNumber, 10) <= 0)
+      ) {
+        errors.mprice = "Street Number must be a positive number";
       }
     }
     if (minPrice !== null) {
-      if (!isNumber.test(minPrice) || parseInt(minPrice, 10) <= 0) {
+      if (
+        minPrice !== "" &&
+        (!isNumber.test(minPrice) || parseInt(minPrice, 10) <= 0)
+      ) {
         errors.price = "Min Price must be a positive number";
       }
     }
     if (maxPrice !== null) {
-      if (!isNumber.test(maxPrice) || parseInt(maxPrice, 10) <= 0) {
+      if (
+        maxPrice !== "" &&
+        (!isNumber.test(maxPrice) || parseInt(maxPrice, 10) <= 0)
+      ) {
         errors.price = "Max Price must be a positive number";
       }
     }
     if (fBathrooms !== null) {
-      if (!isNumber.test(fBathrooms) || parseInt(fBathrooms, 10) < 1) {
+      if (
+        fBathrooms !== "" &&
+        (!isNumber.test(fBathrooms) || parseInt(fBathrooms, 10) < 1)
+      ) {
         errors.price = "Bathroom must be a non-zero positive number";
       }
     }
     if (fBedrooms !== null) {
-      if (!isNumber.test(fBedrooms) || parseInt(fBedrooms, 10) < 1) {
+      if (
+        fBedrooms !== "" &&
+        (!isNumber.test(fBedrooms) || parseInt(fBedrooms, 10) < 1)
+      ) {
         errors.price = "Bedroom must be a non-zero positive number";
       }
     }
@@ -60,16 +94,21 @@ const Property = () => {
       return;
     }
 
-    async function filterProperties() {
-      try {
-        const url = `http://localhost:8080/api/houses/filter?minPrice=${minPrice}&maxPrice=${maxPrice}&city=${fCity}&province=${fProvince}&bedrooms=${fBedrooms}&bathrooms=${fBathrooms}&type=${fType}&streetNumber=${fStreetNumber}&street=${fStreetName}`;
-        const response = await axios.get(url);
-        setCrud(response.data);
-      } catch (error) {
-        alert("Cannot Filter Data! " + error);
-      }
-    }
-    filterProperties();
+    const filters_form = {
+      minPrice: minPrice ? minPrice : null,
+      maxPrice: maxPrice ? maxPrice : null,
+      city: fCity ? fCity : null,
+      province: fProvince ? fProvince : null,
+      bedrooms: fBedrooms ? Number(fBedrooms) : null,
+      bathrooms: fBathrooms ? Number(fBathrooms) : null,
+      type: fType ? fType : null,
+      status: fStatus ? fStatus : null,
+      streetName: fStreetName ? fStreetName : null,
+      streetNumber: fStreetNumber ? Number(fStreetNumber) : null,
+    };
+
+    setFilters(filters_form);
+    setCrud((crud) => !crud);
     alert("Filters Applied");
   };
 
@@ -80,36 +119,45 @@ const Property = () => {
           "http://localhost:8080/api/houses/all-houses"
         );
         setProperties(response.data);
+        setDisplayProperties(response.data);
       } catch (error) {
-        alert("Cannot Load Data! " + error);
+        console.log("Cannot Load Property Data! " + error);
       }
     }
-    getProperties();
+
+    if (filters) {
+      filterProperty(properties, filters, setDisplayProperties);
+      setFilters(null);
+    } else {
+      getProperties();
+    }
   }, [crud]);
 
   return (
     <div className="mainframe">
       <PropertyHeader
+        user={user}
         showForm={showForm}
         setShowForm={setShowForm}
         propertyToBeUpdated={propertyToBeUpdated}
         setPropertyToBeUpdated={setPropertyToBeUpdated}
         setShowViewForm={setShowViewForm}
+        setShowOfferForm={setShowOfferForm}
         setCrud={setCrud}
       />
-      <form className="filter-container" onSubmit={handleSubmit}>
+      <form className="filter-container">
         <div className="sub-container-1">
           <select value={fStatus} onChange={(e) => setFStatus(e.target.value)}>
             <option value="">Choose Status:</option>
-            <option value="For Sale">For Sale</option>
-            <option value="To Lease">To Lease</option>
+            <option value="FOR_SALE">For Sale</option>
+            <option value="FOR_LEASE">To Lease</option>
           </select>
 
           <select value={fType} onChange={(e) => setFType(e.target.value)}>
             <option value="">Choose Type:</option>
-            <option value="Condo">Condo</option>
-            <option value="Apartment">Apartment</option>
-            <option value="House">House</option>
+            <option value="CONDO">Condo</option>
+            <option value="APARTMENT">Apartment</option>
+            <option value="HOUSE">House</option>
           </select>
 
           <input
@@ -185,17 +233,73 @@ const Property = () => {
             onChange={(e) => setFBathrooms(e.target.value)}
           />
         </div>
-        <button type="Submit">Apply Filters</button>
+        <button onClick={handleSubmit}>Apply Filters</button>
+        <button onClick={handleResetFilters}>All Properties</button>
       </form>
       <PropertyList
-        properties={properties}
+        user={user}
+        properties={displayProperties}
         setShowForm={setShowForm}
         setPropertyToBeUpdated={setPropertyToBeUpdated}
         showViewForm={showViewForm}
         setShowViewForm={setShowViewForm}
+        showOfferForm={showOfferForm}
+        setShowOfferForm={setShowOfferForm}
         setCrud={setCrud}
       />
     </div>
+  );
+};
+
+const filterProperty = (properties, filters, setDisplayProperties) => {
+  setDisplayProperties(
+    properties.filter((property) => {
+      // Check each filter condition
+      const meetsMinPrice =
+        filters.minPrice === null || property.price >= filters.minPrice;
+      const meetsMaxPrice =
+        filters.maxPrice === null || property.price <= filters.maxPrice;
+      const meetsCity =
+        filters.city === null ||
+        property.address.city.toLowerCase() === filters.city.toLowerCase();
+      const meetsProvince =
+        filters.province === null ||
+        property.address.province.toLowerCase() ===
+          filters.province.toLowerCase();
+      const meetsBedrooms =
+        filters.bedrooms === null ||
+        property.numberOfBedrooms === filters.bedrooms;
+      const meetsBathrooms =
+        filters.bathrooms === null ||
+        property.numberOfBathrooms === filters.bathrooms;
+      const meetsType =
+        filters.type === null ||
+        property.type.toLowerCase() === filters.type.toLowerCase();
+      const meetsStatus =
+        filters.status === null ||
+        property.status.toLowerCase() === filters.status.toLowerCase();
+      const meetsStreetName =
+        filters.streetName === null ||
+        property.address.street.toLowerCase() ===
+          filters.streetName.toLowerCase();
+      const meetsStreetNumber =
+        filters.streetNumber === null ||
+        property.address.streetNumber === filters.streetNumber;
+
+      // Combine all conditions using AND logic
+      return (
+        meetsMinPrice &&
+        meetsMaxPrice &&
+        meetsCity &&
+        meetsProvince &&
+        meetsBedrooms &&
+        meetsBathrooms &&
+        meetsType &&
+        meetsStatus &&
+        meetsStreetName &&
+        meetsStreetNumber
+      );
+    })
   );
 };
 

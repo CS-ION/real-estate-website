@@ -1,10 +1,9 @@
 import React, { useState } from "react";
+import axios from "axios";
 import "../App.css";
 import "./Property.css";
 
-const ViewingForm = ({ setViewForm, brokerEmail, setBrokerEmail }) => {
-  const [fname, setFname] = useState("");
-  const [lname, setLname] = useState("");
+const ViewingForm = ({ user, setViewForm, houseId, setHouseId }) => {
   const [selectedDays, setSelectedDays] = useState("");
   const [description, setDescription] = useState("");
 
@@ -20,54 +19,65 @@ const ViewingForm = ({ setViewForm, brokerEmail, setBrokerEmail }) => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    // Integrate with Email API to send brokerEmail
-    console.log(brokerEmail);
 
     const errors = {};
 
-    if (
-      fname === "" ||
-      lname === "" ||
-      description === "" ||
-      !selectedDays.length
-    ) {
+    if (description === "" || !selectedDays.length) {
       errors.requiredFields = "All fields are mandatory";
     }
     if (description.length > 300) {
       errors.description = "Description must be 300 characters or less";
     }
+
     if (Object.keys(errors).length > 0) {
       alert("Validation errors: " + Object.values(errors).join("\n"));
       return;
     }
 
-    setBrokerEmail("");
+    const messageBody = {
+      availabilityDescription: description,
+      availability: selectedDays,
+    };
+
+    async function sentViewingRequest() {
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/api/houses/${houseId}`
+        );
+        const house = response.data;
+        messageBody.availabilityDescription =
+          house.address.streetNumber +
+          " " +
+          house.address.street +
+          ", " +
+          house.address.city +
+          ", " +
+          house.address.province +
+          " " +
+          house.address.postalCode +
+          "\n\n" +
+          description;
+
+        await axios.post(
+          `http://localhost:8080/api/users/request-viewing/${user.id}/${houseId}`,
+          messageBody
+        );
+        alert("Request Sent");
+      } catch (error) {
+        alert("Error sending request!", error);
+      }
+    }
+
+    sentViewingRequest();
+
+    setHouseId("");
     setViewForm(false);
-    alert("Message Sent");
   };
 
   return (
     <form className="viewing-form" onSubmit={handleFormSubmit}>
       <div className="form-contents">
         <div className="name-address">
-          <div className="name">
-            <input
-              className="fname"
-              type="text"
-              value={fname}
-              onChange={(e) => setFname(e.target.value)}
-              placeholder="First Name"
-            />
-
-            <input
-              className="lname"
-              type="text"
-              value={lname}
-              onChange={(e) => setLname(e.target.value)}
-              placeholder="Last Name"
-            />
-          </div>
-
           <div className="days">
             <label>Select the days you are available:</label>
             <div className="theDays">

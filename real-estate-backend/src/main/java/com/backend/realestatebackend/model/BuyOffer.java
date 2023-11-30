@@ -8,36 +8,32 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-
-import java.util.List;
-
 
 
 @Data
 @NoArgsConstructor
 @Entity
-public class ViewingRequest {
-
+public class BuyOffer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long viewingRequestId;
+    private Long buy_offer_id;
 
-    public ViewingRequest(String userFirstName,String userLastName,
+    public BuyOffer(String userFirstName,String userLastName,
                           String userEmail,Long houseId,
                           Long userId,Long brokerId,
-                          String availabilityDescription,
-                          List<String> availability){
+                          String offerDescription,
+                          Long offer_price,
+                          String status){
         this.userFirstName = userFirstName;
         this.userLastName = userLastName;
         this.userEmail = userEmail;
         this.houseId = houseId;
         this.userId = userId;
         this.brokerId = brokerId;
-        this.availabilityDescription = availabilityDescription;
-        this.availability = availability;
+        this.offer_price = offer_price;
+        this.offerDescription = offerDescription;
+        this.status = status;
     }
-
 
     @NotBlank
     private String userFirstName;
@@ -53,11 +49,8 @@ public class ViewingRequest {
     private Long brokerId;
     @NotNull
     private Long houseId;
-    private String availabilityDescription;
-
+    private Long offer_price;
+    private String offerDescription;
     private String status;
-
-    private List<String> availability = new ArrayList<>();
-
 
 }

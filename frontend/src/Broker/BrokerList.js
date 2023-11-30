@@ -2,35 +2,30 @@ import React from "react";
 import axios from "axios";
 import "./Broker.css";
 
-const BrokerList = ({
-  brokers,
-  setShowForm,
-  setBrokerToBeUpdated,
-  setCrud,
-}) => {
+const BrokerList = ({ user, brokers, setCrud }) => {
   if (brokers.length === 0) {
     return <p>No Brokers to Display!!</p>;
   }
   return (
     <div className="broker-list-container">
       <ul className="broker-list">
-        {brokers.map((broker) => (
-          <Broker
-            key={broker.brokerId}
-            broker={broker}
-            id={broker.brokerId}
-            fname={broker.firstName}
-            lname={broker.lastName}
-            city={broker.location.city}
-            province={broker.location.province}
-            email={broker.email}
-            phone={broker.phoneNumber}
-            description={broker.broker_description}
-            setShowForm={setShowForm}
-            setBrokerToBeUpdated={setBrokerToBeUpdated}
-            setCrud={setCrud}
-          />
-        ))}
+        {brokers
+          .sort((a, b) => b.brokerId - a.brokerId)
+          .map((broker) => (
+            <Broker
+              key={broker.brokerId}
+              user={user}
+              id={broker.brokerId}
+              fname={broker.firstName}
+              lname={broker.lastName}
+              city={broker.location.city}
+              province={broker.location.province}
+              email={broker.email}
+              phone={broker.phoneNumber}
+              description={broker.broker_description}
+              setCrud={setCrud}
+            />
+          ))}
       </ul>
     </div>
   );
@@ -38,7 +33,7 @@ const BrokerList = ({
 
 function Broker({
   id,
-  broker,
+  user,
   fname,
   lname,
   city,
@@ -46,14 +41,16 @@ function Broker({
   email,
   phone,
   description,
-  setShowForm,
-  setBrokerToBeUpdated,
   setCrud,
 }) {
   const handleDelete = (brokerId) => {
+    if (user.role !== "ADMIN") {
+      alert("Unauthorized to delete properties!");
+      return;
+    }
     async function deleteBrokers() {
       try {
-        const response = await axios.delete(
+        await axios.delete(
           `http://localhost:8080/api/brokers/delete-broker/${brokerId}`
         );
         setCrud((crud) => !crud);
@@ -63,14 +60,6 @@ function Broker({
     }
     deleteBrokers();
     alert("Deleted Broker with ID " + brokerId);
-  };
-  const handleUpdate = () => {
-    setBrokerToBeUpdated(broker);
-    setShowForm(true);
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
   };
 
   return (
@@ -90,15 +79,16 @@ function Broker({
             <div className="li-phone">Phone: {phone}</div>
           </div>
         </div>
-        <div className="li-description">{description}</div>
+        <div className="li-description">
+          {description ? description : "No Description Provided!"}
+        </div>
       </div>
       <div className="brok-buttons">
-        <button className="update" onClick={handleUpdate}>
-          Update
-        </button>
-        <button className="delete" onClick={() => handleDelete(id)}>
-          Delete
-        </button>
+        {user.role === "ADMIN" ? (
+          <button className="delete" onClick={() => handleDelete(id)}>
+            Delete
+          </button>
+        ) : null}
       </div>
     </li>
   );

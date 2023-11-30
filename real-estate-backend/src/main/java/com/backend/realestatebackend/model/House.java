@@ -1,6 +1,6 @@
 package com.backend.realestatebackend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
@@ -9,6 +9,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Objects;
 
 @Entity
 @Data
@@ -83,7 +85,10 @@ public class House {
     @Column(name = "description")
     private String house_description;
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(houseId);
+    }
 
     @Override
     public boolean equals(Object obj) {

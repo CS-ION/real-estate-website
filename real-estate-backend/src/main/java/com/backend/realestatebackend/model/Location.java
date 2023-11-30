@@ -14,6 +14,11 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class Location {
 
+    public Location(Location location){
+        this.city = location.city;
+        this.province = location.province;
+    }
+
     @NotBlank(message = "City cannot be blank.")
     @Column(name = "city")
     private String city;

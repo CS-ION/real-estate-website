@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Property.css";
 import axios from "axios";
 import ViewingForm from "./ViewingForm";
+import OfferForm from "./OfferForm";
 
 const TYPE = [
   { name: "CONDO", color: "#ef4444" },
@@ -10,14 +11,17 @@ const TYPE = [
 ];
 
 const PropertyList = ({
+  user,
   properties,
   setShowForm,
   setPropertyToBeUpdated,
   showViewForm,
   setShowViewForm,
+  showOfferForm,
+  setShowOfferForm,
   setCrud,
 }) => {
-  const [brokerEmail, setBrokerEmail] = useState("");
+  const [houseId, setHouseId] = useState("");
   if (properties.length === 0) {
     return <p>No Properties to Display!!</p>;
   }
@@ -25,38 +29,53 @@ const PropertyList = ({
     <div className="property-list-container">
       {showViewForm ? (
         <ViewingForm
+          user={user}
           setViewForm={setShowViewForm}
-          brokerEmail={brokerEmail}
-          setBrokerEmail={setBrokerEmail}
+          houseId={houseId}
+          setHouseId={setHouseId}
+        />
+      ) : null}
+      {showOfferForm ? (
+        <OfferForm
+          user={user}
+          setShowOfferForm={setShowOfferForm}
+          houseId={houseId}
+          setHouseId={setHouseId}
         />
       ) : null}
       <ul className="property-list">
-        {properties.map((property) => (
-          <Property
-            key={property.id}
-            property={property}
-            id={property.houseId}
-            unitNumber={property.unitNumber}
-            streetNumber={property.address.streetNumber}
-            streetName={property.address.street}
-            city={property.address.city}
-            province={property.address.province}
-            postalCode={property.address.postalCode}
-            description={property.house_description}
-            bathrooms={property.numberOfBathrooms}
-            bedrooms={property.numberOfBedrooms}
-            area={property.area}
-            price={property.price}
-            type={property.type}
-            status={property.status}
-            email={property.broker.email}
-            setBrokerEmail={setBrokerEmail}
-            setShowForm={setShowForm}
-            setShowViewForm={setShowViewForm}
-            setPropertyToBeUpdated={setPropertyToBeUpdated}
-            setCrud={setCrud}
-          />
-        ))}
+        {properties
+          .sort((a, b) => b.houseId - a.houseId)
+          .map((property) => (
+            <Property
+              key={property.houseId}
+              user={user}
+              property={property}
+              id={property.houseId}
+              unitNumber={property.unit}
+              streetNumber={property.address.streetNumber}
+              streetName={property.address.street}
+              city={property.address.city}
+              province={property.address.province}
+              postalCode={property.address.postalCode}
+              description={property.house_description}
+              bathrooms={property.numberOfBathrooms}
+              bedrooms={property.numberOfBedrooms}
+              area={property.area}
+              price={property.price}
+              type={property.type}
+              status={property.status}
+              brokerId={property.broker.brokerId}
+              fname={property.broker.firstName}
+              lname={property.broker.lastName}
+              setHouseId={setHouseId}
+              setShowForm={setShowForm}
+              setShowViewForm={setShowViewForm}
+              setShowOfferForm={setShowOfferForm}
+              setPropertyToBeUpdated={setPropertyToBeUpdated}
+              setCrud={setCrud}
+            />
+          ))}
       </ul>
     </div>
   );
@@ -64,6 +83,7 @@ const PropertyList = ({
 
 function Property({
   id,
+  user,
   property,
   unitNumber,
   streetNumber,
@@ -78,28 +98,39 @@ function Property({
   price,
   type,
   status,
-  email,
-  setBrokerEmail,
+  brokerId,
+  fname,
+  lname,
+  setHouseId,
   setShowForm,
   setShowViewForm,
+  setShowOfferForm,
   setPropertyToBeUpdated,
   setCrud,
 }) {
   const handleDelete = (propertyId) => {
+    if (user.role === "USER" || user.id !== brokerId) {
+      alert("Unauthorized to delete properties!");
+      return;
+    }
     async function deleteProperties() {
       try {
-        const response = await axios.delete(
+        await axios.delete(
           `http://localhost:8080/api/houses/house-delete/${propertyId}`
         );
         setCrud((crud) => !crud);
+        alert("Deleted Property with broker " + fname + " " + lname);
       } catch (error) {
         alert("Cannot Delete Property! " + error);
       }
     }
     deleteProperties();
-    alert("Deleted Property with ID " + propertyId);
   };
   const handleUpdate = () => {
+    if (user.role === "USER" || user.id !== brokerId) {
+      alert("Unauthorized to delete properties!");
+      return;
+    }
     setPropertyToBeUpdated(property);
     setShowViewForm(false);
     setShowForm(true);
@@ -109,9 +140,28 @@ function Property({
     });
   };
   const handleRequestViewing = () => {
+    if (user.role !== "USER") {
+      alert("Unauthorized to request viewings!");
+      return;
+    }
     setShowForm(false);
+    setShowOfferForm(false);
     setShowViewForm(true);
-    setBrokerEmail(email);
+    setHouseId(id);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+  const handleBuyOffer = () => {
+    if (user.role !== "USER") {
+      alert("Unauthorized to submit offers!");
+      return;
+    }
+    setShowForm(false);
+    setShowViewForm(false);
+    setShowOfferForm(true);
+    setHouseId(id);
     window.scrollTo({
       top: 0,
       behavior: "smooth",
@@ -145,22 +195,37 @@ function Property({
               {area}
             </div>
             <div className="li-price">
-              <p>Price(CAD)</p>$ {price}
+              <p>Price(CAD)</p>
+              {price}
             </div>
           </div>
+        </div>
+        <div className="li-broker">
+          <strong>{"Broker Name: " + fname + " " + lname}</strong>
         </div>
         <div className="li-description">{description}</div>
       </div>
       <div className="prop-buttons">
-        <button className="update" onClick={handleUpdate}>
-          Update
-        </button>
-        <button className="delete" onClick={() => handleDelete(id)}>
-          Delete
-        </button>
-        <button className="request-viewing" onClick={handleRequestViewing}>
-          Request Viewing
-        </button>
+        {user.role === "BROKER" ? (
+          <>
+            <button className="update" onClick={handleUpdate}>
+              Update
+            </button>
+            <button className="delete" onClick={() => handleDelete(id)}>
+              Delete
+            </button>{" "}
+          </>
+        ) : null}
+        {user.role === "USER" ? (
+          <>
+            <button className="request-viewing" onClick={handleRequestViewing}>
+              Request Viewing
+            </button>
+            <button className="buy-offer" onClick={handleBuyOffer}>
+              Submit Offer
+            </button>
+          </>
+        ) : null}
         <span
           className="status"
           style={{

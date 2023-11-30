@@ -3,34 +3,43 @@ import "./Property.css";
 import PropertyForm from "./PropertyForm";
 
 const PropertyHeader = ({
+  user,
   showForm,
   setShowForm,
-  setProperties,
   propertyToBeUpdated,
   setPropertyToBeUpdated,
   setShowViewForm,
+  setShowOfferForm,
   setCrud,
 }) => {
   return (
     <div className="property-listing-header">
       <div className="property-listing-header-contents">
         <h1 className="property-listings">PROPERTY LISTINGS</h1>
-        <button
-          className="showForm"
-          onClick={() => {
-            setShowForm((show) => !show);
-            if (!showForm) {
-              setShowViewForm(false);
-            }
-            setPropertyToBeUpdated(null);
-          }}
-        >
-          {showForm || propertyToBeUpdated ? "CLOSE FORM" : "ADD A PROPERTY"}
-        </button>
+        {user.role === "BROKER" ? (
+          <button
+            className="showForm"
+            onClick={() => {
+              if (user.role === "USER") {
+                alert("Unauthorized to add properties!");
+                return;
+              }
+              setShowForm((show) => !show);
+              if (!showForm) {
+                setShowViewForm(false);
+                setShowOfferForm(false);
+              }
+              setPropertyToBeUpdated(null);
+            }}
+          >
+            {showForm || propertyToBeUpdated ? "CLOSE FORM" : "ADD A PROPERTY"}
+          </button>
+        ) : null}
       </div>
       <div className="form-container">
         {showForm || propertyToBeUpdated ? (
           <PropertyForm
+            user={user}
             setShowForm={setShowForm}
             propertyToBeUpdated={propertyToBeUpdated}
             setPropertyToBeUpdated={setPropertyToBeUpdated}

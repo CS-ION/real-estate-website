@@ -1,6 +1,15 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Account.css";
+import "../App.css";
+
+function decodeJwt(token) {
+  const base64Url = token.split(".")[1];
+  const base64 = base64Url.replace("-", "+").replace("_", "/");
+  const payload = JSON.parse(atob(base64));
+  return payload;
+}
 
 const RegisterForm = ({ setUser }) => {
   const [type, setType] = useState("");
@@ -75,22 +84,52 @@ const RegisterForm = ({ setUser }) => {
       userObject.password = password;
       userObject.first_name = fname;
       userObject.last_name = lname;
+
+      async function addUser(userObject) {
+        try {
+          const response = await axios.post(
+            "http://localhost:8080/api/auth/register-user",
+            userObject
+          );
+          const token = response.data.token;
+          const decodedToken = decodeJwt(token);
+          setUser(decodedToken);
+        } catch (error) {
+          alert("Cannot register user", error);
+        }
+      }
+
+      addUser(userObject);
     } else if (type === "BROKER") {
-      userObject.firstName = fname;
-      userObject.lastName = lname;
+      userObject.first_name = fname;
+      userObject.last_name = lname;
       userObject.email = email;
+      userObject.password = password;
       userObject.phoneNumber = phone;
       userObject.location = {
         city: city,
         province: province,
       };
       userObject.broker_description = description;
+
+      async function addBroker(userObject) {
+        try {
+          const response = await axios.post(
+            "http://localhost:8080/api/auth/register-broker",
+            userObject
+          );
+          const token = response.data.token;
+          const decodedToken = decodeJwt(token);
+          setUser(decodedToken);
+        } catch (error) {
+          alert("Cannot register user", error);
+        }
+      }
+
+      addBroker(userObject);
     }
 
-    setUser(userObject);
     navigate("/Property");
-
-    // Integrate with Email API to send brokerEmail
   };
 
   return (
@@ -161,7 +200,7 @@ const RegisterForm = ({ setUser }) => {
           >
             <option value="">Province:</option>
             <option value="Ontario">Ontario</option>
-            <option value="Apartment">Quebec</option>
+            <option value="Quebec">Quebec</option>
             <option value="Nova Scotia">Nova Scotia</option>
             <option value="Manitoba">Manitoba</option>
             <option value="British Columbia">British Columbia</option>

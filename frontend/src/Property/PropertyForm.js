@@ -3,6 +3,7 @@ import axios from "axios";
 import "./Property.css";
 
 const PropertyForm = ({
+  user,
   setShowForm,
   propertyToBeUpdated,
   setPropertyToBeUpdated,
@@ -32,7 +33,7 @@ const PropertyForm = ({
     if (propertyToBeUpdated) {
       setStatus(propertyToBeUpdated.status);
       setType(propertyToBeUpdated.type);
-      setUnitNumber(propertyToBeUpdated.unitNumber);
+      setUnitNumber(propertyToBeUpdated.unit);
       setStreetNumber(propertyToBeUpdated.address.streetNumber);
       setStreetName(propertyToBeUpdated.address.street);
       setCity(propertyToBeUpdated.address.city);
@@ -98,12 +99,11 @@ const PropertyForm = ({
       return;
     }
 
-    //Will Add broker when registration is implemented
-    //Will add viewing requests when integrated better with project
     const newProperty = {
       status: status,
       type: type,
-      unitNumber: unitNumber === "" ? null : unitNumber,
+      unit:
+        unitNumber === "" || unitNumber === null ? null : Number(unitNumber),
       address: {
         streetNumber: streetNumber,
         street: streetName,
@@ -123,9 +123,10 @@ const PropertyForm = ({
       async function updateProperties() {
         try {
           const response = await axios.put(
-            "http://localhost:8080/api/houses/house-update/",
+            "http://localhost:8080/api/houses/house-update/" + user.id,
             newProperty
           );
+          alert("Property Updated!");
           setCrud(response.data);
         } catch (error) {
           alert("Cannot Update Property! " + error);
@@ -137,7 +138,7 @@ const PropertyForm = ({
       async function addProperties() {
         try {
           const response = await axios.post(
-            "http://localhost:8080/api/houses/add-house/2",
+            "http://localhost:8080/api/houses/add-house/" + user.id,
             newProperty
           );
           setCrud(response.data);
@@ -160,7 +161,7 @@ const PropertyForm = ({
             <select value={status} onChange={(e) => setStatus(e.target.value)}>
               <option value="">Choose Status:</option>
               <option value="FOR_SALE">For Sale</option>
-              <option value="TO_LEASE">To Lease</option>
+              <option value="FOR_LEASE">To Lease</option>
             </select>
 
             <select value={type} onChange={(e) => setType(e.target.value)}>
@@ -214,7 +215,7 @@ const PropertyForm = ({
             >
               <option value="">Province:</option>
               <option value="Ontario">Ontario</option>
-              <option value="Apartment">Quebec</option>
+              <option value="Quebec">Quebec</option>
               <option value="Nova Scotia">Nova Scotia</option>
               <option value="Manitoba">Manitoba</option>
               <option value="British Columbia">British Columbia</option>

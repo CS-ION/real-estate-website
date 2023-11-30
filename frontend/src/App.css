@@ -44,8 +44,24 @@ body {
   color: #fff;
 }
 
-.nav-item a:hover {
+.nav-item a:hover,
+.nav-item span:hover {
   text-decoration: underline;
+  cursor: pointer;
+}
+
+.logout {
+  margin: auto;
+}
+
+/* LOGIN REGISTER FORMS */
+
+.login-register {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  margin: 20px;
 }
 
 /* LOGIN REGISTER FORMS */

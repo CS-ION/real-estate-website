@@ -1,0 +1,58 @@
+.dashboard-container {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.request-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+  width: 100%;
+}
+
+.requests-listings {
+  font-family: "Coiny", sans-serif;
+  font-size: 20px;
+  margin-bottom: 10px;
+  margin-top: 30px;
+}
+
+.request {
+  font-size: 20px;
+  margin-bottom: 16px;
+  padding: 16px 30px;
+  background-color: white;
+  display: flex;
+  gap: 2px;
+  border-radius: 16px;
+  width: 100%;
+  border: 2px solid saddlebrown;
+}
+
+.deets {
+  font-size: 20px;
+  line-height: 1.4;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-radius: 16px;
+  width: 100%;
+}
+
+.li-description,
+.li-available {
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 5px;
+}
+
+.brok-buttons {
+  padding-left: 50px;
+}
