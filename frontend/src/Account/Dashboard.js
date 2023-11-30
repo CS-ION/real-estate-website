@@ -56,7 +56,7 @@ const Dashboard = ({ user }) => {
   return (
     <div className="dashboard-containter">
       <ul className="request-list">
-        <h3 className="requests-listings">PENDING VIEWING REQUESTS</h3>
+        <h3 className="requests-listings">VIEWING REQUEST LIST</h3>
         {viewingRequests ? (
           viewingRequests.map((viewingRequest) => (
             <ViewReq
@@ -73,6 +73,7 @@ const Dashboard = ({ user }) => {
               }
               brokerId={viewingRequest.brokerId}
               description={viewingRequest.availabilityDescription}
+              status={viewingRequest.status}
               availability={viewingRequest.availability}
               setUpdates={setUpdates}
             />
@@ -118,6 +119,7 @@ function ViewReq({
   user_details,
   brokerId,
   description,
+  status,
   availability,
   setUpdates,
 }) {
@@ -140,6 +142,35 @@ function ViewReq({
     setUpdates((updates) => !updates);
   };
 
+  async function updateRequest(status) {
+    try {
+      await axios.put(
+        `http://localhost:8080/api/brokers/viewing-request/update-status/${id}?status=` +
+          status
+      );
+    } catch (error) {
+      alert("Could not update status of the offer! " + error);
+    }
+  }
+  const handleAccept = () => {
+    if (user.role !== "BROKER") {
+      alert("Unauthorized to accept requests!");
+      return;
+    }
+    updateRequest("accepted");
+    alert("OFFER ACCEPTED!");
+    setUpdates((updates) => !updates);
+  };
+  const handleReject = () => {
+    if (user.role !== "BROKER") {
+      alert("Unauthorized to delete requests!");
+      return;
+    }
+    updateRequest("rejected");
+    alert("OFFER REJECTED!");
+    setUpdates((updates) => !updates);
+  };
+
   return (
     <li className="request">
       <div className="deets">
@@ -157,13 +188,42 @@ function ViewReq({
           </pre>
         </div>
       </div>
-      {user.role === "BROKER" ? (
-        <div className="brok-buttons">
+      <div className="brok-buttons">
+        {user.role === "BROKER" && status.toLowerCase() === "pending" ? (
+          <>
+            <button className="update" onClick={handleAccept}>
+              Accept
+            </button>
+            <button className="delete" onClick={handleReject}>
+              Reject
+            </button>
+          </>
+        ) : (
           <button className="delete" onClick={handleDelete}>
             Delete
           </button>
-        </div>
-      ) : null}
+        )}
+        {status.toLowerCase() !== "pending" ? (
+          <span
+            className="status"
+            style={{
+              backgroundColor:
+                status.toLowerCase() === "rejected" ? "#FF0000" : "#008000",
+            }}
+          >
+            {status}
+          </span>
+        ) : (
+          <span
+            className="status"
+            style={{
+              backgroundColor: "#0000FF",
+            }}
+          >
+            {status}
+          </span>
+        )}
+      </div>
     </li>
   );
 }
