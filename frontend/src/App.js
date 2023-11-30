@@ -1,7 +1,6 @@
 import { Link, Route, Routes } from "react-router-dom";
 import { useState } from "react";
 import "./App.css";
-import { useState } from "react";
 
 import Property from "./Property/Property";
 import Broker from "./Broker/Broker";

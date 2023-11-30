@@ -53,6 +53,12 @@
   margin-top: 5px;
 }
 
+.li-description pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow: auto;
+}
+
 .brok-buttons {
   padding-left: 50px;
 }
