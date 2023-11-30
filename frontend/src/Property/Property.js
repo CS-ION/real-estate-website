@@ -99,12 +99,12 @@ const Property = ({ user }) => {
       maxPrice: maxPrice ? maxPrice : null,
       city: fCity ? fCity : null,
       province: fProvince ? fProvince : null,
-      bedrooms: fBedrooms ? fBedrooms : null,
-      bathrooms: fBathrooms ? fBathrooms : null,
+      bedrooms: fBedrooms ? Number(fBedrooms) : null,
+      bathrooms: fBathrooms ? Number(fBathrooms) : null,
       type: fType ? fType : null,
       status: fStatus ? fStatus : null,
       streetName: fStreetName ? fStreetName : null,
-      streetNumber: fStreetNumber ? fStreetNumber : null,
+      streetNumber: fStreetNumber ? Number(fStreetNumber) : null,
     };
 
     setFilters(filters_form);

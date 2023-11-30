@@ -9,21 +9,23 @@ const BrokerList = ({ user, brokers, setCrud }) => {
   return (
     <div className="broker-list-container">
       <ul className="broker-list">
-        {brokers.map((broker) => (
-          <Broker
-            key={broker.brokerId}
-            user={user}
-            id={broker.brokerId}
-            fname={broker.firstName}
-            lname={broker.lastName}
-            city={broker.location.city}
-            province={broker.location.province}
-            email={broker.email}
-            phone={broker.phoneNumber}
-            description={broker.broker_description}
-            setCrud={setCrud}
-          />
-        ))}
+        {brokers
+          .sort((a, b) => b.brokerId - a.brokerId)
+          .map((broker) => (
+            <Broker
+              key={broker.brokerId}
+              user={user}
+              id={broker.brokerId}
+              fname={broker.firstName}
+              lname={broker.lastName}
+              city={broker.location.city}
+              province={broker.location.province}
+              email={broker.email}
+              phone={broker.phoneNumber}
+              description={broker.broker_description}
+              setCrud={setCrud}
+            />
+          ))}
       </ul>
     </div>
   );

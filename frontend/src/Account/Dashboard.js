@@ -53,31 +53,35 @@ const Dashboard = ({ user }) => {
     getViewingRequests();
   }, [updates, user.id]);
 
+  console.log(viewingRequests);
+
   return (
     <div className="dashboard-containter">
       <ul className="request-list">
         <h3 className="requests-listings">VIEWING REQUEST LIST</h3>
         {viewingRequests ? (
-          viewingRequests.map((viewingRequest) => (
-            <ViewReq
-              key={viewingRequest.viewingRequestId}
-              id={viewingRequest.viewingRequestId}
-              user={user}
-              user_details={
-                viewingRequest.userFirstName +
-                " " +
-                viewingRequest.userLastName +
-                " [" +
-                viewingRequest.userEmail +
-                "]\n"
-              }
-              brokerId={viewingRequest.brokerId}
-              description={viewingRequest.availabilityDescription}
-              status={viewingRequest.status}
-              availability={viewingRequest.availability}
-              setUpdates={setUpdates}
-            />
-          ))
+          viewingRequests
+            .sort((a, b) => b.viewingRequestId - a.viewingRequestId)
+            .map((viewingRequest) => (
+              <ViewReq
+                key={viewingRequest.viewingRequestId}
+                id={viewingRequest.viewingRequestId}
+                user={user}
+                user_details={
+                  viewingRequest.userFirstName +
+                  " " +
+                  viewingRequest.userLastName +
+                  " [" +
+                  viewingRequest.userEmail +
+                  "]\n"
+                }
+                brokerId={viewingRequest.brokerId}
+                description={viewingRequest.availabilityDescription}
+                status={viewingRequest.status}
+                availability={viewingRequest.availability}
+                setUpdates={setUpdates}
+              />
+            ))
         ) : (
           <strong>No Viewing Requests Found!</strong>
         )}
@@ -85,26 +89,28 @@ const Dashboard = ({ user }) => {
       <ul className="request-list">
         <h3 className="requests-listings">PROPERTY OFFER LIST</h3>
         {offers ? (
-          offers.map((offer) => (
-            <OfferReq
-              key={offer.buy_offer_id}
-              id={offer.buy_offer_id}
-              user={user}
-              user_details={
-                offer.userFirstName +
-                " " +
-                offer.userLastName +
-                " [" +
-                offer.userEmail +
-                "]\n"
-              }
-              houseId={offer.houseId}
-              description={offer.offerDescription}
-              status={offer.status}
-              price={offer.offer_price}
-              setUpdates={setUpdates}
-            />
-          ))
+          offers
+            .sort((a, b) => b.buy_offer_id - a.buy_offer_id)
+            .map((offer) => (
+              <OfferReq
+                key={offer.buy_offer_id}
+                id={offer.buy_offer_id}
+                user={user}
+                user_details={
+                  offer.userFirstName +
+                  " " +
+                  offer.userLastName +
+                  " [" +
+                  offer.userEmail +
+                  "]\n"
+                }
+                houseId={offer.houseId}
+                description={offer.offerDescription}
+                status={offer.status}
+                price={offer.offer_price}
+                setUpdates={setUpdates}
+              />
+            ))
         ) : (
           <strong>No Offers Found!</strong>
         )}
@@ -145,29 +151,31 @@ function ViewReq({
   async function updateRequest(status) {
     try {
       await axios.put(
-        `http://localhost:8080/api/brokers/viewing-request/update-status/${id}?status=` +
+        `http://localhost:8080/api/brokers/request_viewing/update-status/${id}?status=` +
           status
       );
     } catch (error) {
       alert("Could not update status of the offer! " + error);
     }
   }
+
   const handleAccept = () => {
     if (user.role !== "BROKER") {
       alert("Unauthorized to accept requests!");
       return;
     }
     updateRequest("accepted");
-    alert("OFFER ACCEPTED!");
+    alert("REQUEST ACCEPTED!");
     setUpdates((updates) => !updates);
   };
+
   const handleReject = () => {
     if (user.role !== "BROKER") {
       alert("Unauthorized to delete requests!");
       return;
     }
     updateRequest("rejected");
-    alert("OFFER REJECTED!");
+    alert("REQUEST REJECTED!");
     setUpdates((updates) => !updates);
   };
 
@@ -189,7 +197,7 @@ function ViewReq({
         </div>
       </div>
       <div className="brok-buttons">
-        {user.role === "BROKER" && status.toLowerCase() === "pending" ? (
+        {user.role === "BROKER" && status === null ? (
           <>
             <button className="update" onClick={handleAccept}>
               Accept
@@ -198,12 +206,15 @@ function ViewReq({
               Reject
             </button>
           </>
-        ) : (
+        ) : null}
+
+        {user.role === "BROKER" && status !== null ? (
           <button className="delete" onClick={handleDelete}>
             Delete
           </button>
-        )}
-        {status.toLowerCase() !== "pending" ? (
+        ) : null}
+
+        {status !== null ? (
           <span
             className="status"
             style={{
@@ -220,7 +231,7 @@ function ViewReq({
               backgroundColor: "#0000FF",
             }}
           >
-            {status}
+            PENDING
           </span>
         )}
       </div>

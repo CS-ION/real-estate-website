@@ -44,36 +44,38 @@ const PropertyList = ({
         />
       ) : null}
       <ul className="property-list">
-        {properties.map((property) => (
-          <Property
-            key={property.id}
-            user={user}
-            property={property}
-            id={property.houseId}
-            unitNumber={property.unit}
-            streetNumber={property.address.streetNumber}
-            streetName={property.address.street}
-            city={property.address.city}
-            province={property.address.province}
-            postalCode={property.address.postalCode}
-            description={property.house_description}
-            bathrooms={property.numberOfBathrooms}
-            bedrooms={property.numberOfBedrooms}
-            area={property.area}
-            price={property.price}
-            type={property.type}
-            status={property.status}
-            brokerId={property.broker.brokerId}
-            fname={property.broker.firstName}
-            lname={property.broker.lastName}
-            setHouseId={setHouseId}
-            setShowForm={setShowForm}
-            setShowViewForm={setShowViewForm}
-            setShowOfferForm={setShowOfferForm}
-            setPropertyToBeUpdated={setPropertyToBeUpdated}
-            setCrud={setCrud}
-          />
-        ))}
+        {properties
+          .sort((a, b) => b.houseId - a.houseId)
+          .map((property) => (
+            <Property
+              key={property.houseId}
+              user={user}
+              property={property}
+              id={property.houseId}
+              unitNumber={property.unit}
+              streetNumber={property.address.streetNumber}
+              streetName={property.address.street}
+              city={property.address.city}
+              province={property.address.province}
+              postalCode={property.address.postalCode}
+              description={property.house_description}
+              bathrooms={property.numberOfBathrooms}
+              bedrooms={property.numberOfBedrooms}
+              area={property.area}
+              price={property.price}
+              type={property.type}
+              status={property.status}
+              brokerId={property.broker.brokerId}
+              fname={property.broker.firstName}
+              lname={property.broker.lastName}
+              setHouseId={setHouseId}
+              setShowForm={setShowForm}
+              setShowViewForm={setShowViewForm}
+              setShowOfferForm={setShowOfferForm}
+              setPropertyToBeUpdated={setPropertyToBeUpdated}
+              setCrud={setCrud}
+            />
+          ))}
       </ul>
     </div>
   );
