@@ -79,6 +79,12 @@ public class BrokerService {
         buyOfferRepository.save(buyOffer);
     }
 
+    public void updateViewStatus(Long request_id,String status){
+        ViewingRequest view_request = viewingRequestRepository.findById(request_id).orElseThrow();
+        view_request.setStatus(status);
+        viewingRequestRepository.save(view_request);
+    }
+
     
 
     public Broker addBroker(Broker broker){

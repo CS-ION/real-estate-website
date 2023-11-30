@@ -55,6 +55,8 @@ public class ViewingRequest {
     private Long houseId;
     private String availabilityDescription;
 
+    private String status;
+
     private List<String> availability = new ArrayList<>();
 
 
