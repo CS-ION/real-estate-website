@@ -1,8 +1,12 @@
 # Real Estate Web Application
 
-## Introduction
+## Introduction & Presentation
 
-Welcome to the Real Estate Web Application, a cutting-edge digital platform designed to revolutionize the real estate buying, selling, and renting experience. This platform caters to four primary user roles: Homebuyers, Property renters, Brokers, and System administrators, offering a wide array of features to streamline the entire real estate transaction process.
+Welcome to the Real Estate Web Application, a cutting-edge digital platform designed to revolutionize the real estate buying, selling, and renting experience.
+
+### [View Presentation](https://docs.google.com/presentation/d/1s84Dpw8ejurE7jVbK5ejLRXucLukCRhFK20KgvYZ89c/edit#slide=id.p)
+
+Explore our website through this concise presentation that provides detailed insights and snapshots of our innovative features.
 
 ## Features
 
