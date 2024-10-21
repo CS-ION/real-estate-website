@@ -49,7 +49,7 @@ Explore our website through this concise presentation that provides detailed ins
    - **Technologies**:
      - **Languages**: Java
      - **Frameworks**: Spring
-     - **Database**: PostgreSQL
+     - **Database**: H2 Database
 
 2. **Frontend Developer(s)**:
    - **Names**:
@@ -77,14 +77,6 @@ The choice of our tech stack was carefully considered, taking into account our p
 - **Component-Based**: React's component-based architecture allows for modular development, making it easier to manage and scale the frontend of the application. This modular approach is more intuitive compared to alternatives like jQuery or vanilla JavaScript.
 
 - **Fast Rendering**: React's virtual DOM ensures efficient rendering of UI components, enhancing the overall performance of the application. This performance advantage is critical, especially when compared to alternatives like Backbone.js.
-
-**PostgreSQL as the Database:**
-
-- **Robust and ACID-Compliant**: PostgreSQL is known for its reliability and compliance with ACID (Atomicity, Consistency, Isolation, Durability) principles, which are crucial for handling complex real estate transactions. It ensures data integrity, even in high-transaction environments.
-
-- **Scalability**: PostgreSQL offers scalability features, allowing the system to handle growth in data and user numbers over time. This is essential for a real estate platform that may experience rapid changes in demand.
-
-- **Open Source and Cost-Effective**: PostgreSQL is open-source and cost-effective, making it a more budget-friendly choice compared to some commercial alternatives like Oracle. This is advantageous for startups and businesses with budget constraints.
 
 ### Project Approach: Agile Methodology
 
